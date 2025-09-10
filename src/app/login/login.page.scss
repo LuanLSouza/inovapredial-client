@@ -1,0 +1,205 @@
+.login-page {
+  --background: #1E4D6B;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+/* Background Image */
+.background-image {
+  position: absolute;
+  top: 421px;
+  left: 589px;
+  width: 872px;
+  height: 400px;
+  z-index: 1;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text Overlay */
+.text-overlay {
+  position: absolute;
+  top: 69px;
+  left: 641px;
+  width: 886px;
+  height: 300px;
+  z-index: 2;
+}
+
+.main-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.5em;
+  color: #FFFFFF;
+  margin: 0;
+  text-align: left;
+}
+
+.main-text:nth-child(2) {
+  margin-left: 125px;
+}
+
+
+/* Login Form Section */
+.login-form-section {
+  position: absolute;
+  left: -3px;
+  top: 0;
+  width: 480px;
+  height: 100vh;
+  background-color: #FFFFFF;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 67px 0;
+}
+
+/* Logo Container */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 73px;
+}
+
+.logo {
+  width: 307px;
+  height: 215px;
+  margin-bottom: 20px;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+}
+
+/* Login Form */
+.login-form {
+  width: 100%;
+  max-width: 409px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* Input Groups */
+.input-group {
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  background-color: #DEDEDE;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 17px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.input-icon {
+  width: 29px;
+  height: 29px;
+  margin-right: 24px;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5em;
+  color: #000000;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: #000000;
+  opacity: 0.5;
+}
+
+/* Login Button */
+.login-button {
+  width: 100%;
+  height: 45.92px;
+  background-color: #1E4D6B;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.5em;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #1a3f5a;
+}
+
+.login-button:active {
+  background-color: #163a52;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .background-image {
+    display: none;
+  }
+  
+  .text-overlay {
+    display: none;
+  }
+  
+  .login-form-section {
+    position: static;
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-form-section {
+    padding: 40px 20px;
+  }
+  
+  .logo {
+    width: 250px;
+    height: 175px;
+  }
+  
+  .inova, .predial {
+    font-size: 32px;
+  }
+  
+  .main-text {
+    font-size: 48px;
+  }
+  
+  .form-input {
+    font-size: 18px;
+  }
+  
+  .login-button {
+    font-size: 20px;
+  }
+}
