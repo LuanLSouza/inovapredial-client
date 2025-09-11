@@ -1,0 +1,20 @@
+<ion-menu contentId="main-content" type="overlay">
+  <ion-content>
+    <div class="menu-container">
+      <ion-list class="menu-list">
+        <ion-item 
+          *ngFor="let item of menuItems" 
+          button 
+          class="menu-item"
+          (click)="onMenuItemClick(item.route)">
+          <img 
+            [src]="item.icon" 
+            slot="start" 
+            class="menu-icon"
+            alt="icon">
+          <ion-label class="menu-label">{{ item.label }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>  
+  </ion-content>
+</ion-menu>

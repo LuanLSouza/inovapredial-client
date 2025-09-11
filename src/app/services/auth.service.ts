@@ -40,7 +40,17 @@ export class AuthService {
 
   logout(): void {
     this.removeToken();
+    this.clearUserData();
     this.tokenSubject.next(null);
+  }
+
+  private clearUserData(): void {
+    // Limpar dados do usuário armazenados localmente
+    localStorage.removeItem('user_info');
+    localStorage.removeItem('building_info');
+    localStorage.removeItem('user_preferences');
+    localStorage.removeItem('last_login');
+    // Adicione outros dados que precisem ser limpos
   }
 
   isAuthenticated(): boolean {

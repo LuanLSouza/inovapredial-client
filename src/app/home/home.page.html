@@ -1,34 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Inova Predial
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()" fill="clear">
-        Sair
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<app-sidebar 
+  [menuItems]="menuItems" 
+  (menuItemClick)="onMenuItemClick($event)">
+</app-sidebar>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inova Predial</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div class="ion-page" id="main-content">
+  <app-header 
+    [userInfo]="userInfo"
+    (logoutClick)="onLogoutClick()"
+    (buildingDropdownClick)="onBuildingDropdownClick()">
+  </app-header>
 
-  <div class="container">
-    <h1>Bem-vindo ao Inova Predial!</h1>
-    <p>Sistema de gestão eficiente da manutenção predial.</p>
-    
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Dashboard</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Aqui você pode gerenciar todas as atividades de manutenção predial.</p>
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ion-content>
+  <ion-content class="main-content">
+    <div class="content-container">
+      <h1>Bem-vindo ao Inova Predial</h1>
+      <p>Gerencie seu condomínio de forma eficiente e inteligente.</p>
+    </div>
+  </ion-content>
+</div>

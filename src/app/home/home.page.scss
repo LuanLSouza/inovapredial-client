@@ -1,22 +1,42 @@
-.container {
-  padding: 20px;
+// Estilos específicos da página home
+
+// Content styles
+.main-content {
+  --background: #E9E9E9;
+}
+
+.content-container {
+  padding: 24px;
   text-align: center;
 }
 
-h1 {
+.content-container h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
   color: #1E4D6B;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-p {
-  color: #666;
-  margin-bottom: 30px;
+.content-container p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #666666;
+  line-height: 1.5;
 }
 
-ion-card {
-  margin-top: 20px;
-}
-
-ion-card-title {
-  color: #1E4D6B;
+// Responsive adjustments para conteúdo
+@media (max-width: 768px) {
+  .content-container {
+    padding: 16px;
+  }
+  
+  .content-container h1 {
+    font-size: 24px;
+  }
+  
+  .content-container p {
+    font-size: 14px;
+  }
 }

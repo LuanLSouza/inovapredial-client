@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-menu-button slot="start" class="menu-button"></ion-menu-button>
+    
+    <div class="header-content">
+      <div class="logo-section">
+        <img src="assets/icons/logo-name.svg" alt="Inova Predial" class="logo-image">
+      </div>
+      
+      <div class="user-section">
+        <div class="building-info" (click)="onBuildingDropdownClick()">
+          <img src="assets/icons/building-icon.svg" alt="Building" class="building-icon">
+          <span class="building-name">{{ userInfo.building }}</span>
+          <img src="assets/icons/dropdown-icon.svg" alt="Dropdown" class="dropdown-icon">
+        </div>
+        
+        <div class="user-info">
+
+          <div class="user-details">
+            <div class="user-name">{{ userInfo.name }}</div>
+            <div class="user-role">{{ userInfo.role }}</div>
+          </div>
+          <ion-button fill="clear" class="logout-button" (click)="onLogoutClick()">
+            <img src="assets/icons/logout-icon.svg" alt="Logout" class="logout-icon">
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
