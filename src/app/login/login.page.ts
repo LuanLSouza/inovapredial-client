@@ -43,7 +43,7 @@ export class LoginPage {
       next: async (response) => {
         await loading.dismiss();
         this.showToast('Login realizado com sucesso!', 'success');
-        // TODO: Implementar navegação para dashboard principal
+        this.router.navigate(['/home']);
         console.log('Token salvo:', response.token);
       },
       error: async (error) => {

@@ -11,7 +11,9 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
-  // Adicione outros campos que sua API retorna
+  username: string;
+  email: string;
+
 }
 
 @Injectable({
