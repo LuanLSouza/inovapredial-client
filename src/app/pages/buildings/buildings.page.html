@@ -1,0 +1,56 @@
+<ion-content>
+
+  <ion-header class="main-header">
+    <ion-toolbar>
+      <ion-title class="title">
+        Edificações
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button class="button">
+          Nova Edificação
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="filter-card">
+    <ion-grid class="filter-grid">
+      <ion-row class="filter-row" class="ion-align-items-end">
+        <ion-col size="12" size-lg="4">
+          <ion-label class="label">Buscar</ion-label>
+          <div class="input-wrapper">
+            <ion-input type="text" placeholder="Nome" fill="solid" class="input solid"></ion-input>
+            <ion-img src="../../../assets/images/advanced-filters-icon.png" class="advanced-filters-icon"></ion-img>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Tipo de Edificação</ion-label>
+          <ion-select placeholder="Todos os tipos" fill="solid" class="select solid">
+            <ion-select-option value="todos">Todos os tipos</ion-select-option>
+            <ion-select-option value="residential">Residencial</ion-select-option>
+            <ion-select-option value="commercial">Comercial</ion-select-option>
+            <ion-select-option value="industrial">Industrial</ion-select-option>
+            <ion-select-option value="mixed">Misto</ion-select-option>
+            <ion-select-option value="other">Outros</ion-select-option>
+
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Ano de Construção</ion-label>
+          <ion-input type="number" placeholder="Digite o ano" fill="solid" class="input solid">
+
+          </ion-input>
+        </ion-col>
+
+        <ion-col size="12" size-lg="2" class="btn-col">
+          <ion-button class="clear" expand="block">Limpar Filtros</ion-button>
+        </ion-col>
+        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+
+</ion-content>
