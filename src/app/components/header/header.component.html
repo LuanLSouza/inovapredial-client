@@ -10,15 +10,15 @@
       <div class="user-section">
         <div class="building-info" (click)="onBuildingDropdownClick()">
           <img src="assets/icons/building-icon.svg" alt="Building" class="building-icon">
-          <span class="building-name">{{ userInfo.building }}</span>
+          <span class="building-name">{{ (userInfo$ | async)?.building }}</span>
           <img src="assets/icons/dropdown-icon.svg" alt="Dropdown" class="dropdown-icon">
         </div>
         
         <div class="user-info">
 
           <div class="user-details">
-            <div class="user-name">{{ userInfo.name }}</div>
-            <div class="user-role">{{ userInfo.role }}</div>
+            <div class="user-name">{{ (userInfo$ | async)?.name }}</div>
+            <div class="user-role">{{ (userInfo$ | async)?.role }}</div>
           </div>
           <ion-button fill="clear" class="logout-button" (click)="onLogoutClick()">
             <img src="assets/icons/logout-icon.svg" alt="Logout" class="logout-icon">

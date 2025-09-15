@@ -1,30 +1,24 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { UserInfo } from 'src/app/models/userinfo.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
-export interface UserInfo {
-  name: string;
-  role: string;
-  building: string;
-  avatar: string;
-}
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, AsyncPipe, NgIf],
 })
 export class HeaderComponent {
-  @Input() userInfo: UserInfo = {
-    name: '',
-    role: '',
-    building: '',
-    avatar: ''
-  };
+  userInfo$ = this.authService.userInfo$;
   
   @Output() logoutClick = new EventEmitter<void>();
   @Output() buildingDropdownClick = new EventEmitter<void>();
+
+  constructor(private authService: AuthService) {}
 
   onLogoutClick() {
     this.logoutClick.emit();

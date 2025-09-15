@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
@@ -16,8 +16,19 @@ export interface MenuItem {
   imports: [IonicModule, CommonModule],
 })
 export class SidebarComponent {
-  @Input() menuItems: MenuItem[] = [];
   @Output() menuItemClick = new EventEmitter<string>();
+
+  menuItems: MenuItem[] = [
+    { icon: 'assets/icons/home-icon.svg', label: 'Inicio', route: '/home' },
+    { icon: 'assets/icons/building-icon.svg', label: 'Edificações', route: '/buildings' },
+    { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/orders' },
+    { icon: 'assets/icons/metrics-icon.svg', label: 'Métricas', route: '/metrics' },
+    { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipment' },
+    { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/stock' },
+    { icon: 'assets/icons/employee-icon.svg', label: 'Funcionários', route: '/employees' },
+    { icon: 'assets/icons/calendar-icon.svg', label: 'Calendários', route: '/calendar' },
+    { icon: 'assets/icons/plan-icon.svg', label: 'Plano de manutenções', route: '/maintenance-plan' }
+  ];
 
   onMenuItemClick(route: string) {
     this.menuItemClick.emit(route);

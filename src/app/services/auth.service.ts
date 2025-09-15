@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { UserInfo } from '../models/userinfo.interface';
 
 export interface LoginRequest {
   login: string;
@@ -12,8 +13,7 @@ export interface LoginRequest {
 export interface LoginResponse {
   token: string;
   username: string;
-  email: string;
-
+  role: 'ADMIN' | 'USER';
 }
 
 @Injectable({
@@ -22,9 +22,13 @@ export interface LoginResponse {
 export class AuthService {
   private readonly API_URL = environment.apiUrl;
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly USER_INFO_KEY = 'user_info';
   
   private tokenSubject = new BehaviorSubject<string | null>(this.getStoredToken());
   public token$ = this.tokenSubject.asObservable();
+
+  private userInfoSubject = new BehaviorSubject<UserInfo>(this.getUserInfo());
+  public userInfo$ = this.userInfoSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -33,11 +37,20 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.storeToken(response.token);
+          const mappedRole = this.mapRole(response.role);
+          const userInfo: UserInfo = {
+            name: response.username || '',
+            role: mappedRole,
+            building: ''
+          };
+          this.setUserInfo(userInfo);
+          this.userInfoSubject.next(userInfo);
+          localStorage.setItem('last_login', new Date().toISOString());
           this.tokenSubject.next(response.token);
         })
       );
   }
-
+  
   logout(): void {
     this.removeToken();
     this.clearUserData();
@@ -91,5 +104,28 @@ export class AuthService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+  }
+
+  // UserInfo helpers
+  private mapRole(apiRole: 'ADMIN' | 'USER'): string {
+    if (apiRole === 'ADMIN') return 'Sindico';
+    return 'Morador';
+  }
+
+  setUserInfo(info: UserInfo): void {
+    localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(info));
+    this.userInfoSubject.next(info);
+  }
+
+  getUserInfo(): UserInfo {
+    const raw = localStorage.getItem(this.USER_INFO_KEY);
+    if (!raw) {
+      return { name: '', role: '', building: '' };
+    }
+    try {
+      return JSON.parse(raw) as UserInfo;
+    } catch {
+      return { name: '', role: '', building: '' };
+    }
   }
 }
