@@ -1,0 +1,208 @@
+<ion-content>
+  <div class="page-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>Edificação > {{ isEditMode ? 'Editar Edificação' : 'Nova Edificação' }}</span>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando dados...</p>
+    </div>
+
+    <!-- Form Container -->
+    <ion-card class="form-card" *ngIf="!loading">
+     
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+          <!-- Informações Básicas -->
+          <div class="form-section">
+            <h3 class="section-title">Informações Básicas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Nome da Edificação *</ion-label>
+                    <ion-input 
+                      formControlName="name"
+                      placeholder="Digite o nome da edificação"
+                      [class.error]="f.name.invalid && f.name.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.name.invalid && f.name.touched">
+                    <span *ngIf="f.name.errors?.['required']">Nome é obrigatório</span>
+                    <span *ngIf="f.name.errors?.['maxlength']">Nome deve ter no máximo 120 caracteres</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Tipo de Edificação *</ion-label>
+                    <ion-select 
+                      formControlName="buildingType"
+                      placeholder="Selecione o tipo"
+                      [class.error]="f.buildingType.invalid && f.buildingType.touched">
+                      <ion-select-option 
+                        *ngFor="let option of buildingTypeOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Ano de Construção *</ion-label>
+                    <ion-input 
+                      formControlName="constructionYear"
+                      type="number"
+                      placeholder="Ex: 2020"
+                      [class.error]="f.constructionYear.invalid && f.constructionYear.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.constructionYear.invalid && f.constructionYear.touched">
+                    <span *ngIf="f.constructionYear.errors?.['required']">Ano de construção é obrigatório</span>
+                    <span *ngIf="f.constructionYear.errors?.['min']">Ano deve ser maior que 1800</span>
+                    <span *ngIf="f.constructionYear.errors?.['max']">Ano não pode ser maior que o atual</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Descrição</ion-label>
+                    <ion-input 
+                      formControlName="description"
+                      placeholder="Descreva características da edificação (opcional)">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Endereço -->
+          <div class="form-section" formGroupName="addressRequest">
+            <h3 class="section-title">Endereço</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="4">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">CEP</ion-label>
+                    <ion-input 
+                      formControlName="zipCode"
+                      placeholder="00000-000"
+                      (ionInput)="onCepInput()"
+                      [class.error]="a.zipCode.invalid && a.zipCode.touched">
+                    </ion-input>
+                    <ion-spinner *ngIf="loadingCep" name="crescent" slot="end"></ion-spinner>
+                  </ion-item>
+                  <div class="error-message" *ngIf="a.zipCode.invalid && a.zipCode.touched">
+                    <span *ngIf="a.zipCode.errors?.['required']">CEP é obrigatório</span>
+                    <span *ngIf="a.zipCode.errors?.['pattern']">CEP deve ter formato válido</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="8">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Logradouro *</ion-label>
+                    <ion-input 
+                      formControlName="street"
+                      placeholder="Rua, Avenida, etc."
+                      [class.error]="a.street.invalid && a.street.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="a.street.invalid && a.street.touched">
+                    <span>Logradouro é obrigatório</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="3">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Número *</ion-label>
+                    <ion-input 
+                      formControlName="number"
+                      type="number"
+                      placeholder="123"
+                      [class.error]="a.number.invalid && a.number.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="a.number.invalid && a.number.touched">
+                    <span *ngIf="a.number.errors?.['required']">Número é obrigatório</span>
+                    <span *ngIf="a.number.errors?.['min']">Número deve ser maior que 0</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="9">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Bairro</ion-label>
+                    <ion-input 
+                      formControlName="district"
+                      placeholder="Nome do bairro">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="8">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Cidade *</ion-label>
+                    <ion-input 
+                      formControlName="city"
+                      placeholder="Nome da cidade"
+                      [class.error]="a.city.invalid && a.city.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="a.city.invalid && a.city.touched">
+                    <span>Cidade é obrigatória</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="4">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Estado</ion-label>
+                    <ion-input 
+                      formControlName="state"
+                      placeholder="UF"
+                      maxlength="2">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="form-actions">
+            <ion-button 
+              type="button" 
+              fill="outline" 
+              color="medium"
+              (click)="cancel()">
+              Cancelar
+            </ion-button>
+            
+            <ion-button 
+              type="submit"
+              fill="outline"
+              color="medium"
+              [disabled]="form.invalid || saving">
+              <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
+              {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

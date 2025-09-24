@@ -33,6 +33,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/buildings/buildings.page').then( m => m.BuildingsPage)
       },
       {
+        path: 'buildings/new',
+        loadComponent: () => import('./pages/buildings/form-building/form-building.page').then( m => m.FormBuildingPage)
+      },
+      {
+        path: 'buildings/edit/:id',
+        loadComponent: () => import('./pages/buildings/form-building/form-building.page').then( m => m.FormBuildingPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

@@ -5,7 +5,8 @@ import { AuthService } from "./auth.service";
 import { 
   Building, 
   BuildingSearchRequest, 
-  BuildingSearchParams, 
+  BuildingSearchParams,
+  BuildingRequest, 
 } from "../models/building.interface";
 import { PaginatedResponse } from "../models/paginatedResponse";
 
@@ -51,6 +52,36 @@ export class BuildingsService {
         { params,
           headers: this.authService.getAuthHeaders()
         }
+      );
+    }
+
+    createBuilding(building: BuildingRequest) {
+      return this.http.post<Building>(
+        `${this.API_URL}/buildings`,
+        building,
+        { headers: this.authService.getAuthHeaders() }
+      );
+    }
+
+    deleteBuilding(id: string) {
+      return this.http.delete<void>(
+        `${this.API_URL}/buildings/${id}`,
+        { headers: this.authService.getAuthHeaders() }
+      );
+    }
+
+    updateBuilding(id: string, building: BuildingRequest) {
+      return this.http.put<Building>(
+        `${this.API_URL}/buildings/${id}`,
+        building,
+        { headers: this.authService.getAuthHeaders() }
+      );
+    }
+
+    getBuildingById(id: string) {
+      return this.http.get<Building>(
+        `${this.API_URL}/buildings/${id}`,
+        { headers: this.authService.getAuthHeaders() }
       );
     }
 

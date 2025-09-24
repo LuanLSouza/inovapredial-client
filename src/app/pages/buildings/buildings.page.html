@@ -6,7 +6,7 @@
         Edificações
       </ion-title>
       <ion-buttons slot="end">
-        <ion-button class="button">
+        <ion-button class="button" (click)="navigateToNewBuilding()">
           Nova Edificação
         </ion-button>
       </ion-buttons>
@@ -169,10 +169,14 @@
 
             <ion-col size="12" size-lg="0.5" class="actions">
               <ion-buttons>
-                <ion-button fill="clear">
+                <ion-button fill="clear"
+                (click)="onDelete(building)"
+                >
                   <ion-icon src="../../../assets/icons/trash-icon.svg"></ion-icon>
                 </ion-button>
-                <ion-button fill="clear">
+                <ion-button fill="clear"
+                (click)="onEdit(building)"
+                >
                   <ion-icon src="../../../assets/icons/pencil-icon.svg"></ion-icon>
                 </ion-button>
                 <ion-button fill="clear">

@@ -17,6 +17,14 @@ export interface Building {
   address: Address;
 }
 
+export interface BuildingRequest {
+  name: string;
+  buildingType: 'RESIDENTIAL' | 'COMMERCIAL' | 'INDUSTRIAL' | 'MIXED' | 'OTHER';
+  constructionYear: number;
+  description: string;
+  addressRequest: Address;
+}
+
 export interface BuildingSearchRequest {
   name?: string;
   buildingType?: 'RESIDENTIAL' | 'COMMERCIAL' | 'INDUSTRIAL' | 'MIXED' | 'OTHER';

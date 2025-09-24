@@ -6,6 +6,7 @@ import { BuildingsService } from 'src/app/services/buildings.service';
 import { Building, BuildingSearchParams, BuildingSearchRequest } from 'src/app/models/building.interface';
 import { PaginatedResponse } from 'src/app/models/paginatedResponse';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
+import { AlertController, ToastController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-buildings',
@@ -56,7 +57,10 @@ export class BuildingsPage implements OnInit {
   ]
 
   constructor(
-    private buildingsService: BuildingsService
+    private buildingsService: BuildingsService,
+    private router: Router,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -221,9 +225,38 @@ export class BuildingsPage implements OnInit {
 
   onView(building: Building) {}
 
-  onEdit(building: Building) {}
+  onEdit(building: Building) {
+    this.router.navigate(['/buildings/edit', building.id]);
+  }
 
-  onDelete(building: Building) {}
+  async onDelete(building: Building) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar Exclusão',
+      message: `Tem certeza que deseja excluir a edificação "${building.name}"? Esta ação não pode ser desfeita.`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Exclusão cancelada');
+          }
+        },
+        {
+          text: 'Excluir',
+          role: 'destructive',
+          handler: () => {
+            this.deleteBuilding(building);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  navigateToNewBuilding() {
+    this.router.navigate(['/buildings/new']);
+  }
   
   getBuildingTypeColor(bt: Building['buildingType'] | undefined): string {
     if (!bt) return 'medium';
@@ -254,6 +287,33 @@ export class BuildingsPage implements OnInit {
 
   getSortDirection(field: string): 'ASC' | 'DESC' | null {
     return this.isSortedBy(field) ? this.currentSortDirection : null;
+  }
+  
+  private deleteBuilding(building: Building) {
+    this.loading = true;
+    
+    this.buildingsService.deleteBuilding(building.id!)
+      .subscribe({
+        next: () => {
+          this.showToast('Edificação excluída com sucesso!', 'success');
+          this.loadBuildings(); // Recarrega a lista
+        },
+        error: (error) => {
+          console.error('Erro ao excluir edificação:', error);
+          this.showToast('Erro ao excluir edificação. Tente novamente.', 'danger');
+          this.loading = false;
+        }
+      });
+  }
+
+  private async showToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      color: color,
+      position: 'top'
+    });
+    await toast.present();
   }
 
 }
