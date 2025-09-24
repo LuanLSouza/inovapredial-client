@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { SidebarComponent, HeaderComponent } from '../components';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, SidebarComponent, HeaderComponent],
+  imports: [IonicModule, CommonModule],
 })
 export class HomePage {
   constructor(

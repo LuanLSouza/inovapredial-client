@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonicModule, AsyncPipe, NgIf],
+  imports: [IonicModule, AsyncPipe],
 })
 export class HeaderComponent {
   userInfo$ = this.authService.userInfo$;

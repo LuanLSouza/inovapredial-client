@@ -1,2 +1,10 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+  --ion-color-success: #10B981;    // Verde esmeralda para Residencial
+  --ion-color-primary: #3B82F6;    // Azul moderno para Comercial
+  --ion-color-warning: #F59E0B;    // Âmbar para Industrial
+  --ion-color-secondary: #6B7280;  // Cinza slate para Misto
+  --ion-color-tertiary: #8B5CF6;   // Violeta para Outros
+
+}

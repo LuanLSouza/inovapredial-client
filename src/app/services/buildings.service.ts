@@ -6,8 +6,8 @@ import {
   Building, 
   BuildingSearchRequest, 
   BuildingSearchParams, 
-  PaginatedResponse 
 } from "../models/building.interface";
+import { PaginatedResponse } from "../models/paginatedResponse";
 
 @Injectable({
     providedIn: 'root'
