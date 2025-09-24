@@ -1,11 +1,11 @@
 export interface Address {
-  id: string;
-  street: string;
-  number: number;
-  district: string;
-  city: string;
-  state: string;
-  zipCode: string;
+  id?: string;
+  street?: string;
+  number?: number;
+  district?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }
 
 export interface Building {
@@ -14,7 +14,7 @@ export interface Building {
   buildingType: 'RESIDENTIAL' | 'COMMERCIAL' | 'INDUSTRIAL' | 'MIXED' | 'OTHER';
   constructionYear: number;
   description: string;
-  address: Address;
+  address: Address | null;
 }
 
 export interface BuildingRequest {
@@ -22,7 +22,7 @@ export interface BuildingRequest {
   buildingType: 'RESIDENTIAL' | 'COMMERCIAL' | 'INDUSTRIAL' | 'MIXED' | 'OTHER';
   constructionYear: number;
   description: string;
-  addressRequest: Address;
+  addressRequest?: Address | null;
 }
 
 export interface BuildingSearchRequest {

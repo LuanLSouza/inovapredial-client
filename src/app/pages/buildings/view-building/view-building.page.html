@@ -59,12 +59,6 @@
                   <ion-label class="info-value">{{ building.constructionYear }}</ion-label>
                 </div>
               </ion-col>
-              <ion-col size="12" size-md="6">
-                <div class="info-item">
-                  <ion-label class="info-label">ID</ion-label>
-                  <ion-label class="info-value">{{ building.id }}</ion-label>
-                </div>
-              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
@@ -82,13 +76,13 @@
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">Rua</ion-label>
-                  <ion-label class="info-value">{{ building.address.street }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.street || '-'}}</ion-label>
                 </div>
               </ion-col>
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">Número</ion-label>
-                  <ion-label class="info-value">{{ building.address.number }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.number || '-'}}</ion-label>
                 </div>
               </ion-col>
             </ion-row>
@@ -97,13 +91,13 @@
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">Bairro</ion-label>
-                  <ion-label class="info-value">{{ building.address.district }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.district || '-'}}</ion-label>
                 </div>
               </ion-col>
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">Cidade</ion-label>
-                  <ion-label class="info-value">{{ building.address.city }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.city || '-'}}</ion-label>
                 </div>
               </ion-col>
             </ion-row>
@@ -112,13 +106,13 @@
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">Estado</ion-label>
-                  <ion-label class="info-value">{{ building.address.state }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.state || '-'}}</ion-label>
                 </div>
               </ion-col>
               <ion-col size="12" size-md="6">
                 <div class="info-item">
                   <ion-label class="info-label">CEP</ion-label>
-                  <ion-label class="info-value">{{ building.address.zipCode }}</ion-label>
+                  <ion-label class="info-value">{{ building.address?.zipCode || '-'}}</ion-label>
                 </div>
               </ion-col>
             </ion-row>
