@@ -1,0 +1,150 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando edificação...</ion-label>
+    </div>
+  } @else if (building) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="building-header">
+            <ion-card-title class="building-name">{{ building.name }}</ion-card-title>
+            <ion-badge [color]="getBuildingTypeColor(building.buildingType)" class="building-type-badge">
+              {{ displayBuildingType(building.buildingType) }}
+            </ion-badge>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          @if (building.description) {
+            <div class="description-section">
+              <ion-label class="section-label">Descrição</ion-label>
+              <p class="description-text">{{ building.description }}</p>
+            </div>
+          }
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Detalhadas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Detalhadas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Nome</ion-label>
+                  <ion-label class="info-value">{{ building.name }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Tipo de Edificação</ion-label>
+                  <ion-label class="info-value">{{ displayBuildingType(building.buildingType) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Ano de Construção</ion-label>
+                  <ion-label class="info-value">{{ building.constructionYear }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">ID</ion-label>
+                  <ion-label class="info-value">{{ building.id }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Endereço -->
+      <ion-card class="address-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Endereço</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="address-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Rua</ion-label>
+                  <ion-label class="info-value">{{ building.address.street }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Número</ion-label>
+                  <ion-label class="info-value">{{ building.address.number }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Bairro</ion-label>
+                  <ion-label class="info-value">{{ building.address.district }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Cidade</ion-label>
+                  <ion-label class="info-value">{{ building.address.city }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Estado</ion-label>
+                  <ion-label class="info-value">{{ building.address.state }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">CEP</ion-label>
+                  <ion-label class="info-value">{{ building.address.zipCode }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Edificação
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Edificação não encontrada</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>

@@ -41,6 +41,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/buildings/form-building/form-building.page').then( m => m.FormBuildingPage)
       },
       {
+        path: 'buildings/view/:id',
+        loadComponent: () => import('./pages/buildings/view-building/view-building.page').then( m => m.ViewBuildingPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

@@ -223,7 +223,9 @@ export class BuildingsPage implements OnInit {
   }
 
 
-  onView(building: Building) {}
+  onView(building: Building) {
+    this.router.navigate(['/buildings/view', building.id]);
+  }
 
   onEdit(building: Building) {
     this.router.navigate(['/buildings/edit', building.id]);
