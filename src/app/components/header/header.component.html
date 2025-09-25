@@ -10,7 +10,7 @@
       <div class="user-section">
         <div class="building-info" (click)="onBuildingDropdownClick()">
           <img src="assets/icons/building-icon.svg" alt="Building" class="building-icon">
-          <span class="building-name">{{ (userInfo$ | async)?.building }}</span>
+          <span class="building-name">{{ getBuildingDisplayName() }}</span>
           <img src="assets/icons/dropdown-icon.svg" alt="Dropdown" class="dropdown-icon">
         </div>
         

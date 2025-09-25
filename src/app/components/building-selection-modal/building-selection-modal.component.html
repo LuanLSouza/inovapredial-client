@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Selecionar Edificação</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="modal-content">
+    <!-- Barra de busca -->
+    <div class="search-section">
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar edificação..."
+        show-clear-button="focus"
+        debounce="300">
+      </ion-searchbar>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando edificações...</p>
+    </div>
+
+    <!-- Lista de edificações -->
+    <div *ngIf="!loading" class="buildings-list">
+      <div *ngIf="filteredBuildings.length === 0" class="empty-state">
+        <ion-icon name="business-outline" size="large"></ion-icon>
+        <h3>Nenhuma edificação encontrada</h3>
+        <p *ngIf="searchTerm">Tente ajustar os termos de busca</p>
+        <p *ngIf="!searchTerm">Não há edificações cadastradas</p>
+      </div>
+
+      <ion-list *ngIf="filteredBuildings.length > 0">
+        <ion-item 
+          *ngFor="let building of filteredBuildings" 
+          button
+          (click)="selectBuilding(building)"
+          [class.selected]="isSelected(building)">
+          
+          <img 
+          slot="start" 
+          src="assets/icons/building-icon.svg" 
+          alt="Edificação"
+          class="building-icon"
+          [class.selected-icon]="isSelected(building)">
+          
+          <ion-label>
+            <h2>{{ building.name }}</h2>
+            <p>{{ building.description }}</p>
+            <p class="building-info">
+              <span class="building-type">{{ getBuildingTypeLabel(building.buildingType) }}</span>
+              <span class="construction-year">{{ building.constructionYear }}</span>
+            </p>
+            <p *ngIf="building.address" class="address">
+              {{ getAddressString(building.address) }}
+            </p>
+          </ion-label>
+
+
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

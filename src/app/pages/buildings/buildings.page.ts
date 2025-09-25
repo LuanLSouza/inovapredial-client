@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -60,7 +60,8 @@ export class BuildingsPage implements OnInit {
     private buildingsService: BuildingsService,
     private router: Router,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -83,10 +84,13 @@ export class BuildingsPage implements OnInit {
         this.buildings = response.content;
         this.updatePagination(response);
         this.loading = false;
+
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Erro ao carregar edificações:', error);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     })
   }
