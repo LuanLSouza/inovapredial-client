@@ -1,0 +1,255 @@
+.main-header,
+ion-toolbar,
+ion-header {
+    --background: transparent;
+    --border-width: 0;
+    box-shadow: none;
+}
+
+ion-content { 
+  --background: #E9E9E9;
+  --padding-start: 100px;
+  --padding-end: 100px;
+  --padding-top: 20px;
+
+}
+
+.title{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: #2D9CDB;
+    padding-left: 0;
+}
+
+.button{
+    --background: #D9D9D9;
+    width: 173px;
+    height: 43px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14 px;
+    color: #000000;
+}
+
+.btn-col{
+    display: flex;
+    align-items: flex-end;
+    padding-top: 24px;
+}
+
+.clear{
+    --background: #D9D9D9;
+    width: 173px;
+    height: 35px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+}
+
+.border{
+    border: 1px solid #000000;
+}
+
+.advanced-filters-icon {
+
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+
+}
+
+.filter-card {
+    margin: 20px auto 0;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+    padding: 12px 16px;
+}
+
+.filter-grid {
+    --ion-grid-padding: 0;
+    --ion-grid-column-padding: 12px;
+}
+
+.label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 6px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.solid {
+    --background: #D9D9D9;
+    --border-radius: 10px;
+    --box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 35px;
+    min-height: 35px;
+    --padding-start: 12px;
+    --padding-end: 36px;
+    flex: 1;
+}
+
+
+.list-card {
+    margin: 20px auto 0;
+    border-radius: 0, 20px, 20px, 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+    padding: 12px 16px;
+}
+
+/** Table */
+
+.table-grid {
+    --ion-grid-padding: 0;
+    --ion-grid-column-padding: 12px;
+    border: 1px solid #939393;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+.table-header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    white-space: nowrap;
+    background: #d0d0d0a2;
+    border-radius: 10px 10px 0 0;
+    align-items: center;
+}
+
+.table-row {
+    border: 1px solid #939393;
+    align-items: center;
+}
+
+.table-row:hover {
+    background: #ebebeb;
+}
+
+.table-row ion-col ion-label {
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+}
+
+.actions {
+    padding: 0;
+}
+
+.actions ion-button {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    --background: transparent;
+    --box-shadow: none;
+    margin: 0 2px;
+}
+
+.actions ion-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.name-cell .name{
+    color: #000000;
+    line-height: 1.2;
+}
+
+.name-cell .description{
+    display: block;
+    margin-top: 2px;
+}
+
+.grid-divider {
+    --min-height: 25px;
+}
+
+/** Pagination */
+
+.pagination-bar {
+    margin-top: 12px;
+    padding-top: 8px;
+}
+
+.pagination-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+}
+
+.pagination-info ion-note {
+    color: #666666;
+    white-space: nowrap;
+}
+
+.page-size-label {
+    margin-right: 8px;
+    font-weight: 600;
+    color: #333333;
+    white-space: nowrap;
+}
+
+.page-size-select {
+    --background: #D9D9D9;
+    --border-radius: 10px;
+    --box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 35px;
+    min-height: 35px;
+    width: 80px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+}
+
+.pagination-buttons ion-button{
+    --padding-start: 6px;
+    --padding-end: 6px;
+    height: 28px;
+    min-height: 28px;
+    --background: transparent;
+}
+
+.pagination-controls ion-button.page-number {
+    margin: 0 2px;
+    --border-radius: 8px;
+    --border-width: 1px;
+    --border-color: #939393;
+    --color: #000000;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: var(--ion-color-light);
+      color: var(--ion-color-primary);
+    }
+    
+    &.active {
+      background-color: var(--ion-color-primary-tint);
+      color: var(--ion-color-primary-contrast);
+      font-weight: 600;
+    }
+  }

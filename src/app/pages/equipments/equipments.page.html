@@ -1,0 +1,249 @@
+<ion-content>
+
+  <ion-header class="main-header">
+    <ion-toolbar>
+      <ion-title class="title">
+        Equipamentos
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button class="button" (click)="navigateToNewEquipment()">
+          Novo Equipamento
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="filter-card">
+    <ion-grid class="filter-grid">
+      <ion-row class="filter-row" class="ion-align-items-end">
+        <ion-col size="12" size-lg="4">
+          <ion-label class="label">Identificação</ion-label>
+          <div class="input-wrapper">
+            <ion-input 
+              type="text" 
+              placeholder="Identificação" 
+              fill="solid" 
+              class="input solid"
+              [(ngModel)]="searchIdentification"
+              (ionChange)="applyFilters()"
+            ></ion-input>
+            <ion-img src="../../../assets/images/advanced-filters-icon.png" class="advanced-filters-icon"></ion-img>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Classificação</ion-label>
+          <ion-select 
+            placeholder="Todas as classificações" 
+            fill="solid" 
+            class="select solid"
+            [(ngModel)]="searchClassification"
+            (ionChange)="applyFilters()"
+            >
+            @for (option of classificationOptions; track option.value) {
+              <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Status</ion-label>
+          <ion-select 
+            placeholder="Todos os status" 
+            fill="solid" 
+            class="select solid"
+            [(ngModel)]="searchEquipmentStatus"
+            (ionChange)="applyFilters()"
+            >
+            @for (option of equipmentStatusOptions; track option.value) {
+              <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="12" size-lg="2" class="btn-col">
+          <ion-button class="clear" expand="block" (click)="clearFilters()">Limpar Filtros</ion-button>
+        </ion-col>
+        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+  <ion-card class="list-card">
+    <ion-grid class="table-grid">
+      <ion-row class="table-header">
+        <ion-col size="12" size-lg="3">
+          <ion-label
+          (click)="sortBy('identification')"
+          [class.sorted]="isSortedBy('identification')"
+          class="sortable-header"
+          >
+            Identificação
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('classification')"
+          [class.sorted]="isSortedBy('classification')"
+          class="sortable-header"
+          >
+            Classificação
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('criticality')"
+          [class.sorted]="isSortedBy('criticality')"
+          class="sortable-header"
+          >
+            Criticidade
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('equipmentStatus')"
+          [class.sorted]="isSortedBy('equipmentStatus')"
+          class="sortable-header"
+          >
+            Status
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('location')"
+          [class.sorted]="isSortedBy('location')"
+          class="sortable-header"
+          >
+            Localização
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+      </ion-row>
+      @if (loading) {
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <ion-spinner name="crescent"></ion-spinner>
+          </ion-col>
+        </ion-row>
+      } @else if (equipments.length === 0) {
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-label>Nenhum equipamento encontrado</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      } @else {
+        @for (equipment of equipments; track equipment.id) {
+          <ion-row class="table-row" button="true">
+            <ion-col size="12" size-lg="3">
+              <div class="name-cell">
+                <div class="name"> {{ equipment.identification }} </div>
+                <ion-note class="description"> {{ equipment.description || '-' }} </ion-note>
+              </div>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="equipment.classification === 'EQUIPMENT' ? 'primary' : 'secondary'">
+                {{ displayClassification(equipment.classification) }}
+              </ion-badge>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="getCriticalityColor(equipment.criticality)">
+                {{ displayCriticality(equipment.criticality) }}
+              </ion-badge>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="getEquipmentStatusColor(equipment.equipmentStatus)">
+                {{ displayEquipmentStatus(equipment.equipmentStatus) }}
+              </ion-badge>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-label>{{ equipment.location || '-' }}</ion-label>
+            </ion-col>
+
+            <ion-col size="12" size-lg="0.5" class="actions">
+              <ion-buttons>
+                <ion-button fill="clear"
+                (click)="onDelete(equipment)"
+                >
+                  <ion-icon src="../../../assets/icons/trash-icon.svg"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear"
+                (click)="onEdit(equipment)"
+                >
+                  <ion-icon src="../../../assets/icons/pencil-icon.svg"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="onView(equipment)">
+                  <ion-icon src="../../../assets/icons/eye-icon.svg"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        }
+      }
+
+    </ion-grid>
+    <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
+    <ion-grid>
+      <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">
+        <ion-col size="12" size-lg="4" class="pagination-info">
+          <div class="pagination-content">
+            <ion-note>{{showingStart}}-{{showingEnd}} de {{totalElements}} </ion-note>
+            <ion-label class="page-size-label">Itens por páginas:</ion-label>
+            <ion-select
+              interface="popover"
+              class="page-size-select"
+              [value]="pageSize"
+              (ionChange)="onPageSizeChange($event.detail.value)"
+            >
+              @for (size of pageSizeOptions; track size) {
+                <ion-select-option [value]="size">{{size}}</ion-select-option>
+              }
+            </ion-select>
+        </div>
+        </ion-col>
+
+        <ion-col size="12" size-lg="4" class="pagination-controls ion-text-end">
+
+          <ion-buttons class="pagination-buttons">
+            <ion-button fill="clear" size="small" (click)="goToFirtPage()" [disabled]="currentPage === 0 || loading">
+              <ion-icon src="../../../assets/icons/goToFirst-icon.svg"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="goToPreviousPage()" [disabled]="!hasPrevious || loading">
+              <ion-icon src="../../../assets/icons/previous-icon.svg"></ion-icon>
+            </ion-button>
+
+            @if (pageNumbers.length > 0) {
+              @for (p of pageNumbers; track p) {
+                <ion-button
+                  fill="solid"
+                  class="page-number"
+                  [color]="p === currentPage ? 'primary' : 'medium'"
+                  (click)="goToPage(p)"
+                  [disabled]="loading"
+                >
+                  {{p + 1}}
+                </ion-button>
+              }
+            }
+
+            <ion-button fill="clear" (click)="goToNextPage()" [disabled]="!hasNext || loading">
+              <ion-icon src="../../../assets/icons/next-icon.svg"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="goToLastPage()" [disabled]="currentPage === totalPages - 1 || loading">
+              <ion-icon src="../../../assets/icons/goToLast-icon.svg"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-card>
+
+</ion-content>

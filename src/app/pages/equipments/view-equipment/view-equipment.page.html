@@ -1,0 +1,238 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando equipamento...</ion-label>
+    </div>
+  } @else if (equipment) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="equipment-header">
+            <ion-card-title class="equipment-name">{{ equipment.identification }}</ion-card-title>
+            <div class="badges-container">
+              <ion-badge [color]="getClassificationColor(equipment.classification)" class="classification-badge">
+                {{ displayClassification(equipment.classification) }}
+              </ion-badge>
+              <ion-badge [color]="getCriticalityColor(equipment.criticality)" class="criticality-badge">
+                {{ displayCriticality(equipment.criticality) }}
+              </ion-badge>
+              <ion-badge [color]="getEquipmentStatusColor(equipment.equipmentStatus)" class="status-badge">
+                {{ displayEquipmentStatus(equipment.equipmentStatus) }}
+              </ion-badge>
+            </div>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          @if (equipment.description) {
+            <div class="description-section">
+              <ion-label class="section-label">Descrição</ion-label>
+              <p class="description-text">{{ equipment.description }}</p>
+            </div>
+          }
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Básicas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Básicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Identificação</ion-label>
+                  <ion-label class="info-value">{{ equipment.identification }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Número de Série</ion-label>
+                  <ion-label class="info-value">{{ equipment.serialNumber || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Classificação</ion-label>
+                  <ion-label class="info-value">{{ displayClassification(equipment.classification) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Criticidade</ion-label>
+                  <ion-label class="info-value">{{ displayCriticality(equipment.criticality) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Status</ion-label>
+                  <ion-label class="info-value">{{ displayEquipmentStatus(equipment.equipmentStatus) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Localização</ion-label>
+                  <ion-label class="info-value">{{ equipment.location || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Técnicas -->
+      <ion-card class="technical-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Técnicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="technical-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Grupo</ion-label>
+                  <ion-label class="info-value">{{ equipment.group || '-' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Modelo</ion-label>
+                  <ion-label class="info-value">{{ equipment.model || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Centro de Custo</ion-label>
+                  <ion-label class="info-value">{{ equipment.costCenter || '-' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Preço</ion-label>
+                  <ion-label class="info-value">{{ formatCurrency(equipment.price) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Datas -->
+      <ion-card class="dates-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Datas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="dates-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Data de Compra</ion-label>
+                  <ion-label class="info-value">{{ formatDate(equipment.purchaseDate) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Fim da Garantia</ion-label>
+                  <ion-label class="info-value">{{ formatDate(equipment.warrantyEndDate) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Calendário de Manutenção -->
+      @if (equipment.calendar) {
+        <ion-card class="calendar-card">
+          <ion-card-header>
+            <ion-card-title class="card-title">Calendário de Manutenção</ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <ion-grid class="calendar-grid">
+              @if (equipment.calendar.description) {
+                <ion-row>
+                  <ion-col size="12">
+                    <div class="info-item">
+                      <ion-label class="info-label">Descrição</ion-label>
+                      <ion-label class="info-value">{{ equipment.calendar.description }}</ion-label>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              }
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <div class="info-item">
+                    <ion-label class="info-label">Data/Hora de Início</ion-label>
+                    <ion-label class="info-value">{{ equipment.calendar.startTime || '-' }}</ion-label>
+                  </div>
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <div class="info-item">
+                    <ion-label class="info-label">Data/Hora de Fim</ion-label>
+                    <ion-label class="info-value">{{ equipment.calendar.endTime || '-' }}</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      }
+
+      <!-- Imagem -->
+      @if (equipment.imageUrl) {
+        <ion-card class="image-card">
+          <ion-card-header>
+            <ion-card-title class="card-title">Imagem do Equipamento</ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <div class="image-container">
+              <ion-img [src]="equipment.imageUrl" alt="Imagem do equipamento" class="equipment-image"></ion-img>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      }
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Equipamento
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Equipamento não encontrado</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, distinctUntilChanged } from 'rxjs';
 import { UserInfo } from 'src/app/models/userinfo.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { SelectedBuildingService } from 'src/app/services/selected-building.service';
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userInfo$ = this.authService.userInfo$;
   selectedBuilding$ = this.selectedBuildingService.selectedBuilding$;
   private destroy$ = new Subject<void>();
+  private previousBuildingId: string | null = null;
   
   @Output() logoutClick = new EventEmitter<void>();
 
@@ -30,6 +31,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // Armazenar o ID da edificação inicial
+    const initialBuilding = this.selectedBuildingService.getSelectedBuilding();
+    this.previousBuildingId = initialBuilding?.id || null;
+
+    // Monitorar mudanças na edificação selecionada
+    this.selectedBuilding$
+      .pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged((prev, curr) => prev?.id === curr?.id)
+      )
+      .subscribe(building => {
+        const currentBuildingId = building?.id || null;
+        
+        // Se houve mudança de edificação (não é a inicialização)
+        if (this.previousBuildingId !== null && this.previousBuildingId !== currentBuildingId) {
+          console.log('Edificação alterada, recarregando página...');
+          this.reloadPage();
+        }
+        
+        this.previousBuildingId = currentBuildingId;
+      });
+
     // Se não há edificação selecionada, tentar usar a do userInfo
     this.userInfo$
       .pipe(takeUntil(this.destroy$))
@@ -77,5 +100,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     
     // Fallback para o nome da edificação do userInfo
     return 'Selecionar Edificação';
+  }
+
+  /**
+   * Recarrega a página atual
+   */
+  private reloadPage(): void {
+    window.location.reload();
   }
 }

@@ -1,0 +1,294 @@
+<ion-content>
+  <div class="page-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>Equipamentos > {{ isEditMode ? 'Editar Equipamento' : 'Novo Equipamento' }}</span>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando dados...</p>
+    </div>
+
+    <!-- Form Container -->
+    <ion-card class="form-card" *ngIf="!loading">
+     
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+          <!-- Informações Básicas -->
+          <div class="form-section">
+            <h3 class="section-title">Informações Básicas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Identificação *</ion-label>
+                    <ion-input 
+                      formControlName="identification"
+                      placeholder="Digite a identificação do equipamento"
+                      [class.error]="f.identification.invalid && f.identification.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.identification.invalid && f.identification.touched">
+                    <span *ngIf="f.identification.errors?.['required']">Identificação é obrigatória</span>
+                    <span *ngIf="f.identification.errors?.['maxlength']">Identificação deve ter no máximo 100 caracteres</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Número de Série</ion-label>
+                    <ion-input 
+                      formControlName="serialNumber"
+                      placeholder="Digite o número de série">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Classificação *</ion-label>
+                    <ion-select 
+                      formControlName="classification"
+                      placeholder="Selecione a classificação"
+                      [class.error]="f.classification.invalid && f.classification.touched">
+                      <ion-select-option 
+                        *ngFor="let option of classificationOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Criticidade *</ion-label>
+                    <ion-select 
+                      formControlName="criticality"
+                      placeholder="Selecione a criticidade"
+                      [class.error]="f.criticality.invalid && f.criticality.touched">
+                      <ion-select-option 
+                        *ngFor="let option of criticalityOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Status do Equipamento</ion-label>
+                    <ion-select 
+                      formControlName="equipmentStatus"
+                      placeholder="Selecione o status">
+                      <ion-select-option 
+                        *ngFor="let option of equipmentStatusOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Localização</ion-label>
+                    <ion-input 
+                      formControlName="location"
+                      placeholder="Digite a localização">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Descrição</ion-label>
+                    <ion-input 
+                      formControlName="description"
+                      placeholder="Descreva características do equipamento (opcional)">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Informações Técnicas -->
+          <div class="form-section">
+            <h3 class="section-title">Informações Técnicas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Grupo</ion-label>
+                    <ion-input 
+                      formControlName="group"
+                      placeholder="Digite o grupo do equipamento">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Modelo</ion-label>
+                    <ion-input 
+                      formControlName="model"
+                      placeholder="Digite o modelo">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Centro de Custo</ion-label>
+                    <ion-input 
+                      formControlName="costCenter"
+                      placeholder="Digite o centro de custo">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Preço</ion-label>
+                    <ion-input 
+                      formControlName="price"
+                      type="number"
+                      placeholder="0.00"
+                      [class.error]="f.price.invalid && f.price.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.price.invalid && f.price.touched">
+                    <span *ngIf="f.price.errors?.['min']">Preço deve ser maior ou igual a 0</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Datas -->
+          <div class="form-section">
+            <h3 class="section-title">Datas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data de Compra</ion-label>
+                    <ion-input 
+                      formControlName="purchaseDate"
+                      type="date">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data de Fim da Garantia</ion-label>
+                    <ion-input 
+                      formControlName="warrantyEndDate"
+                      type="date">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Calendário -->
+          <div class="form-section" formGroupName="calendar">
+            <h3 class="section-title">Calendário de Manutenção</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Descrição do Calendário</ion-label>
+                    <ion-input 
+                      formControlName="description"
+                      placeholder="Descreva o calendário de manutenção">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data/Hora de Início</ion-label>
+                    <ion-input 
+                      formControlName="startTime"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data/Hora de Fim</ion-label>
+                    <ion-input 
+                      formControlName="endTime"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- URL da Imagem -->
+          <div class="form-section">
+            <h3 class="section-title">Imagem</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">URL da Imagem</ion-label>
+                    <ion-input 
+                      formControlName="imageUrl"
+                      placeholder="Digite a URL da imagem do equipamento">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="form-actions">
+            <ion-button 
+              type="button" 
+              fill="outline" 
+              color="medium"
+              (click)="cancel()">
+              Cancelar
+            </ion-button>
+            
+            <ion-button 
+              type="submit"
+              fill="outline"
+              color="medium"
+              [disabled]="form.invalid || saving">
+              <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
+              {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

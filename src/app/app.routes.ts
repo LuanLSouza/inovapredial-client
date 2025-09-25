@@ -45,6 +45,22 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/buildings/view-building/view-building.page').then( m => m.ViewBuildingPage)
       },
       {
+        path: 'equipments',
+        loadComponent: () => import('./pages/equipments/equipments.page').then( m => m.EquipmentsPage)
+      },
+      {
+        path: 'equipments/new',
+        loadComponent: () => import('./pages/equipments/form-equipment/form-equipment.page').then( m => m.FormEquipmentPage)
+      },
+      {
+        path: 'equipments/edit/:id',
+        loadComponent: () => import('./pages/equipments/form-equipment/form-equipment.page').then( m => m.FormEquipmentPage)
+      },
+      {
+        path: 'equipments/view/:id',
+        loadComponent: () => import('./pages/equipments/view-equipment/view-equipment.page').then( m => m.ViewEquipmentPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'
