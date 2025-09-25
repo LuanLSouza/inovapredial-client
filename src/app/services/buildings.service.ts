@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { AuthService } from "./auth.service";
+import { SelectedBuildingService } from "./selected-building.service";
 import { 
   Building, 
   BuildingSearchRequest, 
@@ -16,8 +17,10 @@ import { PaginatedResponse } from "../models/paginatedResponse";
 export class BuildingsService {
     private readonly API_URL = environment.apiUrl; 
 
-    constructor(private http: HttpClient,
-        private authService: AuthService
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService,
+        private selectedBuildingService: SelectedBuildingService
     ) {}
 
     /**
@@ -83,6 +86,51 @@ export class BuildingsService {
         `${this.API_URL}/buildings/${id}`,
         { headers: this.authService.getAuthHeaders() }
       );
+    }
+
+    /**
+     * Obtém os headers de autenticação com o ID da edificação selecionada
+     * @returns Headers com autenticação e ID da edificação
+     */
+    private getAuthHeadersWithBuilding() {
+      const headers = this.authService.getAuthHeaders();
+      const selectedBuildingId = this.selectedBuildingService.getSelectedBuildingId();
+      
+      if (selectedBuildingId) {
+        headers.set('X-Building-Id', selectedBuildingId);
+      }
+      
+      return headers;
+    }
+
+    /**
+     * Adiciona o ID da edificação selecionada aos parâmetros de query
+     * @param params Parâmetros existentes
+     * @returns Parâmetros com o ID da edificação adicionado
+     */
+    private addBuildingIdToParams(params: HttpParams): HttpParams {
+      const selectedBuildingId = this.selectedBuildingService.getSelectedBuildingId();
+      
+      if (selectedBuildingId) {
+        return params.set('buildingId', selectedBuildingId);
+      }
+      
+      return params;
+    }
+
+    /**
+     * Adiciona o ID da edificação selecionada ao body da requisição
+     * @param body Body existente
+     * @returns Body com o ID da edificação adicionado
+     */
+    private addBuildingIdToBody(body: any): any {
+      const selectedBuildingId = this.selectedBuildingService.getSelectedBuildingId();
+      
+      if (selectedBuildingId) {
+        return { ...body, buildingId: selectedBuildingId };
+      }
+      
+      return body;
     }
 
 }
