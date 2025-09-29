@@ -118,7 +118,7 @@ export class BuildingsPage implements OnInit {
     this.searchFilters = {};
 
     if (this.searchName.trim()) {
-      this.searchFilters.name = this.searchName.trim();
+      this.searchFilters.name = this.searchName;
     }
     
     if (this.searchBuildingType) {
