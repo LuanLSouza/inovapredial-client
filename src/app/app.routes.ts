@@ -61,6 +61,22 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/equipments/view-equipment/view-equipment.page').then( m => m.ViewEquipmentPage)
       },
       {
+        path: 'maintenance-plans',
+        loadComponent: () => import('./pages/maintenance-plans/maintenance-plans.page').then( m => m.MaintenancePlansPage)
+      },
+      {
+        path: 'maintenance-plans/new',
+        loadComponent: () => import('./pages/maintenance-plans/form-maintenance-plan/form-maintenance-plan.page').then( m => m.FormMaintenancePlanPage)
+      },
+      {
+        path: 'maintenance-plans/edit/:id',
+        loadComponent: () => import('./pages/maintenance-plans/form-maintenance-plan/form-maintenance-plan.page').then( m => m.FormMaintenancePlanPage)
+      },
+      {
+        path: 'maintenance-plans/view/:id',
+        loadComponent: () => import('./pages/maintenance-plans/view-maintenance-plan/view-maintenance-plan.page').then( m => m.ViewMaintenancePlanPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

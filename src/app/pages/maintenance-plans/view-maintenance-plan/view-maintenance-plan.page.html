@@ -1,0 +1,99 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando plano de manutenção...</ion-label>
+    </div>
+  } @else if (maintenancePlan) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="maintenance-plan-header">
+            <ion-card-title class="maintenance-plan-name">
+              {{ maintenancePlan.description || 'Plano de Manutenção' }}
+            </ion-card-title>
+            <div class="badges-container">
+              <ion-badge [color]="getMaintenanceTypeColor(maintenancePlan.maintenanceType)" class="type-badge">
+                {{ displayMaintenanceType(maintenancePlan.maintenanceType) }}
+              </ion-badge>
+              <ion-badge [color]="getRequiresShutdownColor(maintenancePlan.requiresShutdown)" class="shutdown-badge">
+                {{ displayRequiresShutdown(maintenancePlan.requiresShutdown) }}
+              </ion-badge>
+            </div>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <div class="id-section">
+            <ion-label class="section-label">ID do Plano</ion-label>
+            <p class="id-text">{{ maintenancePlan.id }}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Básicas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Básicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Descrição</ion-label>
+                  <ion-label class="info-value">{{ maintenancePlan.description || '-' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Tipo de Manutenção</ion-label>
+                  <ion-label class="info-value">{{ displayMaintenanceType(maintenancePlan.maintenanceType) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Frequência</ion-label>
+                  <ion-label class="info-value">{{ maintenancePlan.frequencyDays }} dias</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Requer Parada</ion-label>
+                  <ion-label class="info-value">{{ displayRequiresShutdown(maintenancePlan.requiresShutdown) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Plano
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Plano de manutenção não encontrado</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>
