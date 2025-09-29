@@ -77,6 +77,22 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/maintenance-plans/view-maintenance-plan/view-maintenance-plan.page').then( m => m.ViewMaintenancePlanPage)
       },
       {
+        path: 'employees',
+        loadComponent: () => import('./pages/employees/employees.page').then( m => m.EmployeesPage)
+      },
+      {
+        path: 'employees/new',
+        loadComponent: () => import('./pages/employees/form-employee/form-employee.page').then( m => m.FormEmployeePage)
+      },
+      {
+        path: 'employees/edit/:id',
+        loadComponent: () => import('./pages/employees/form-employee/form-employee.page').then( m => m.FormEmployeePage)
+      },
+      {
+        path: 'employees/view/:id',
+        loadComponent: () => import('./pages/employees/view-employee/view-employee.page').then( m => m.ViewEmployeePage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

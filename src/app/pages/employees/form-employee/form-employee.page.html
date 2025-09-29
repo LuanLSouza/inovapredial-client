@@ -1,0 +1,129 @@
+<ion-content>
+  <div class="page-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>Funcionários > {{ isEditMode ? 'Editar Funcionário' : 'Novo Funcionário' }}</span>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando dados...</p>
+    </div>
+
+    <!-- Form Container -->
+    <ion-card class="form-card" *ngIf="!loading">
+     
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+          <!-- Informações Básicas -->
+          <div class="form-section">
+            <h3 class="section-title">Informações Básicas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Nome *</ion-label>
+                    <ion-input 
+                      formControlName="name"
+                      placeholder="Digite o nome do funcionário"
+                      [class.error]="f.name.invalid && f.name.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.name.invalid && f.name.touched">
+                    <span *ngIf="f.name.errors?.['required']">Nome é obrigatório</span>
+                    <span *ngIf="f.name.errors?.['maxlength']">Nome deve ter no máximo 100 caracteres</span>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Especialidade</ion-label>
+                    <ion-input 
+                      formControlName="specialty"
+                      placeholder="Digite a especialidade do funcionário">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Contato</ion-label>
+                    <ion-input 
+                      formControlName="contact"
+                      placeholder="Digite o contato do funcionário">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Calendário -->
+          <div class="form-section" formGroupName="calendar">
+            <h3 class="section-title">Calendário de Trabalho</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Descrição do Calendário</ion-label>
+                    <ion-input 
+                      formControlName="description"
+                      placeholder="Descreva o calendário de trabalho">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data/Hora de Início</ion-label>
+                    <ion-input 
+                      formControlName="startTime"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data/Hora de Fim</ion-label>
+                    <ion-input 
+                      formControlName="endTime"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="form-actions">
+            <ion-button 
+              type="button" 
+              fill="outline" 
+              color="medium"
+              (click)="cancel()">
+              Cancelar
+            </ion-button>
+            
+            <ion-button 
+              type="submit"
+              fill="outline"
+              color="medium"
+              [disabled]="form.invalid || saving">
+              <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
+              {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

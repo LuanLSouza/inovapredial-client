@@ -1,0 +1,124 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando funcionário...</ion-label>
+    </div>
+  } @else if (employee) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="employee-header">
+            <ion-card-title class="employee-name">{{ employee.name }}</ion-card-title>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          @if (employee.specialty) {
+            <div class="specialty-section">
+              <ion-label class="section-label">Especialidade</ion-label>
+              <p class="specialty-text">{{ employee.specialty }}</p>
+            </div>
+          }
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Básicas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Básicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Nome</ion-label>
+                  <ion-label class="info-value">{{ employee.name }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Especialidade</ion-label>
+                  <ion-label class="info-value">{{ employee.specialty || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Contato</ion-label>
+                  <ion-label class="info-value">{{ employee.contact || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Calendário de Trabalho -->
+      @if (employee.calendar) {
+        <ion-card class="calendar-card">
+          <ion-card-header>
+            <ion-card-title class="card-title">Calendário de Trabalho</ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <ion-grid class="calendar-grid">
+              @if (employee.calendar.description) {
+                <ion-row>
+                  <ion-col size="12">
+                    <div class="info-item">
+                      <ion-label class="info-label">Descrição</ion-label>
+                      <ion-label class="info-value">{{ employee.calendar.description }}</ion-label>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              }
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <div class="info-item">
+                    <ion-label class="info-label">Data/Hora de Início</ion-label>
+                    <ion-label class="info-value">{{ formatDateTime(employee.calendar.startTime) }}</ion-label>
+                  </div>
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <div class="info-item">
+                    <ion-label class="info-label">Data/Hora de Fim</ion-label>
+                    <ion-label class="info-value">{{ formatDateTime(employee.calendar.endTime) }}</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      }
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Funcionário
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Funcionário não encontrado</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>
