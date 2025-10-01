@@ -93,6 +93,22 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/employees/view-employee/view-employee.page').then( m => m.ViewEmployeePage)
       },
       {
+        path: 'inventories',
+        loadComponent: () => import('./pages/inventories/inventories.page').then( m => m.InventoriesPage)
+      },
+      {
+        path: 'inventories/new',
+        loadComponent: () => import('./pages/inventories/form-inventory/form-inventory.page').then( m => m.FormInventoryPage)
+      },
+      {
+        path: 'inventories/edit/:id',
+        loadComponent: () => import('./pages/inventories/form-inventory/form-inventory.page').then( m => m.FormInventoryPage)
+      },
+      {
+        path: 'inventories/view/:id',
+        loadComponent: () => import('./pages/inventories/view-inventory/view-inventory.page').then( m => m.ViewInventoryPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

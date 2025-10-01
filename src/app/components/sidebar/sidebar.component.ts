@@ -24,7 +24,7 @@ export class SidebarComponent {
     { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/orders' },
     { icon: 'assets/icons/metrics-icon.svg', label: 'Métricas', route: '/metrics' },
     { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipments' },
-    { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/stock' },
+    { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/inventories' },
     { icon: 'assets/icons/employee-icon.svg', label: 'Funcionários', route: '/employees' },
     { icon: 'assets/icons/calendar-icon.svg', label: 'Calendários', route: '/calendar' },
     { icon: 'assets/icons/plan-icon.svg', label: 'Plano de manutenções', route: '/maintenance-plans' }

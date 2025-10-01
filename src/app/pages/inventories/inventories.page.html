@@ -1,0 +1,250 @@
+<ion-content>
+
+  <ion-header class="main-header">
+    <ion-toolbar>
+      <ion-title class="title">
+        Estoque
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button class="button" (click)="navigateToNewInventory()">
+          Novo Item
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="filter-card">
+    <ion-grid class="filter-grid">
+      <ion-row class="filter-row" class="ion-align-items-end">
+        <ion-col size="12" size-lg="4">
+          <ion-label class="label">Nome</ion-label>
+          <div class="input-wrapper">
+            <ion-input 
+              type="text" 
+              placeholder="Nome do item" 
+              fill="solid" 
+              class="input solid"
+              [(ngModel)]="searchName"
+              (ionChange)="applyFilters()"
+            ></ion-input>
+            <ion-img src="../../../assets/images/advanced-filters-icon.png" class="advanced-filters-icon"></ion-img>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Tipo</ion-label>
+          <ion-select 
+            placeholder="Todos os tipos" 
+            fill="solid" 
+            class="select solid"
+            [(ngModel)]="searchItemType"
+            (ionChange)="applyFilters()"
+            >
+            @for (option of itemTypeOptions; track option.value) {
+              <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="12" size-lg="3">
+          <ion-label class="label">Funcionário</ion-label>
+          <ion-select 
+            placeholder="Todos os funcionários" 
+            fill="solid" 
+            class="select solid"
+            [(ngModel)]="searchEmployeeId"
+            (ionChange)="applyFilters()"
+            [disabled]="loadingEmployees"
+            >
+            @for (option of employeeOptions; track option.value) {
+              <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="12" size-lg="2" class="btn-col">
+          <ion-button class="clear" expand="block" (click)="clearFilters()">Limpar Filtros</ion-button>
+        </ion-col>
+        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+  <ion-card class="list-card">
+    <ion-grid class="table-grid">
+      <ion-row class="table-header">
+        <ion-col size="12" size-lg="3">
+          <ion-label
+          (click)="sortBy('name')"
+          [class.sorted]="isSortedBy('name')"
+          class="sortable-header"
+          >
+            Nome
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('itemType')"
+          [class.sorted]="isSortedBy('itemType')"
+          class="sortable-header"
+          >
+            Tipo
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('cost')"
+          [class.sorted]="isSortedBy('cost')"
+          class="sortable-header"
+          >
+            Custo
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('quantity')"
+          [class.sorted]="isSortedBy('quantity')"
+          class="sortable-header"
+          >
+            Quantidade
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="6" size-lg="2">
+          <ion-label
+          (click)="sortBy('minimumStock')"
+          [class.sorted]="isSortedBy('minimumStock')"
+          class="sortable-header"
+          >
+            Estoque Mínimo
+            <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+      </ion-row>
+      @if (loading) {
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <ion-spinner name="crescent"></ion-spinner>
+          </ion-col>
+        </ion-row>
+      } @else if (inventories.length === 0) {
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-label>Nenhum item encontrado</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      } @else {
+        @for (inventory of inventories; track inventory.id) {
+          <ion-row class="table-row" button="true">
+            <ion-col size="12" size-lg="3">
+              <div class="name-cell">
+                <div class="name"> {{ inventory.name }} </div>
+                <ion-note class="description"> {{ inventory.minimumStock ? 'Estoque Mín: ' + inventory.minimumStock : 'Sem estoque mínimo' }} </ion-note>
+              </div>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="getItemTypeColor(inventory.itemType)">
+                {{ displayItemType(inventory.itemType) }}
+              </ion-badge>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-label>R$ {{ inventory.cost | number:'1.2-2' }}</ion-label>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="getStockStatusColor(inventory)">
+                {{ inventory.quantity }}
+              </ion-badge>
+            </ion-col>
+            <ion-col size="6" size-lg="2">
+              <ion-badge [color]="getStockStatusColor(inventory)">
+                {{ getStockStatusText(inventory) }}
+              </ion-badge>
+            </ion-col>
+
+            <ion-col size="12" size-lg="0.5" class="actions">
+              <ion-buttons>
+                <ion-button fill="clear"
+                (click)="onDelete(inventory)"
+                >
+                  <ion-icon src="../../../assets/icons/trash-icon.svg"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear"
+                (click)="onEdit(inventory)"
+                >
+                  <ion-icon src="../../../assets/icons/pencil-icon.svg"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="onView(inventory)">
+                  <ion-icon src="../../../assets/icons/eye-icon.svg"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        }
+      }
+
+    </ion-grid>
+    <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
+    <ion-grid>
+      <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">
+        <ion-col size="12" size-lg="4" class="pagination-info">
+          <div class="pagination-content">
+            <ion-note>{{showingStart}}-{{showingEnd}} de {{totalElements}} </ion-note>
+            <ion-label class="page-size-label">Itens por páginas:</ion-label>
+            <ion-select
+              interface="popover"
+              class="page-size-select"
+              [value]="pageSize"
+              (ionChange)="onPageSizeChange($event.detail.value)"
+            >
+              @for (size of pageSizeOptions; track size) {
+                <ion-select-option [value]="size">{{size}}</ion-select-option>
+              }
+            </ion-select>
+        </div>
+        </ion-col>
+
+        <ion-col size="12" size-lg="4" class="pagination-controls ion-text-end">
+
+          <ion-buttons class="pagination-buttons">
+            <ion-button fill="clear" size="small" (click)="goToFirtPage()" [disabled]="currentPage === 0 || loading">
+              <ion-icon src="../../../assets/icons/goToFirst-icon.svg"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="goToPreviousPage()" [disabled]="!hasPrevious || loading">
+              <ion-icon src="../../../assets/icons/previous-icon.svg"></ion-icon>
+            </ion-button>
+
+            @if (pageNumbers.length > 0) {
+              @for (p of pageNumbers; track p) {
+                <ion-button
+                  fill="solid"
+                  class="page-number"
+                  [color]="p === currentPage ? 'primary' : 'medium'"
+                  (click)="goToPage(p)"
+                  [disabled]="loading"
+                >
+                  {{p + 1}}
+                </ion-button>
+              }
+            }
+
+            <ion-button fill="clear" (click)="goToNextPage()" [disabled]="!hasNext || loading">
+              <ion-icon src="../../../assets/icons/next-icon.svg"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="goToLastPage()" [disabled]="currentPage === totalPages - 1 || loading">
+              <ion-icon src="../../../assets/icons/goToLast-icon.svg"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-card>
+
+</ion-content>

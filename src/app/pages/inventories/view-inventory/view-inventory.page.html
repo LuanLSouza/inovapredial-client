@@ -1,0 +1,146 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando item...</ion-label>
+    </div>
+  } @else if (inventory) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="inventory-header">
+            <ion-card-title class="inventory-name">{{ inventory.name }}</ion-card-title>
+            <div class="badges-container">
+              <ion-badge [color]="getItemTypeColor(inventory.itemType)" class="type-badge">
+                {{ displayItemType(inventory.itemType) }}
+              </ion-badge>
+              <ion-badge [color]="getStockStatusColor(inventory)" class="stock-badge">
+                {{ getStockStatusText(inventory) }}
+              </ion-badge>
+            </div>
+          </div>
+        </ion-card-header>
+      </ion-card>
+
+      <!-- Informações Básicas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Básicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Nome</ion-label>
+                  <ion-label class="info-value">{{ inventory.name }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Tipo</ion-label>
+                  <ion-label class="info-value">{{ displayItemType(inventory.itemType) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Custo</ion-label>
+                  <ion-label class="info-value">{{ formatCurrency(inventory.cost) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Quantidade</ion-label>
+                  <ion-label class="info-value">{{ inventory.quantity }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Estoque Mínimo</ion-label>
+                  <ion-label class="info-value">{{ inventory.minimumStock || '-' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Status do Estoque</ion-label>
+                  <ion-label class="info-value">{{ getStockStatusText(inventory) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Funcionário Responsável</ion-label>
+                  <ion-label class="info-value">{{ getEmployeeName(inventory.employeeId) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações de Estoque -->
+      <ion-card class="stock-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações de Estoque</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="stock-grid">
+            <ion-row>
+              <ion-col size="12" size-md="4">
+                <div class="stock-item">
+                  <ion-label class="stock-label">Quantidade Atual</ion-label>
+                  <ion-label class="stock-value quantity">{{ inventory.quantity }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="4">
+                <div class="stock-item">
+                  <ion-label class="stock-label">Estoque Mínimo</ion-label>
+                  <ion-label class="stock-value minimum">{{ inventory.minimumStock || 'Não definido' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="4">
+                <div class="stock-item">
+                  <ion-label class="stock-label">Valor Total</ion-label>
+                  <ion-label class="stock-value total">{{ formatCurrency(inventory.cost * inventory.quantity) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Item
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Item não encontrado</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>
