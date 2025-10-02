@@ -70,9 +70,10 @@
   </ion-card>
   
   <ion-card class="list-card">
-    <ion-grid class="table-grid">
-      <ion-row class="table-header">
-        <ion-col size="12" size-lg="3">
+    <div class="table-container">
+      <ion-grid class="table-grid">
+        <ion-row class="table-header">
+        <ion-col class="col-description">
           <ion-label
           (click)="sortBy('description')"
           [class.sorted]="isSortedBy('description')"
@@ -82,7 +83,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-type">
           <ion-label
           (click)="sortBy('maintenanceType')"
           [class.sorted]="isSortedBy('maintenanceType')"
@@ -92,7 +93,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-frequency">
           <ion-label
           (click)="sortBy('frequencyDays')"
           [class.sorted]="isSortedBy('frequencyDays')"
@@ -102,7 +103,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-shutdown">
           <ion-label
           (click)="sortBy('requiresShutdown')"
           [class.sorted]="isSortedBy('requiresShutdown')"
@@ -112,7 +113,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+        <ion-col class="col-actions"><ion-label>Ações</ion-label></ion-col>
       </ion-row>
       @if (loading) {
         <ion-row>
@@ -131,26 +132,26 @@
       } @else {
         @for (maintenancePlan of maintenancePlans; track maintenancePlan.id) {
           <ion-row class="table-row" button="true">
-            <ion-col size="12" size-lg="3">
+            <ion-col class="col-description">
               <div class="name-cell">
                 <div class="name"> {{ maintenancePlan.description || 'Sem descrição' }} </div>
               </div>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-type">
               <ion-badge [color]="getMaintenanceTypeColor(maintenancePlan.maintenanceType)">
                 {{ displayMaintenanceType(maintenancePlan.maintenanceType) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-frequency">
               <ion-label>{{ maintenancePlan.frequencyDays }} dias</ion-label>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-shutdown">
               <ion-badge [color]="getRequiresShutdownColor(maintenancePlan.requiresShutdown)">
                 {{ displayRequiresShutdown(maintenancePlan.requiresShutdown) }}
               </ion-badge>
             </ion-col>
 
-            <ion-col size="12" size-lg="0.5" class="actions">
+            <ion-col class="col-actions actions">
               <ion-buttons>
                 <ion-button fill="clear"
                 (click)="onDelete(maintenancePlan)"
@@ -171,7 +172,8 @@
         }
       }
 
-    </ion-grid>
+      </ion-grid>
+    </div>
     <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
     <ion-grid>
       <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">

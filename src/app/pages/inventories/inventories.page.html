@@ -71,9 +71,10 @@
   </ion-card>
   
   <ion-card class="list-card">
-    <ion-grid class="table-grid">
-      <ion-row class="table-header">
-        <ion-col size="12" size-lg="3">
+    <div class="table-container">
+      <ion-grid class="table-grid">
+        <ion-row class="table-header">
+        <ion-col class="col-name">
           <ion-label
           (click)="sortBy('name')"
           [class.sorted]="isSortedBy('name')"
@@ -83,7 +84,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-type">
           <ion-label
           (click)="sortBy('itemType')"
           [class.sorted]="isSortedBy('itemType')"
@@ -93,7 +94,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-cost">
           <ion-label
           (click)="sortBy('cost')"
           [class.sorted]="isSortedBy('cost')"
@@ -103,7 +104,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-quantity">
           <ion-label
           (click)="sortBy('quantity')"
           [class.sorted]="isSortedBy('quantity')"
@@ -113,7 +114,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-minimum">
           <ion-label
           (click)="sortBy('minimumStock')"
           [class.sorted]="isSortedBy('minimumStock')"
@@ -123,7 +124,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+        <ion-col class="col-actions"><ion-label>Ações</ion-label></ion-col>
       </ion-row>
       @if (loading) {
         <ion-row>
@@ -142,32 +143,32 @@
       } @else {
         @for (inventory of inventories; track inventory.id) {
           <ion-row class="table-row" button="true">
-            <ion-col size="12" size-lg="3">
+            <ion-col class="col-name">
               <div class="name-cell">
                 <div class="name"> {{ inventory.name }} </div>
                 <ion-note class="description"> {{ inventory.minimumStock ? 'Estoque Mín: ' + inventory.minimumStock : 'Sem estoque mínimo' }} </ion-note>
               </div>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-type">
               <ion-badge [color]="getItemTypeColor(inventory.itemType)">
                 {{ displayItemType(inventory.itemType) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-cost">
               <ion-label>R$ {{ inventory.cost | number:'1.2-2' }}</ion-label>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-quantity">
               <ion-badge [color]="getStockStatusColor(inventory)">
                 {{ inventory.quantity }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-minimum">
               <ion-badge [color]="getStockStatusColor(inventory)">
                 {{ getStockStatusText(inventory) }}
               </ion-badge>
             </ion-col>
 
-            <ion-col size="12" size-lg="0.5" class="actions">
+            <ion-col class="col-actions actions">
               <ion-buttons>
                 <ion-button fill="clear"
                 (click)="onDelete(inventory)"
@@ -188,7 +189,8 @@
         }
       }
 
-    </ion-grid>
+      </ion-grid>
+    </div>
     <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
     <ion-grid>
       <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">

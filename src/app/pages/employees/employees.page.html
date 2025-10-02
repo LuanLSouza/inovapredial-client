@@ -64,9 +64,10 @@
   </ion-card>
   
   <ion-card class="list-card">
-    <ion-grid class="table-grid">
-      <ion-row class="table-header">
-        <ion-col size="12" size-lg="4">
+    <div class="table-container">
+      <ion-grid class="table-grid">
+        <ion-row class="table-header">
+        <ion-col class="col-name">
           <ion-label
           (click)="sortBy('name')"
           [class.sorted]="isSortedBy('name')"
@@ -76,7 +77,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="3">
+        <ion-col class="col-specialty">
           <ion-label
           (click)="sortBy('specialty')"
           [class.sorted]="isSortedBy('specialty')"
@@ -86,7 +87,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="3">
+        <ion-col class="col-contact">
           <ion-label
           (click)="sortBy('contact')"
           [class.sorted]="isSortedBy('contact')"
@@ -96,7 +97,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="12" size-lg="2"><ion-label>Ações</ion-label></ion-col>
+        <ion-col class="col-actions"><ion-label>Ações</ion-label></ion-col>
       </ion-row>
       @if (loading) {
         <ion-row>
@@ -115,19 +116,19 @@
       } @else {
         @for (employee of employees; track employee.id) {
           <ion-row class="table-row" button="true">
-            <ion-col size="12" size-lg="4">
+            <ion-col class="col-name">
               <div class="name-cell">
                 <div class="name"> {{ employee.name }} </div>
               </div>
             </ion-col>
-            <ion-col size="6" size-lg="3">
+            <ion-col class="col-specialty">
               <ion-label>{{ employee.specialty || '-' }}</ion-label>
             </ion-col>
-            <ion-col size="6" size-lg="3">
+            <ion-col class="col-contact">
               <ion-label>{{ employee.contact || '-' }}</ion-label>
             </ion-col>
 
-            <ion-col size="12" size-lg="2" class="actions">
+            <ion-col class="col-actions actions">
               <ion-buttons>
                 <ion-button fill="clear"
                 (click)="onDelete(employee)"
@@ -148,7 +149,8 @@
         }
       }
 
-    </ion-grid>
+      </ion-grid>
+    </div>
     <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
     <ion-grid>
       <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">

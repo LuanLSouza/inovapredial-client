@@ -196,4 +196,52 @@
         min-width: auto;
       }
     }
+    
+    .form-item {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+    }
+    
+    .form-item ion-label {
+      font-size: 14px;
+    }
+    
+    .form-item ion-input,
+    .form-item ion-select {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-container {
+      padding: 12px;
+    }
+    
+    .form-card {
+      ion-card-content {
+        padding: 16px;
+      }
+    }
+    
+    .section-title {
+      font-size: 15px;
+    }
+    
+    .form-item {
+      --padding-start: 10px;
+      --padding-end: 10px;
+      --padding-top: 8px;
+      --padding-bottom: 8px;
+    }
+    
+    .form-item ion-label {
+      font-size: 13px;
+    }
+    
+    .form-item ion-input,
+    .form-item ion-select {
+      font-size: 13px;
+    }
   }

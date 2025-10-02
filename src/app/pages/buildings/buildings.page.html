@@ -68,9 +68,10 @@
   </ion-card>
   
   <ion-card class="list-card">
-    <ion-grid class="table-grid">
-      <ion-row class="table-header">
-        <ion-col size="12" size-lg="3">
+    <div class="table-container">
+      <ion-grid class="table-grid">
+        <ion-row class="table-header">
+        <ion-col class="col-name">
           <ion-label
           (click)="sortBy('name')"
           [class.sorted]="isSortedBy('name')"
@@ -81,7 +82,7 @@
           </ion-label>
           
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-type">
           <ion-label
           (click)="sortBy('buildingType')"
           [class.sorted]="isSortedBy('buildingType')"
@@ -93,7 +94,7 @@
           
         </ion-col>
 
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-year">
           <ion-label
           (click)="sortBy('constructionYear')"
           [class.sorted]="isSortedBy('constructionYear')"
@@ -104,7 +105,7 @@
           </ion-label>        
         </ion-col>
 
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-city">
           <ion-label
           (click)="sortBy('address.city')"
           [class.sorted]="isSortedBy('address.city')"
@@ -115,7 +116,7 @@
           </ion-label>
           
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-address">
           <ion-label
           (click)="sortBy('address.street')"
           [class.sorted]="isSortedBy('address.street')"
@@ -126,7 +127,7 @@
           </ion-label>
           
         </ion-col>
-        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+        <ion-col class="col-actions"><ion-label>Ações</ion-label></ion-col>
       </ion-row>
       @if (loading) {
         <ion-row>
@@ -145,28 +146,28 @@
       } @else {
         @for (building of buildings; track building.id) {
           <ion-row class="table-row" button="true">
-            <ion-col size="12" size-lg="3">
+            <ion-col class="col-name">
               <div class="name-cell">
                 <div class="name"> {{ building.name }} </div>
                 <ion-note class="description"> {{ building.description }} </ion-note>
               </div>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-type">
               <ion-badge [color]="getBuildingTypeColor(building.buildingType)">
                 {{ displayBuildingType(building.buildingType) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-year">
               <ion-label>{{ building.constructionYear }}</ion-label>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-city">
               <ion-label>{{ building.address?.city || '-' }}/{{ building.address?.state || '-' }}</ion-label>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-address">
               <ion-label>{{ building.address?.street || '-' }}, {{ building.address?.number || '-' }} </ion-label>
             </ion-col>
 
-            <ion-col size="12" size-lg="0.5" class="actions">
+            <ion-col class="col-actions actions">
               <ion-buttons>
                 <ion-button fill="clear"
                 (click)="onDelete(building)"
@@ -187,7 +188,8 @@
         }
       }
 
-    </ion-grid>
+      </ion-grid>
+    </div>
     <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
     <ion-grid>
       <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">

@@ -8,29 +8,64 @@ ion-header {
 
 ion-content { 
   --background: #E9E9E9;
-  --padding-start: 100px;
-  --padding-end: 100px;
+  --padding-start: 20px;
+  --padding-end: 20px;
   --padding-top: 20px;
+}
 
+@media (min-width: 768px) {
+  ion-content {
+    --padding-start: 50px;
+    --padding-end: 50px;
+  }
+}
+
+@media (min-width: 1024px) {
+  ion-content {
+    --padding-start: 100px;
+    --padding-end: 100px;
+  }
 }
 
 .title{
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 32px;
+    font-size: 24px;
     color: #2D9CDB;
     padding-left: 0;
 }
 
+@media (min-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 32px;
+  }
+}
+
 .button{
     --background: #D9D9D9;
-    width: 173px;
+    width: 100%;
+    max-width: 173px;
     height: 43px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 14 px;
+    font-size: 14px;
     color: #000000;
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+    max-width: none;
+    height: 40px;
+    font-size: 13px;
+  }
 }
 
 .btn-col{
@@ -41,13 +76,23 @@ ion-content {
 
 .clear{
     --background: #D9D9D9;
-    width: 173px;
+    width: 100%;
+    max-width: 173px;
     height: 35px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 14px;
     color: #000000;
+}
+
+@media (max-width: 768px) {
+  .clear {
+    width: 100%;
+    max-width: none;
+    height: 40px;
+    font-size: 13px;
+  }
 }
 
 .border{
@@ -112,12 +157,56 @@ ion-content {
 
 /** Table */
 
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #939393;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
 .table-grid {
     --ion-grid-padding: 0;
     --ion-grid-column-padding: 12px;
-    border: 1px solid #939393;
-    border-radius: 10px;
+    min-width: 800px; // Largura mínima para manter as colunas lado a lado
     padding-bottom: 10px;
+}
+
+// Definição das larguras das colunas
+.col-name {
+  flex: 0 0 28%; // 30% da largura
+  min-width: 200px;
+  max-width: 30%;
+}
+
+.col-type {
+  flex: 0 0 18%; // 18% da largura
+  min-width: 120px;
+  max-width: 18%;
+}
+
+.col-cost {
+  flex: 0 0 15%; // 15% da largura
+  min-width: 100px;
+  max-width: 15%;
+}
+
+.col-quantity {
+  flex: 0 0 15%; // 15% da largura
+  min-width: 100px;
+  max-width: 15%;
+}
+
+.col-minimum {
+  flex: 0 0 12%; // 12% da largura
+  min-width: 100px;
+  max-width: 12%;
+}
+
+.col-actions {
+  flex: 0 0 10%; // 10% da largura
+  min-width: 80px;
+  max-width: 10%;
 }
 
 .table-header {
@@ -129,11 +218,30 @@ ion-content {
     background: #d0d0d0a2;
     border-radius: 10px 10px 0 0;
     align-items: center;
+    min-height: 50px;
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    font-size: 14px;
+    min-height: 45px;
+  }
 }
 
 .table-row {
     border: 1px solid #939393;
     align-items: center;
+    min-height: 50px;
+}
+
+@media (max-width: 768px) {
+  .table-row {
+    min-height: 45px;
+  }
+  
+  .table-row ion-col ion-label {
+    font-size: 14px;
+  }
 }
 
 .table-row:hover {
@@ -147,6 +255,9 @@ ion-content {
 
 .actions {
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .actions ion-button {
@@ -155,11 +266,28 @@ ion-content {
     --background: transparent;
     --box-shadow: none;
     margin: 0 2px;
+    min-width: 32px;
+    height: 32px;
 }
 
 .actions ion-icon {
     width: 18px;
     height: 18px;
+}
+
+@media (max-width: 768px) {
+  .actions ion-button {
+    --padding-start: 4px;
+    --padding-end: 4px;
+    margin: 0 1px;
+    min-width: 28px;
+    height: 28px;
+  }
+  
+  .actions ion-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .name-cell .name{

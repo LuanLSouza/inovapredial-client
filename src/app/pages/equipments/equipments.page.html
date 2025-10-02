@@ -70,9 +70,10 @@
   </ion-card>
   
   <ion-card class="list-card">
-    <ion-grid class="table-grid">
-      <ion-row class="table-header">
-        <ion-col size="12" size-lg="3">
+    <div class="table-container">
+      <ion-grid class="table-grid">
+        <ion-row class="table-header">
+        <ion-col class="col-identification">
           <ion-label
           (click)="sortBy('identification')"
           [class.sorted]="isSortedBy('identification')"
@@ -82,7 +83,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-classification">
           <ion-label
           (click)="sortBy('classification')"
           [class.sorted]="isSortedBy('classification')"
@@ -92,7 +93,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-criticality">
           <ion-label
           (click)="sortBy('criticality')"
           [class.sorted]="isSortedBy('criticality')"
@@ -102,7 +103,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-status">
           <ion-label
           (click)="sortBy('equipmentStatus')"
           [class.sorted]="isSortedBy('equipmentStatus')"
@@ -112,7 +113,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="6" size-lg="2">
+        <ion-col class="col-location">
           <ion-label
           (click)="sortBy('location')"
           [class.sorted]="isSortedBy('location')"
@@ -122,7 +123,7 @@
             <ion-icon src="../../../assets/icons/ordenation-icon.svg"></ion-icon>
           </ion-label>
         </ion-col>
-        <ion-col size="12" size-lg="0.5"><ion-label>Ações</ion-label></ion-col>
+        <ion-col class="col-actions"><ion-label>Ações</ion-label></ion-col>
       </ion-row>
       @if (loading) {
         <ion-row>
@@ -141,32 +142,32 @@
       } @else {
         @for (equipment of equipments; track equipment.id) {
           <ion-row class="table-row" button="true">
-            <ion-col size="12" size-lg="3">
+            <ion-col class="col-identification">
               <div class="name-cell">
                 <div class="name"> {{ equipment.identification }} </div>
                 <ion-note class="description"> {{ equipment.description || '-' }} </ion-note>
               </div>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-classification">
               <ion-badge [color]="equipment.classification === 'EQUIPMENT' ? 'primary' : 'secondary'">
                 {{ displayClassification(equipment.classification) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-criticality">
               <ion-badge [color]="getCriticalityColor(equipment.criticality)">
                 {{ displayCriticality(equipment.criticality) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-status">
               <ion-badge [color]="getEquipmentStatusColor(equipment.equipmentStatus)">
                 {{ displayEquipmentStatus(equipment.equipmentStatus) }}
               </ion-badge>
             </ion-col>
-            <ion-col size="6" size-lg="2">
+            <ion-col class="col-location">
               <ion-label>{{ equipment.location || '-' }}</ion-label>
             </ion-col>
 
-            <ion-col size="12" size-lg="0.5" class="actions">
+            <ion-col class="col-actions actions">
               <ion-buttons>
                 <ion-button fill="clear"
                 (click)="onDelete(equipment)"
@@ -187,7 +188,8 @@
         }
       }
 
-    </ion-grid>
+      </ion-grid>
+    </div>
     <ion-item lines="full" detail="false" class="grid-divider"></ion-item>
     <ion-grid>
       <ion-row class="pagination-bar ion-aling-items-center ion-justify-content-between">
