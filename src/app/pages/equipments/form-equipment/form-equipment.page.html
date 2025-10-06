@@ -175,16 +175,6 @@
                     <span *ngIf="f.price.errors?.['min']">Preço deve ser maior ou igual a 0</span>
                   </div>
                 </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-
-          <!-- Datas -->
-          <div class="form-section">
-            <h3 class="section-title">Datas</h3>
-            
-            <ion-grid>
-              <ion-row>
                 <ion-col size="12" size-md="6">
                   <ion-item class="form-item">
                     <ion-label position="stacked">Data de Compra</ion-label>
@@ -194,7 +184,6 @@
                     </ion-input>
                   </ion-item>
                 </ion-col>
-                
                 <ion-col size="12" size-md="6">
                   <ion-item class="form-item">
                     <ion-label position="stacked">Data de Fim da Garantia</ion-label>
@@ -207,7 +196,6 @@
               </ion-row>
             </ion-grid>
           </div>
-
           <!-- Calendário -->
           <div class="form-section" formGroupName="calendar">
             <h3 class="section-title">Calendário de Manutenção</h3>
