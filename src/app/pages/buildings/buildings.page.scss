@@ -221,6 +221,29 @@ ion-content {
     min-height: 50px;
 }
 
+// Evita que textos longos do cabeçalho (ex.: "Ano de Construção") ultrapassem a coluna
+.table-header ion-col {
+  overflow: hidden;
+}
+
+.table-header .sortable-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0; // necessário para truncar dentro de flex
+}
+
+.table-header .sortable-header ion-icon {
+  flex: 0 0 auto;
+  margin-left: 6px;
+}
+
+// Permite que apenas o cabeçalho da coluna "Ano de Construção" quebre linha
+.table-header .col-year .sortable-header {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 @media (max-width: 768px) {
   .table-header {
     font-size: 14px;
