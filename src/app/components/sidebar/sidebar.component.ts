@@ -20,14 +20,14 @@ export class SidebarComponent {
 
   menuItems: MenuItem[] = [
     { icon: 'assets/icons/home-icon.svg', label: 'Inicio', route: '/home' },
-    { icon: 'assets/icons/building-icon.svg', label: 'Edificações', route: '/buildings' },
-    { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/work-orders' },
-    { icon: 'assets/icons/metrics-icon.svg', label: 'Métricas', route: '/metrics' },
-    { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipments' },
-    { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/inventories' },
-    { icon: 'assets/icons/employee-icon.svg', label: 'Funcionários', route: '/employees' },
     { icon: 'assets/icons/calendar-icon.svg', label: 'Calendários', route: '/calendar' },
-    { icon: 'assets/icons/plan-icon.svg', label: 'Plano de manutenções', route: '/maintenance-plans' }
+    { icon: 'assets/icons/building-icon.svg', label: 'Edificações', route: '/buildings' },
+    { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipments' },
+    { icon: 'assets/icons/employee-icon.svg', label: 'Funcionários', route: '/employees' },
+    { icon: 'assets/icons/metrics-icon.svg', label: 'Métricas', route: '/metrics' },
+    { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/work-orders' },
+    { icon: 'assets/icons/plan-icon.svg', label: 'Plano de manutenções', route: '/maintenance-plans' },
+    { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/inventories' }
   ];
 
   onMenuItemClick(route: string) {

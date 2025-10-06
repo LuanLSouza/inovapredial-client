@@ -72,6 +72,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogoutClick() {
     this.logoutClick.emit();
+    this.authService.logout();
   }
 
   async onBuildingDropdownClick() {

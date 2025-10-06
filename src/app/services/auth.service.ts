@@ -44,6 +44,9 @@ export class AuthService {
             building: ''
           };
           this.setUserInfo(userInfo);
+          if (!userInfo.building) {
+            localStorage.removeItem('selectedBuilding');
+          }
           this.userInfoSubject.next(userInfo);
           localStorage.setItem('last_login', new Date().toISOString());
           this.tokenSubject.next(response.token);
@@ -63,7 +66,7 @@ export class AuthService {
     localStorage.removeItem('building_info');
     localStorage.removeItem('user_preferences');
     localStorage.removeItem('last_login');
-    // Adicione outros dados que precisem ser limpos
+    localStorage.removeItem('selectedBuilding');
   }
 
   isAuthenticated(): boolean {

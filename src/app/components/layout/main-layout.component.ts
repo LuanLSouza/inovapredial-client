@@ -4,6 +4,7 @@ import { IonicModule, AlertController } from '@ionic/angular';
 import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent, HeaderComponent } from '../index';
 import { AuthService } from 'src/app/services/auth.service';
+import { SelectedBuildingService } from 'src/app/services/selected-building.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -32,7 +33,8 @@ export class MainLayoutComponent {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private authService: AuthService
+    private authService: AuthService,
+    private selectedBuildingService: SelectedBuildingService
   ) {}
 
   onMenuItemClick(route: string) {
@@ -52,14 +54,13 @@ export class MainLayoutComponent {
   }
 
   private performLogout() {
+    this.selectedBuildingService.clearSelectedBuilding();
     this.authService.logout();
     this.router.navigate(['/login']);
   }
 
   onBuildingDropdownClick() {
-    // Implementar lógica do dropdown de edifícios (abrir modal, etc.)
-    // Futuro: injetar serviço de prédios para seleção e usar authService.setUserInfo
-    console.log('Building dropdown clicked');
+
   }
 }
 
