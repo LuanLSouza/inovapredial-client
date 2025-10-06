@@ -109,6 +109,22 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/inventories/view-inventory/view-inventory.page').then( m => m.ViewInventoryPage)
       },
       {
+        path: 'work-orders',
+        loadComponent: () => import('./pages/work-orders/work-orders.page').then( m => m.WorkOrdersPage)
+      },
+      {
+        path: 'work-orders/new',
+        loadComponent: () => import('./pages/work-orders/form-work-order/form-work-order.page').then( m => m.FormWorkOrderPage)
+      },
+      {
+        path: 'work-orders/edit/:id',
+        loadComponent: () => import('./pages/work-orders/form-work-order/form-work-order.page').then( m => m.FormWorkOrderPage)
+      },
+      {
+        path: 'work-orders/view/:id',
+        loadComponent: () => import('./pages/work-orders/view-work-order/view-work-order.page').then( m => m.ViewWorkOrderPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'

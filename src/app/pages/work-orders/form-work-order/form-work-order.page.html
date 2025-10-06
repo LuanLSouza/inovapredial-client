@@ -1,0 +1,206 @@
+<ion-content>
+  <div class="page-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>Ordens de Serviço > {{ isEditMode ? 'Editar Ordem de Serviço' : 'Nova Ordem de Serviço' }}</span>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando dados...</p>
+    </div>
+
+    <!-- Form Container -->
+    <ion-card class="form-card" *ngIf="!loading">
+     
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+          <!-- Informações Básicas -->
+          <div class="form-section">
+            <h3 class="section-title">Informações Básicas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Descrição *</ion-label>
+                    <ion-input 
+                      formControlName="description"
+                      placeholder="Digite a descrição da ordem de serviço"
+                      [class.error]="f.description.invalid && f.description.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.description.invalid && f.description.touched">
+                    <span *ngIf="f.description.errors?.['required']">Descrição é obrigatória</span>
+                    <span *ngIf="f.description.errors?.['minlength']">Descrição deve ter pelo menos 1 caractere</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Tipo de Manutenção *</ion-label>
+                    <ion-select 
+                      formControlName="maintenanceType"
+                      placeholder="Selecione o tipo de manutenção"
+                      [class.error]="f.maintenanceType.invalid && f.maintenanceType.touched">
+                      <ion-select-option 
+                        *ngFor="let option of maintenanceTypeOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.maintenanceType.invalid && f.maintenanceType.touched">
+                    <span *ngIf="f.maintenanceType.errors?.['required']">Tipo de manutenção é obrigatório</span>
+                  </div>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Prioridade</ion-label>
+                    <ion-select 
+                      formControlName="priority"
+                      placeholder="Selecione a prioridade">
+                      <ion-select-option 
+                        *ngFor="let option of priorityOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Status da Atividade</ion-label>
+                    <ion-select 
+                      formControlName="activityStatus"
+                      placeholder="Selecione o status">
+                      <ion-select-option 
+                        *ngFor="let option of activityStatusOptions" 
+                        [value]="option.value">
+                        {{ option.label }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Custo Total</ion-label>
+                    <ion-input 
+                      formControlName="totalCost"
+                      type="number"
+                      placeholder="0.00"
+                      [class.error]="f.totalCost.invalid && f.totalCost.touched">
+                    </ion-input>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.totalCost.invalid && f.totalCost.touched">
+                    <span *ngIf="f.totalCost.errors?.['min']">Custo deve ser maior ou igual a 0</span>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Datas -->
+          <div class="form-section">
+            <h3 class="section-title">Datas</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data de Abertura</ion-label>
+                    <ion-input 
+                      formControlName="openingDate"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Data de Fechamento</ion-label>
+                    <ion-input 
+                      formControlName="closingDate"
+                      type="datetime-local">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Relacionamentos -->
+          <div class="form-section">
+            <h3 class="section-title">Selecionar equipamento e funcionário responsável</h3>
+            
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Equipamento *</ion-label>
+                    <ion-select 
+                      formControlName="equipmentId"
+                      placeholder="Selecione o equipamento"
+                      [class.error]="f.equipmentId.invalid && f.equipmentId.touched">
+                      <ion-select-option 
+                        *ngFor="let equipment of equipments" 
+                        [value]="equipment.id">
+                        {{ equipment.identification }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div class="error-message" *ngIf="f.equipmentId.invalid && f.equipmentId.touched">
+                    <span *ngIf="f.equipmentId.errors?.['required']">Equipamento é obrigatório</span>
+                  </div>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item class="form-item">
+                    <ion-label position="stacked">Funcionário Responsável</ion-label>
+                    <ion-select 
+                      formControlName="employeeId"
+                      placeholder="Selecione o funcionário">
+                      <ion-select-option 
+                        *ngFor="let employee of employees" 
+                        [value]="employee.id">
+                        {{ employee.name }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="form-actions">
+            <ion-button 
+              type="button" 
+              fill="outline" 
+              color="medium"
+              (click)="cancel()">
+              Cancelar
+            </ion-button>
+            
+            <ion-button 
+              type="submit"
+              fill="outline"
+              color="medium"
+              [disabled]="form.invalid || saving">
+              <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
+              {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

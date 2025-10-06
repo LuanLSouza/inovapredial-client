@@ -21,7 +21,7 @@ export class SidebarComponent {
   menuItems: MenuItem[] = [
     { icon: 'assets/icons/home-icon.svg', label: 'Inicio', route: '/home' },
     { icon: 'assets/icons/building-icon.svg', label: 'Edificações', route: '/buildings' },
-    { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/orders' },
+    { icon: 'assets/icons/order-service-icon.svg', label: 'Ordens de Serviço', route: '/work-orders' },
     { icon: 'assets/icons/metrics-icon.svg', label: 'Métricas', route: '/metrics' },
     { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipments' },
     { icon: 'assets/icons/stock-icon.svg', label: 'Estoque', route: '/inventories' },

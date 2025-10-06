@@ -1,0 +1,161 @@
+<ion-content>
+
+  @if (loading) {
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label>Carregando ordem de serviço...</ion-label>
+    </div>
+  } @else if (workOrder) {
+    <div class="view-container">
+      
+      <!-- Informações Principais -->
+      <ion-card class="main-info-card">
+        <ion-card-header>
+          <div class="work-order-header">
+            <ion-card-title class="work-order-title">Ordem de Serviço</ion-card-title>
+            <div class="badges-container">
+              <ion-badge [color]="getMaintenanceTypeColor(workOrder.maintenanceType)" class="type-badge">
+                {{ displayMaintenanceType(workOrder.maintenanceType) }}
+              </ion-badge>
+              <ion-badge [color]="getPriorityColor(workOrder.priority)" class="priority-badge">
+                {{ displayPriority(workOrder.priority) }}
+              </ion-badge>
+              <ion-badge [color]="getActivityStatusColor(workOrder.activityStatus)" class="status-badge">
+                {{ displayActivityStatus(workOrder.activityStatus) }}
+              </ion-badge>
+            </div>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <div class="description-section">
+            <ion-label class="section-label">Descrição</ion-label>
+            <p class="description-text">{{ workOrder.description }}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Informações Básicas -->
+      <ion-card class="details-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Informações Básicas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="details-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Descrição</ion-label>
+                  <ion-label class="info-value">{{ workOrder.description }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Tipo de Manutenção</ion-label>
+                  <ion-label class="info-value">{{ displayMaintenanceType(workOrder.maintenanceType) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Prioridade</ion-label>
+                  <ion-label class="info-value">{{ displayPriority(workOrder.priority) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Status</ion-label>
+                  <ion-label class="info-value">{{ displayActivityStatus(workOrder.activityStatus) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Custo Total</ion-label>
+                  <ion-label class="info-value">{{ formatCurrency(workOrder.totalCost) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Datas -->
+      <ion-card class="dates-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Datas</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="dates-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Data de Abertura</ion-label>
+                  <ion-label class="info-value">{{ formatDate(workOrder.openingDate) }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Data de Fechamento</ion-label>
+                  <ion-label class="info-value">{{ formatDate(workOrder.closingDate) }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Relacionamentos -->
+      <ion-card class="relations-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Relacionamentos</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-grid class="relations-grid">
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Equipamento</ion-label>
+                  <ion-label class="info-value">{{ equipmentName || 'Carregando...' }}</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <div class="info-item">
+                  <ion-label class="info-label">Funcionário Responsável</ion-label>
+                  <ion-label class="info-value">{{ employeeName || '-' }}</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Ações -->
+      <div class="actions-container">
+        <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
+          Voltar para Lista
+        </ion-button>
+        <ion-button expand="block" (click)="onEdit()" class="edit-button">
+          Editar Ordem de Serviço
+        </ion-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="error-container">
+      <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+      <ion-label class="error-message">Ordem de serviço não encontrada</ion-label>
+      <ion-button fill="outline" (click)="onBack()" class="back-button">
+        Voltar para Lista
+      </ion-button>
+    </div>
+  }
+
+</ion-content>
