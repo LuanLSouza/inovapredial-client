@@ -7,8 +7,17 @@
     </div>
   } @else if (workOrder) {
     <div class="view-container">
+      <ion-segment [value]="activeTab" (ionChange)="onTabChange($event.detail.value)">
+        <ion-segment-button value="details">
+          <ion-label>Detalhes</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="tasks">
+          <ion-label>Tarefas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
       
       <!-- Informações Principais -->
+      @if (activeTab === 'details') {
       <ion-card class="main-info-card">
         <ion-card-header>
           <div class="work-order-header">
@@ -146,6 +155,67 @@
           Editar Ordem de Serviço
         </ion-button>
       </div>
+      } @else {
+        <!-- TAB Tarefas -->
+        <ion-card class="tasks-card">
+          <ion-card-header>
+            <ion-card-title class="card-title">Tarefas</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            @if (loadingTasks) {
+              <div class="loading-container">
+                <ion-spinner name="crescent"></ion-spinner>
+                <ion-label>Carregando tarefas...</ion-label>
+              </div>
+            } @else if (tasks.length === 0) {
+              <div class="no-tasks">
+                <ion-label>Nenhuma tarefa vinculada.</ion-label>
+              </div>
+            } @else {
+              <ion-list>
+                @for (task of tasks; track task.id) {
+                  <ion-item lines="full">
+                    <ion-label>
+                      <h2>{{ task.title }}</h2>
+                      <p>{{ task.description || 'Sem descrição' }}</p>
+                      <div class="task-status-container">
+                        <ion-badge [color]="getTaskStatusColor(task.activityStatus)">
+                          {{ getTaskStatusLabel(task.activityStatus) }}
+                        </ion-badge>
+                        <div class="status-buttons">
+                          <ion-button 
+                            size="small" 
+                            fill="outline"
+                            color="primary"
+                            (click)="openStatusChangeModal(task)">
+                            Alterar Status
+                          </ion-button>
+                        </div>
+                      </div>
+                    </ion-label>
+                    <ion-buttons slot="end">
+                      <ion-button fill="clear" size="small" (click)="viewTask(task)">
+                        <ion-icon src="../../../assets/icons/eye-icon.svg" slot="icon-only"></ion-icon>
+                      </ion-button>
+                      <ion-button fill="clear" size="small" (click)="editTask(task)">
+                        <ion-icon src="../../../assets/icons/pencil-icon.svg" slot="icon-only"></ion-icon>
+                      </ion-button>
+                      <ion-button fill="clear" size="small" color="danger" (click)="deleteTask(task)">
+                        <ion-icon src="../../../assets/icons/trash-icon.svg" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-item>
+                }
+              </ion-list>
+            }
+
+            <!-- Ações para criar tarefas -->
+            <div class="task-actions">
+              <ion-button expand="block" fill="outline" (click)="openCreateTaskModal()">Adicionar Tarefas</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      }
 
     </div>
   } @else {

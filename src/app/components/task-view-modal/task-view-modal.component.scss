@@ -1,0 +1,105 @@
+.task-details {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main-info-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    .task-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--ion-color-dark);
+      margin: 0;
+    }
+
+    .status-badge {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 16px;
+    }
+  }
+
+  .description-section {
+    margin-top: 16px;
+
+    .section-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ion-color-medium);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .description-text {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--ion-color-dark);
+      margin: 0;
+    }
+  }
+}
+
+.details-card,
+.dates-card,
+.cost-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+}
+
+.details-grid,
+.dates-grid,
+.cost-grid {
+  .info-item {
+    margin-bottom: 16px;
+
+    .info-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ion-color-medium);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      color: var(--ion-color-dark);
+      display: block;
+    }
+  }
+}
+
+.actions-container {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ion-color-light);
+
+  .close-button {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+}

@@ -119,7 +119,7 @@ export class FormWorkOrderPage implements OnInit {
     }
     
     const formValue = this.form.value;
-    const payload: WorkOrderRequest = {
+    let payload: WorkOrderRequest = {
       description: formValue.description,
       maintenanceType: formValue.maintenanceType,
       priority: formValue.priority || null,
@@ -130,6 +130,12 @@ export class FormWorkOrderPage implements OnInit {
       equipmentId: formValue.equipmentId,
       employeeId: formValue.employeeId || null
     };
+
+    // No modo criação, não enviar status e data de fechamento (API define padrão)
+    if (!this.isEditMode) {
+      const { activityStatus, closingDate, ...rest } = payload as any;
+      payload = rest as WorkOrderRequest;
+    }
     this.saving = true;
     
     if (this.isEditMode && this.workOrderId) {

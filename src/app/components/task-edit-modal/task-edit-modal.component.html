@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Tarefa</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        ✕
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    
+    <!-- Informações Básicas -->
+    <div class="form-section">
+      <h3 class="section-title">Informações Básicas</h3>
+      
+      <ion-item class="form-item">
+        <ion-label position="stacked">Título *</ion-label>
+        <ion-input 
+          formControlName="title"
+          placeholder="Digite o título da tarefa"
+          [class.error]="f.title.invalid && f.title.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="f.title.invalid && f.title.touched">
+        <span *ngIf="f.title.errors?.['required']">Título é obrigatório</span>
+        <span *ngIf="f.title.errors?.['minlength']">Título deve ter pelo menos 1 caractere</span>
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Descrição</ion-label>
+        <ion-textarea 
+          formControlName="description"
+          placeholder="Digite a descrição da tarefa"
+          rows="3">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Status</ion-label>
+        <ion-select formControlName="activityStatus">
+          <ion-select-option 
+            *ngFor="let option of activityStatusOptions" 
+            [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <!-- Datas e Tempo -->
+    <div class="form-section">
+      <h3 class="section-title">Datas e Tempo</h3>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Data de Início</ion-label>
+              <ion-input 
+                formControlName="startDate"
+                type="datetime-local">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Data de Fim</ion-label>
+              <ion-input 
+                formControlName="endDate"
+                type="datetime-local">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Tempo Estimado (minutos)</ion-label>
+              <ion-input 
+                formControlName="estimatedTime"
+                type="number"
+                placeholder="0"
+                [class.error]="f.estimatedTime.invalid && f.estimatedTime.touched">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="f.estimatedTime.invalid && f.estimatedTime.touched">
+              <span *ngIf="f.estimatedTime.errors?.['min']">Tempo deve ser maior ou igual a 0</span>
+            </div>
+          </ion-col>
+          
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Tempo Gasto (minutos)</ion-label>
+              <ion-input 
+                formControlName="timeSpent"
+                type="number"
+                placeholder="0"
+                [class.error]="f.timeSpent.invalid && f.timeSpent.touched">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="f.timeSpent.invalid && f.timeSpent.touched">
+              <span *ngIf="f.timeSpent.errors?.['min']">Tempo deve ser maior ou igual a 0</span>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Custo e Responsável -->
+    <div class="form-section">
+      <h3 class="section-title">Custo e Responsável</h3>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Custo (R$)</ion-label>
+              <ion-input 
+                formControlName="cost"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                [class.error]="f.cost.invalid && f.cost.touched">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="f.cost.invalid && f.cost.touched">
+              <span *ngIf="f.cost.errors?.['min']">Custo deve ser maior ou igual a 0</span>
+            </div>
+          </ion-col>
+          
+          <ion-col size="12" size-md="6">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Funcionário Responsável</ion-label>
+              <ion-select 
+                formControlName="employeeId"
+                placeholder="Selecione o funcionário">
+                <ion-select-option 
+                  *ngFor="let employee of employees" 
+                  [value]="employee.id">
+                  {{ employee.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="form-actions">
+      <ion-button 
+        type="button" 
+        fill="outline" 
+        color="medium"
+        (click)="cancel()">
+        Cancelar
+      </ion-button>
+      
+      <ion-button 
+        type="submit"
+        [disabled]="form.invalid || saving">
+        <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
+        Salvar Alterações
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
