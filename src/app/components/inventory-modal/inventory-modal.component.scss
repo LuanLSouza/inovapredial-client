@@ -1,0 +1,36 @@
+.form-card {
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+.actions-container {
+  margin-top: 20px;
+}
+
+.submit-button {
+  margin-bottom: 10px;
+}
+
+.cancel-button {
+  margin-bottom: 10px;
+}
+
+ion-select {
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-input {
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-text small {
+  display: block;
+  margin-top: 4px;
+}

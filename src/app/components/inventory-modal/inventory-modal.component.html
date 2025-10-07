@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adicionar Item do Inventário</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        ✕
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    
+    <!-- Seleção do Item -->
+    <ion-card class="form-card">
+      <ion-card-header>
+        <ion-card-title class="card-title">Selecionar Item</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Item do Inventário *</ion-label>
+              <ion-select 
+                formControlName="inventoryId" 
+                placeholder="Selecione um item"
+                interface="popover">
+                @if (loadingInventories) {
+                  <ion-select-option value="" disabled>
+                    <ion-spinner name="crescent" size="small"></ion-spinner>
+                    Carregando...
+                  </ion-select-option>
+                } @else {
+                  @for (inventory of inventories; track inventory.id) {
+                    <ion-select-option [value]="inventory.id">
+                      {{ inventory.name }} (Estoque: {{ inventory.quantity }})
+                    </ion-select-option>
+                  }
+                }
+              </ion-select>
+              @if (form.get('inventoryId')?.invalid && form.get('inventoryId')?.touched) {
+                <ion-text color="danger">
+                  <small>Selecione um item do inventário</small>
+                </ion-text>
+              }
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Quantidade *</ion-label>
+              <ion-input 
+                type="number" 
+                formControlName="quantity"
+                placeholder="Digite a quantidade"
+                min="1">
+              </ion-input>
+              @if (form.get('quantity')?.invalid && form.get('quantity')?.touched) {
+                <ion-text color="danger">
+                  <small>Quantidade deve ser maior que zero</small>
+                </ion-text>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botões de Ação -->
+    <div class="actions-container">
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        [disabled]="form.invalid || saving"
+        class="submit-button">
+        @if (saving) {
+          <ion-spinner name="crescent" size="small"></ion-spinner>
+          Adicionando...
+        } @else {
+          Adicionar Item
+        }
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        (click)="close()"
+        class="cancel-button">
+        Cancelar
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>

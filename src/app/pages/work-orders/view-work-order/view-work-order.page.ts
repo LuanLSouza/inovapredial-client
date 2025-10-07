@@ -14,13 +14,15 @@ import { TaskActivityStatus, TaskResponse, TaskRequest } from 'src/app/models/ta
 import { TaskModalComponent } from 'src/app/components/task-modal/task-modal.component';
 import { TaskViewModalComponent } from 'src/app/components/task-view-modal/task-view-modal.component';
 import { TaskEditModalComponent } from 'src/app/components/task-edit-modal/task-edit-modal.component';
+import { InventoryModalComponent } from 'src/app/components/inventory-modal/inventory-modal.component';
+import { WorkOrderInventoryResponse } from 'src/app/models/work-order-inventory.interface';
 
 @Component({
   selector: 'app-view-work-order',
   templateUrl: './view-work-order.page.html',
   styleUrls: ['./view-work-order.page.scss'],
   standalone: true,
-  imports: [...IONIC_IMPORTS, CommonModule]
+  imports: [...IONIC_IMPORTS, CommonModule, InventoryModalComponent]
 })
 export class ViewWorkOrderPage implements OnInit {
 
@@ -33,7 +35,11 @@ export class ViewWorkOrderPage implements OnInit {
   // Tasks tab state
   tasks: TaskResponse[] = [];
   loadingTasks = false;
-  activeTab: 'details' | 'tasks' = 'details';
+  activeTab: 'details' | 'tasks' | 'inventory' = 'details';
+
+  // Inventory tab state
+  inventoryItems: WorkOrderInventoryResponse[] = [];
+  loadingInventory = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,10 +64,14 @@ export class ViewWorkOrderPage implements OnInit {
   }
 
   onTabChange(tab: string | number | undefined) {
-    const nextTab: 'details' | 'tasks' = tab === 'tasks' ? 'tasks' : 'details';
+    const nextTab: 'details' | 'tasks' | 'inventory' = 
+      tab === 'tasks' ? 'tasks' : 
+      tab === 'inventory' ? 'inventory' : 'details';
     this.activeTab = nextTab;
     if (nextTab === 'tasks') {
       this.loadTasks();
+    } else if (nextTab === 'inventory') {
+      this.loadInventory();
     }
   }
 
@@ -451,6 +461,81 @@ export class ViewWorkOrderPage implements OnInit {
       CANCELLED: 'danger'
     };
     return colorMap[status] || 'medium';
+  }
+
+  // Inventory methods
+  private loadInventory() {
+    if (!this.workOrderId) return;
+    this.loadingInventory = true;
+    this.workOrdersService.getWorkOrderInventory(this.workOrderId).subscribe({
+      next: (items) => {
+        this.inventoryItems = items;
+        this.loadingInventory = false;
+      },
+      error: () => {
+        this.loadingInventory = false;
+        this.presentToast('Erro ao carregar itens do inventário.', 'danger');
+      }
+    });
+  }
+
+  async openAddInventoryModal() {
+    console.log('openAddInventoryModal called');
+    if (!this.workOrderId) {
+      console.error('workOrderId is null');
+      return;
+    }
+    
+    try {
+      const modal = await this.modalController.create({
+        component: InventoryModalComponent,
+        componentProps: {
+          workOrderId: this.workOrderId
+        }
+      });
+
+      modal.onDidDismiss().then((result) => {
+        if (result.data) {
+          this.loadInventory(); // Recarregar lista após adicionar item
+        }
+      });
+
+      await modal.present();
+      console.log('Modal presented successfully');
+    } catch (error) {
+      console.error('Error creating modal:', error);
+    }
+  }
+
+  async removeInventoryItem(item: WorkOrderInventoryResponse) {
+    const alert = await this.alertController.create({
+      header: 'Remover Item',
+      message: `Tem certeza que deseja remover "${item.inventoryName}" da ordem de serviço?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Remover',
+          handler: () => {
+            if (this.workOrderId) {
+              this.workOrdersService.removeInventoryItem(this.workOrderId, item.inventoryId).subscribe({
+                next: () => {
+                  this.presentToast('Item removido com sucesso!');
+                  this.loadInventory(); // Recarregar lista
+                },
+                error: () => {
+                  this.presentToast('Erro ao remover item.', 'danger');
+                }
+              });
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

@@ -9,6 +9,7 @@ import {
   WorkOrderFilter,
   WorkOrderRequest, 
 } from "../models/work-order.interface";
+import { WorkOrderInventoryRequest, WorkOrderInventoryResponse } from "../models/work-order-inventory.interface";
 import { PaginatedResponse } from "../models/paginatedResponse";
 
 @Injectable({
@@ -106,6 +107,47 @@ export class WorkOrdersService {
 
       return this.http.get<WorkOrder>(
         `${this.API_URL}/work-orders/${id}`,
+        { 
+          params,
+          headers: this.authService.getAuthHeaders() 
+        }
+      );
+    }
+
+    // Métodos para gerenciar inventário da ordem de serviço
+    getWorkOrderInventory(workOrderId: string) {
+      const params = new HttpParams()
+        .set('buildingId', this.selectedBuildingService.getSelectedBuildingId() || '');
+
+      return this.http.get<WorkOrderInventoryResponse[]>(
+        `${this.API_URL}/work-orders/${workOrderId}/inventory`,
+        { 
+          params,
+          headers: this.authService.getAuthHeaders() 
+        }
+      );
+    }
+
+    addInventoryItem(workOrderId: string, inventoryItem: WorkOrderInventoryRequest) {
+      const params = new HttpParams()
+        .set('buildingId', this.selectedBuildingService.getSelectedBuildingId() || '');
+
+      return this.http.post<WorkOrderInventoryResponse>(
+        `${this.API_URL}/work-orders/${workOrderId}/inventory`,
+        inventoryItem,
+        { 
+          params,
+          headers: this.authService.getAuthHeaders() 
+        }
+      );
+    }
+
+    removeInventoryItem(workOrderId: string, inventoryId: string) {
+      const params = new HttpParams()
+        .set('buildingId', this.selectedBuildingService.getSelectedBuildingId() || '');
+
+      return this.http.delete<void>(
+        `${this.API_URL}/work-orders/${workOrderId}/inventory/${inventoryId}`,
         { 
           params,
           headers: this.authService.getAuthHeaders() 
