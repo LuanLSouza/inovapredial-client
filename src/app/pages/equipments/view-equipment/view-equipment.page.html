@@ -246,11 +246,11 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Calendário de Manutenção -->
+      <!-- Calendário de Operação -->
       @if (equipment.calendar) {
         <ion-card class="calendar-card">
           <ion-card-header>
-            <ion-card-title class="card-title">Calendário de Manutenção</ion-card-title>
+            <ion-card-title class="card-title">Calendário de Operação</ion-card-title>
           </ion-card-header>
           
           <ion-card-content>
@@ -266,17 +266,69 @@
                 </ion-row>
               }
               
+              <!-- Dias da Semana -->
+              <ion-row>
+                <ion-col size="12">
+                  <div class="info-item">
+                    <ion-label class="info-label">Dias da Semana</ion-label>
+                    <div class="days-display">
+                      @if (equipment.calendar.monday) {
+                        <ion-badge color="primary" class="day-badge">Segunda</ion-badge>
+                      }
+                      @if (equipment.calendar.tuesday) {
+                        <ion-badge color="primary" class="day-badge">Terça</ion-badge>
+                      }
+                      @if (equipment.calendar.wednesday) {
+                        <ion-badge color="primary" class="day-badge">Quarta</ion-badge>
+                      }
+                      @if (equipment.calendar.thursday) {
+                        <ion-badge color="primary" class="day-badge">Quinta</ion-badge>
+                      }
+                      @if (equipment.calendar.friday) {
+                        <ion-badge color="primary" class="day-badge">Sexta</ion-badge>
+                      }
+                      @if (equipment.calendar.saturday) {
+                        <ion-badge color="primary" class="day-badge">Sábado</ion-badge>
+                      }
+                      @if (equipment.calendar.sunday) {
+                        <ion-badge color="primary" class="day-badge">Domingo</ion-badge>
+                      }
+                      @if (!equipment.calendar.monday && !equipment.calendar.tuesday && !equipment.calendar.wednesday && 
+                           !equipment.calendar.thursday && !equipment.calendar.friday && !equipment.calendar.saturday && 
+                           !equipment.calendar.sunday) {
+                        <ion-label class="info-value">Nenhum dia selecionado</ion-label>
+                      }
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Horários -->
               <ion-row>
                 <ion-col size="12" size-md="6">
                   <div class="info-item">
-                    <ion-label class="info-label">Data/Hora de Início</ion-label>
+                    <ion-label class="info-label">Horário de Início</ion-label>
                     <ion-label class="info-value">{{ equipment.calendar.startTime || '-' }}</ion-label>
                   </div>
                 </ion-col>
                 <ion-col size="12" size-md="6">
                   <div class="info-item">
-                    <ion-label class="info-label">Data/Hora de Fim</ion-label>
+                    <ion-label class="info-label">Horário de Fim</ion-label>
                     <ion-label class="info-value">{{ equipment.calendar.endTime || '-' }}</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Possui Intervalo -->
+              <ion-row>
+                <ion-col size="12">
+                  <div class="info-item">
+                    <ion-label class="info-label">Possui Intervalo</ion-label>
+                    <ion-badge 
+                      [color]="equipment.calendar.hasBreak ? 'warning' : 'success'" 
+                      class="status-badge">
+                      {{ equipment.calendar.hasBreak ? 'Sim' : 'Não' }}
+                    </ion-badge>
                   </div>
                 </ion-col>
               </ion-row>

@@ -81,17 +81,69 @@
                 </ion-row>
               }
               
+              <!-- Dias da Semana -->
+              <ion-row>
+                <ion-col size="12">
+                  <div class="info-item">
+                    <ion-label class="info-label">Dias da Semana</ion-label>
+                    <div class="days-display">
+                      @if (employee.calendar.monday) {
+                        <ion-badge color="primary" class="day-badge">Segunda</ion-badge>
+                      }
+                      @if (employee.calendar.tuesday) {
+                        <ion-badge color="primary" class="day-badge">Terça</ion-badge>
+                      }
+                      @if (employee.calendar.wednesday) {
+                        <ion-badge color="primary" class="day-badge">Quarta</ion-badge>
+                      }
+                      @if (employee.calendar.thursday) {
+                        <ion-badge color="primary" class="day-badge">Quinta</ion-badge>
+                      }
+                      @if (employee.calendar.friday) {
+                        <ion-badge color="primary" class="day-badge">Sexta</ion-badge>
+                      }
+                      @if (employee.calendar.saturday) {
+                        <ion-badge color="primary" class="day-badge">Sábado</ion-badge>
+                      }
+                      @if (employee.calendar.sunday) {
+                        <ion-badge color="primary" class="day-badge">Domingo</ion-badge>
+                      }
+                      @if (!employee.calendar.monday && !employee.calendar.tuesday && !employee.calendar.wednesday && 
+                           !employee.calendar.thursday && !employee.calendar.friday && !employee.calendar.saturday && 
+                           !employee.calendar.sunday) {
+                        <ion-label class="info-value">Nenhum dia selecionado</ion-label>
+                      }
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Horários -->
               <ion-row>
                 <ion-col size="12" size-md="6">
                   <div class="info-item">
-                    <ion-label class="info-label">Data/Hora de Início</ion-label>
-                    <ion-label class="info-value">{{ formatDateTime(employee.calendar.startTime) }}</ion-label>
+                    <ion-label class="info-label">Horário de Início</ion-label>
+                    <ion-label class="info-value">{{ employee.calendar.startTime || '-' }}</ion-label>
                   </div>
                 </ion-col>
                 <ion-col size="12" size-md="6">
                   <div class="info-item">
-                    <ion-label class="info-label">Data/Hora de Fim</ion-label>
-                    <ion-label class="info-value">{{ formatDateTime(employee.calendar.endTime) }}</ion-label>
+                    <ion-label class="info-label">Horário de Fim</ion-label>
+                    <ion-label class="info-value">{{ employee.calendar.endTime || '-' }}</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Possui Intervalo -->
+              <ion-row>
+                <ion-col size="12">
+                  <div class="info-item">
+                    <ion-label class="info-label">Possui Intervalo</ion-label>
+                    <ion-badge 
+                      [color]="employee.calendar.hasBreak ? 'warning' : 'success'" 
+                      class="status-badge">
+                      {{ employee.calendar.hasBreak ? 'Sim' : 'Não' }}
+                    </ion-badge>
                   </div>
                 </ion-col>
               </ion-row>

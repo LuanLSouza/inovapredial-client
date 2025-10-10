@@ -52,6 +52,42 @@
     padding-bottom: 8px;
     border-bottom: 2px solid #007bff;
   }
+
+  .subsection-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin: 0 0 16px 0;
+  }
+
+  .days-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+    
+    .checkbox-item {
+      --background: transparent;
+      --border-width: 0;
+      --padding-start: 0;
+      --padding-end: 0;
+      --padding-top: 8px;
+      --padding-bottom: 8px;
+      margin-bottom: 0;
+      
+      ion-checkbox {
+        margin-right: 12px;
+        --size: 20px;
+      }
+      
+      ion-label {
+        font-size: 14px;
+        font-weight: 400;
+        color: #555;
+        margin: 0;
+      }
+    }
+  }
   
   .form-item {
     --background: #fff;
@@ -212,6 +248,25 @@
     .form-item ion-select {
       font-size: 14px;
     }
+    
+    .days-container {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      
+      .checkbox-item {
+        --padding-top: 6px;
+        --padding-bottom: 6px;
+        
+        ion-checkbox {
+          --size: 18px;
+          margin-right: 10px;
+        }
+        
+        ion-label {
+          font-size: 13px;
+        }
+      }
+    }
   }
   
   @media (max-width: 480px) {
@@ -243,5 +298,21 @@
     .form-item ion-input,
     .form-item ion-select {
       font-size: 13px;
+    }
+    
+    .days-container {
+      .checkbox-item {
+        --padding-top: 4px;
+        --padding-bottom: 4px;
+        
+        ion-checkbox {
+          --size: 16px;
+          margin-right: 8px;
+        }
+        
+        ion-label {
+          font-size: 12px;
+        }
+      }
     }
   }

@@ -118,9 +118,19 @@ export class FormEmployeePage implements OnInit {
     if (formValue.name?.trim()) return true;
     if (formValue.specialty?.trim()) return true;
     if (formValue.contact?.trim()) return true;
+    
+    // Verifica campos do calendário
     if (formValue.calendar?.description?.trim()) return true;
     if (formValue.calendar?.startTime) return true;
     if (formValue.calendar?.endTime) return true;
+    if (formValue.calendar?.monday) return true;
+    if (formValue.calendar?.tuesday) return true;
+    if (formValue.calendar?.wednesday) return true;
+    if (formValue.calendar?.thursday) return true;
+    if (formValue.calendar?.friday) return true;
+    if (formValue.calendar?.saturday) return true;
+    if (formValue.calendar?.sunday) return true;
+    if (formValue.calendar?.hasBreak) return true;
     
     return false;
   }
@@ -132,9 +142,17 @@ export class FormEmployeePage implements OnInit {
       contact: [''],
       calendar: this.fb.group({
         description: [''],
+        monday: [false],
+        tuesday: [false],
+        wednesday: [false],
+        thursday: [false],
+        friday: [false],
+        saturday: [false],
+        sunday: [false],
         startTime: [''],
-        endTime: ['']
-      })
+        endTime: [''],
+        hasBreak: [false]
+      }, { validators: this.calendarValidator })
     });
   }
 
@@ -162,9 +180,57 @@ export class FormEmployeePage implements OnInit {
       contact: employee.contact || '',
       calendar: {
         description: employee.calendar?.description || '',
+        monday: employee.calendar?.monday || false,
+        tuesday: employee.calendar?.tuesday || false,
+        wednesday: employee.calendar?.wednesday || false,
+        thursday: employee.calendar?.thursday || false,
+        friday: employee.calendar?.friday || false,
+        saturday: employee.calendar?.saturday || false,
+        sunday: employee.calendar?.sunday || false,
         startTime: employee.calendar?.startTime || '',
-        endTime: employee.calendar?.endTime || ''
+        endTime: employee.calendar?.endTime || '',
+        hasBreak: employee.calendar?.hasBreak || false
       }
     });
+  }
+
+  private calendarValidator(group: FormGroup) {
+    const calendarValue = group.value;
+    
+    // Se algum campo do calendário foi preenchido, validar campos obrigatórios
+    const hasAnyField = calendarValue.description || 
+                       calendarValue.startTime || 
+                       calendarValue.endTime ||
+                       calendarValue.monday ||
+                       calendarValue.tuesday ||
+                       calendarValue.wednesday ||
+                       calendarValue.thursday ||
+                       calendarValue.friday ||
+                       calendarValue.saturday ||
+                       calendarValue.sunday;
+    
+    if (!hasAnyField) {
+      return null; // Não há validação se nenhum campo foi preenchido
+    }
+    
+    // Se algum campo foi preenchido, validar que pelo menos um dia da semana esteja selecionado
+    const hasAnyDay = calendarValue.monday ||
+                      calendarValue.tuesday ||
+                      calendarValue.wednesday ||
+                      calendarValue.thursday ||
+                      calendarValue.friday ||
+                      calendarValue.saturday ||
+                      calendarValue.sunday;
+    
+    if (!hasAnyDay) {
+      return { noDaysSelected: true };
+    }
+    
+    // Validar que os horários sejam preenchidos
+    if (!calendarValue.startTime || !calendarValue.endTime) {
+      return { missingTimes: true };
+    }
+    
+    return null;
   }
 }

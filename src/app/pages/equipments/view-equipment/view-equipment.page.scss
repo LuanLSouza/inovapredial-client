@@ -138,6 +138,22 @@
   }
 }
 
+.calendar-card {
+  .days-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    
+    .day-badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+  }
+}
+
 .details-grid,
 .technical-grid,
 .dates-grid,

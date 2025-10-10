@@ -198,7 +198,7 @@
           </div>
           <!-- Calendário -->
           <div class="form-section" formGroupName="calendar">
-            <h3 class="section-title">Calendário de Manutenção</h3>
+            <h3 class="section-title">Calendário de Operação</h3>
             
             <ion-grid>
               <ion-row>
@@ -207,31 +207,93 @@
                     <ion-label position="stacked">Descrição do Calendário</ion-label>
                     <ion-input 
                       formControlName="description"
-                      placeholder="Descreva o calendário de manutenção">
+                      placeholder="Descreva o calendário de operação">
                     </ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
               
+              <!-- Dias da Semana -->
+              <ion-row>
+                <ion-col size="12">
+                  <h4 class="subsection-title">Dias da Semana</h4>
+                  <div class="days-container">
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="monday"></ion-checkbox>
+                      <ion-label>Segunda-feira</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="tuesday"></ion-checkbox>
+                      <ion-label>Terça-feira</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="wednesday"></ion-checkbox>
+                      <ion-label>Quarta-feira</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="thursday"></ion-checkbox>
+                      <ion-label>Quinta-feira</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="friday"></ion-checkbox>
+                      <ion-label>Sexta-feira</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="saturday"></ion-checkbox>
+                      <ion-label>Sábado</ion-label>
+                    </ion-item>
+                    <ion-item class="form-item checkbox-item">
+                      <ion-checkbox formControlName="sunday"></ion-checkbox>
+                      <ion-label>Domingo</ion-label>
+                    </ion-item>
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Horários -->
               <ion-row>
                 <ion-col size="12" size-md="6">
                   <ion-item class="form-item">
-                    <ion-label position="stacked">Data/Hora de Início</ion-label>
+                    <ion-label position="stacked">Horário de Início</ion-label>
                     <ion-input 
                       formControlName="startTime"
-                      type="datetime-local">
+                      type="time">
                     </ion-input>
                   </ion-item>
                 </ion-col>
                 
                 <ion-col size="12" size-md="6">
                   <ion-item class="form-item">
-                    <ion-label position="stacked">Data/Hora de Fim</ion-label>
+                    <ion-label position="stacked">Horário de Fim</ion-label>
                     <ion-input 
                       formControlName="endTime"
-                      type="datetime-local">
+                      type="time">
                     </ion-input>
                   </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Possui Intervalo -->
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item class="form-item checkbox-item">
+                    <ion-checkbox formControlName="hasBreak"></ion-checkbox>
+                    <ion-label>Possui intervalo</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+              <!-- Mensagens de Validação -->
+              <ion-row *ngIf="form.get('calendar')?.errors">
+                <ion-col size="12">
+                  <div class="error-message">
+                    <span *ngIf="form.get('calendar')?.errors?.['noDaysSelected']">
+                      Selecione pelo menos um dia da semana
+                    </span>
+                    <span *ngIf="form.get('calendar')?.errors?.['missingTimes']">
+                      Preencha os horários de início e fim
+                    </span>
+                  </div>
                 </ion-col>
               </ion-row>
             </ion-grid>
