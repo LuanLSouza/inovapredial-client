@@ -22,7 +22,7 @@ import { WorkOrderInventoryResponse } from 'src/app/models/work-order-inventory.
   templateUrl: './view-work-order.page.html',
   styleUrls: ['./view-work-order.page.scss'],
   standalone: true,
-  imports: [...IONIC_IMPORTS, CommonModule, InventoryModalComponent]
+  imports: [...IONIC_IMPORTS, CommonModule]
 })
 export class ViewWorkOrderPage implements OnInit {
 
