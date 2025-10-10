@@ -1,0 +1,40 @@
+.submit-button {
+  margin-bottom: 16px;
+}
+
+.cancel-button {
+  margin-bottom: 8px;
+}
+
+ion-note {
+  display: block;
+  margin-top: 4px;
+  margin-left: 16px;
+}
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-bottom: 8px;
+}
+
+ion-toggle {
+  --background: var(--ion-color-light);
+  --background-checked: var(--ion-color-primary);
+  --handle-background: var(--ion-color-light);
+  --handle-background-checked: var(--ion-color-primary-contrast);
+}
+
+ion-select {
+  --placeholder-color: var(--ion-color-medium);
+}
+
+ion-input {
+  --placeholder-color: var(--ion-color-medium);
+}
+
+ion-checkbox {
+  --border-color: var(--ion-color-medium);
+  --border-color-checked: var(--ion-color-primary);
+  --checkmark-color: var(--ion-color-primary-contrast);
+}

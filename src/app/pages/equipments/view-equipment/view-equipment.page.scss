@@ -124,7 +124,8 @@
 .technical-card,
 .dates-card,
 .calendar-card,
-.image-card {
+.image-card,
+.maintenance-plans-card {
   margin-bottom: 16px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -162,6 +163,116 @@
     .info-value {
       font-size: 1rem;
       color: var(--ion-color-dark);
+      font-weight: 500;
+    }
+  }
+}
+
+// Estilos específicos para planos de manutenção
+.maintenance-plans-card {
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+    }
+
+    .empty-message {
+      font-size: 1rem;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  .plans-list {
+    .plan-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      --inner-padding-end: 0;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--ion-color-light);
+      background-color: var(--ion-color-light-tint);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .plan-grid {
+        padding: 16px;
+        width: 100%;
+
+        .plan-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+
+          .plan-description {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ion-color-dark);
+            flex: 1;
+            margin-right: 12px;
+          }
+
+          .plan-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .realized-checkbox {
+              --border-color: var(--ion-color-medium);
+              --border-color-checked: var(--ion-color-success);
+              --checkmark-color: var(--ion-color-success-contrast);
+            }
+          }
+        }
+
+        .plan-info {
+          padding: 8px 0;
+
+          .info-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ion-color-medium);
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+
+          .info-value {
+            font-size: 0.9rem;
+            color: var(--ion-color-dark);
+            font-weight: 500;
+          }
+
+          .status-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .add-plan-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ion-color-light);
+
+    .add-plan-button {
+      --border-color: var(--ion-color-primary);
+      --color: var(--ion-color-primary);
       font-weight: 500;
     }
   }
@@ -258,9 +369,34 @@
   .technical-card,
   .dates-card,
   .calendar-card,
-  .image-card {
+  .image-card,
+  .maintenance-plans-card {
     .card-title {
       font-size: 1.1rem;
+    }
+  }
+
+  .maintenance-plans-card {
+    .plans-list {
+      .plan-item {
+        .plan-grid {
+          .plan-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+
+            .plan-description {
+              margin-right: 0;
+              margin-bottom: 8px;
+            }
+
+            .plan-actions {
+              width: 100%;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
     }
   }
 }

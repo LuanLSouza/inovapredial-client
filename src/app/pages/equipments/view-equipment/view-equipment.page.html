@@ -160,6 +160,92 @@
         </ion-card-content>
       </ion-card>
 
+      <!-- Planos de Manutenção Associados -->
+      <ion-card class="maintenance-plans-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Planos de Manutenção Associados</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          @if (loadingPlans) {
+            <div class="loading-container">
+              <ion-spinner name="crescent"></ion-spinner>
+              <ion-label>Carregando planos...</ion-label>
+            </div>
+          } @else if (equipmentPlans.length === 0) {
+            <div class="empty-state">
+              <ion-icon src="../../../../assets/icons/calendar-icon.svg" class="empty-icon"></ion-icon>
+              <ion-label class="empty-message">Nenhum plano de manutenção associado</ion-label>
+            </div>
+          } @else {
+            <div class="plans-list">
+              @for (plan of equipmentPlans; track plan.planId) {
+                <ion-item class="plan-item">
+                  <ion-grid class="plan-grid">
+                    <ion-row>
+                      <ion-col size="12">
+                        <div class="plan-header">
+                          <ion-label class="plan-description">{{ plan.planDescription }}</ion-label>
+                          <div class="plan-actions">
+                            <ion-checkbox 
+                              [checked]="plan.realized" 
+                              (ionChange)="onToggleRealized(plan)"
+                              class="realized-checkbox">
+                            </ion-checkbox>
+                            <ion-button 
+                              fill="clear" 
+                              color="danger" 
+                              size="small"
+                              (click)="onRemovePlan(plan.planId)">
+                              <ion-icon src="../../../../assets/icons/trash-icon.svg"></ion-icon>
+                            </ion-button>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="12" size-md="4">
+                        <div class="plan-info">
+                          <ion-label class="info-label">Data de Início</ion-label>
+                          <ion-label class="info-value">{{ formatDate(plan.startDate) }}</ion-label>
+                        </div>
+                      </ion-col>
+                      <ion-col size="12" size-md="4">
+                        <div class="plan-info">
+                          <ion-label class="info-label">Próxima Data</ion-label>
+                          <ion-label class="info-value">{{ formatDate(plan.nextDueDate) }}</ion-label>
+                        </div>
+                      </ion-col>
+                      <ion-col size="12" size-md="4">
+                        <div class="plan-info">
+                          <ion-label class="info-label">Status</ion-label>
+                          <ion-badge 
+                            [color]="plan.realized ? 'success' : 'warning'" 
+                            class="status-badge">
+                            {{ plan.realized ? 'Realizado' : 'Pendente' }}
+                          </ion-badge>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              }
+            </div>
+          }
+          
+          <div class="add-plan-section">
+            <ion-button 
+              expand="block" 
+              fill="outline" 
+              (click)="onAddPlan()"
+              class="add-plan-button">
+              <ion-icon name="add" slot="start"></ion-icon>
+              Adicionar Plano de Manutenção
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
       <!-- Calendário de Manutenção -->
       @if (equipment.calendar) {
         <ion-card class="calendar-card">

@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adicionar Plano de Manutenção</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    
+    <!-- Toggle para escolher entre plano existente ou novo -->
+    <ion-item>
+      <ion-label>Opção</ion-label>
+      <ion-toggle 
+        [checked]="createNewPlan" 
+        (ionChange)="toggleCreateNewPlan()"
+        slot="end">
+      </ion-toggle>
+      <ion-label slot="end">{{ createNewPlan ? 'Criar Novo Plano' : 'Usar Plano Existente' }}</ion-label>
+    </ion-item>
+
+    <!-- Campos para plano existente -->
+    @if (!createNewPlan) {
+      <ion-item>
+        <ion-label position="stacked">Plano de Manutenção *</ion-label>
+        <ion-select 
+          formControlName="planId" 
+          placeholder="Selecione um plano"
+          [disabled]="loadingPlans">
+          @if (loadingPlans) {
+            <ion-select-option value="">Carregando...</ion-select-option>
+          } @else {
+            @for (plan of maintenancePlans; track plan.id) {
+              <ion-select-option [value]="plan.id">
+                {{ plan.description }} ({{ plan.maintenanceType === 'CORRECTIVE' ? 'Corretiva' : plan.maintenanceType === 'PREVENTIVE' ? 'Preventiva' : 'Preditiva' }})
+              </ion-select-option>
+            }
+          }
+        </ion-select>
+      </ion-item>
+      @if (f.planId.invalid && f.planId.touched) {
+        <ion-note color="danger">Selecione um plano de manutenção</ion-note>
+      }
+    }
+
+    <!-- Campos para novo plano -->
+    @if (createNewPlan) {
+      <ion-item>
+        <ion-label position="stacked">Descrição do Plano *</ion-label>
+        <ion-input 
+          formControlName="description" 
+          placeholder="Ex: Manutenção preventiva mensal"
+          type="text">
+        </ion-input>
+      </ion-item>
+      @if (f.description.invalid && f.description.touched) {
+        <ion-note color="danger">Descrição é obrigatória</ion-note>
+      }
+
+      <ion-item>
+        <ion-label position="stacked">Tipo de Manutenção *</ion-label>
+        <ion-select formControlName="maintenanceType">
+          @for (option of maintenanceTypeOptions; track option.value) {
+            <ion-select-option [value]="option.value">{{ option.label }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      @if (f.maintenanceType.invalid && f.maintenanceType.touched) {
+        <ion-note color="danger">Selecione o tipo de manutenção</ion-note>
+      }
+
+      <ion-item>
+        <ion-label position="stacked">Frequência (dias) *</ion-label>
+        <ion-input 
+          formControlName="frequencyDays" 
+          placeholder="30"
+          type="number"
+          min="1">
+        </ion-input>
+      </ion-item>
+      @if (f.frequencyDays.invalid && f.frequencyDays.touched) {
+        <ion-note color="danger">Frequência deve ser maior que 0</ion-note>
+      }
+
+      <ion-item>
+        <ion-label>Requer Parada do Equipamento</ion-label>
+        <ion-checkbox 
+          formControlName="requiresShutdown" 
+          slot="end">
+        </ion-checkbox>
+      </ion-item>
+    }
+
+    <!-- Campo comum: Data de início -->
+    <ion-item>
+      <ion-label position="stacked">Data de Início *</ion-label>
+      <ion-input 
+        formControlName="startDate" 
+        type="date">
+      </ion-input>
+    </ion-item>
+    @if (f.startDate.invalid && f.startDate.touched) {
+      <ion-note color="danger">Data de início é obrigatória</ion-note>
+    }
+
+    <!-- Botões de ação -->
+    <div class="ion-margin-top">
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        [disabled]="form.invalid || saving"
+        class="submit-button">
+        @if (saving) {
+          <ion-spinner name="crescent" class="ion-margin-end"></ion-spinner>
+          Salvando...
+        } @else {
+          {{ createNewPlan ? 'Criar e Associar Plano' : 'Associar Plano' }}
+        }
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        (click)="cancel()"
+        class="cancel-button">
+        Cancelar
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>

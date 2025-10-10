@@ -4,7 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EquipmentsService } from 'src/app/services/equipments.service';
 import { Equipment } from 'src/app/models/equipment.interface';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
-import { ToastController } from '@ionic/angular/standalone';
+import { ToastController, ModalController, AlertController } from '@ionic/angular/standalone';
+import { EquipmentPlanResponse } from 'src/app/models/equipment-plan.interface';
+import { EquipmentPlansService } from 'src/app/services/equipment-plans.service';
+import { EquipmentPlanModalComponent } from 'src/app/components/equipment-plan-modal/equipment-plan-modal.component';
 
 @Component({
   selector: 'app-view-equipment',
@@ -18,12 +21,17 @@ export class ViewEquipmentPage implements OnInit {
   equipment: Equipment | null = null;
   loading = false;
   equipmentId: string | null = null;
+  equipmentPlans: EquipmentPlanResponse[] = [];
+  loadingPlans = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private equipmentsService: EquipmentsService,
-    private toastController: ToastController
+    private equipmentPlansService: EquipmentPlansService,
+    private toastController: ToastController,
+    private modalController: ModalController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -46,6 +54,7 @@ export class ViewEquipmentPage implements OnInit {
         next: (equipment: Equipment) => {
           this.equipment = equipment;
           this.loading = false;
+          this.loadEquipmentPlans();
         },
         error: (error) => {
           console.error('Erro ao carregar equipamento:', error);
@@ -152,4 +161,105 @@ export class ViewEquipmentPage implements OnInit {
     await toast.present();
   }
 
+  loadEquipmentPlans() {
+    if (!this.equipmentId) return;
+    
+    this.loadingPlans = true;
+    
+    this.equipmentPlansService.getEquipmentPlans(this.equipmentId)
+      .subscribe({
+        next: (plans: EquipmentPlanResponse[]) => {
+          this.equipmentPlans = plans;
+          this.loadingPlans = false;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar planos:', error);
+          this.showToast('Erro ao carregar planos de manutenção.', 'danger');
+          this.loadingPlans = false;
+        }
+      });
+  }
+
+  async onAddPlan() {
+    if (!this.equipmentId) return;
+
+    const modal = await this.modalController.create({
+      component: EquipmentPlanModalComponent,
+      componentProps: {
+        equipmentId: this.equipmentId
+      }
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data?.success) {
+      this.showToast('Plano de manutenção associado com sucesso!', 'success');
+      this.loadEquipmentPlans();
+    }
+  }
+
+  async onRemovePlan(planId: string) {
+    if (!this.equipmentId) return;
+
+    const alert = await this.alertController.create({
+      header: 'Confirmar Remoção',
+      message: 'Tem certeza que deseja remover este plano de manutenção do equipamento?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Remover',
+          role: 'destructive',
+          handler: () => {
+            this.removePlan(planId);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private removePlan(planId: string) {
+    if (!this.equipmentId) return;
+
+    this.equipmentPlansService.removePlanFromEquipment(this.equipmentId, planId)
+      .subscribe({
+        next: () => {
+          this.showToast('Plano de manutenção removido com sucesso!', 'success');
+          this.loadEquipmentPlans();
+        },
+        error: (error) => {
+          console.error('Erro ao remover plano:', error);
+          this.showToast('Erro ao remover plano de manutenção.', 'danger');
+        }
+      });
+  }
+
+  onToggleRealized(plan: EquipmentPlanResponse) {
+    if (!this.equipmentId) return;
+
+    const updateRequest = { realized: !plan.realized };
+
+    this.equipmentPlansService.updateRealized(this.equipmentId, plan.planId, updateRequest)
+      .subscribe({
+        next: (updatedPlan) => {
+          const index = this.equipmentPlans.findIndex(p => p.planId === plan.planId);
+          if (index !== -1) {
+            this.equipmentPlans[index] = updatedPlan;
+          }
+          this.showToast(
+            updatedPlan.realized ? 'Plano marcado como realizado!' : 'Plano marcado como não realizado!', 
+            'success'
+          );
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar status:', error);
+          this.showToast('Erro ao atualizar status do plano.', 'danger');
+        }
+      });
+  }
 }
