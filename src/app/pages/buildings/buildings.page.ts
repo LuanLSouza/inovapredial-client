@@ -302,11 +302,10 @@ export class BuildingsPage implements OnInit {
       .subscribe({
         next: () => {
           this.showToast('Edificação excluída com sucesso!', 'success');
-          this.loadBuildings(); // Recarrega a lista
+          this.loadBuildings();
         },
         error: (error) => {
-          console.error('Erro ao excluir edificação:', error);
-          this.showToast('Erro ao excluir edificação. Tente novamente.', 'danger');
+          this.showToast('Erro ao excluir edificação: ' + error.error.message, 'danger');
           this.loading = false;
         }
       });

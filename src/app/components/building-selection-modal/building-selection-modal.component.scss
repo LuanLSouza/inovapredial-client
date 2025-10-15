@@ -60,7 +60,7 @@ ion-item {
   border: 1px solid var(--ion-color-light);
 
   &.selected {
-    --background: var(--ion-color-primary-tint);
+    --background: rgb(226, 226, 226);
     --border-color: var(--ion-color-primary);
   }
 
@@ -87,8 +87,8 @@ ion-item {
       margin: 4px 0;
 
       .building-type {
-        background: var(--ion-color-primary-tint);
-        color: var(--ion-color-primary);
+        background: rgb(119, 119, 119);
+        color: white;
         padding: 2px 8px;
         border-radius: 12px;
         font-size: 12px;

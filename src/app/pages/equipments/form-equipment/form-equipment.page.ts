@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { EquipmentsService } from 'src/app/services/equipments.service';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
 import { Equipment, EquipmentRequest } from 'src/app/models/equipment.interface';
@@ -45,7 +45,8 @@ export class FormEquipmentPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private equipmentsService: EquipmentsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { 
     this.initializeForm();
   }
@@ -110,8 +111,9 @@ export class FormEquipmentPage implements OnInit {
           this.saving = false;
           this.router.navigate(['/equipments']);
         },
-        error: () => {
+        error: (error) => {
           this.saving = false;
+          this.showToast('Erro ao atualizar equipamento: ' + error.error.message, 'danger');
         }
       });
     } else {
@@ -121,7 +123,8 @@ export class FormEquipmentPage implements OnInit {
           this.saving = false;
           this.router.navigate(['/equipments']);
         },
-        error: () => {
+        error: (error) => {
+          this.showToast('Erro ao atualizar equipamento: ' + error.error.message, 'danger');
           this.saving = false;
         }
       });
@@ -279,5 +282,15 @@ export class FormEquipmentPage implements OnInit {
     }
     
     return null;
+  }
+
+  private async showToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      color: color,
+      position: 'top'
+    });
+    await toast.present();
   }
 }

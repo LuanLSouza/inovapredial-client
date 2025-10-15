@@ -338,8 +338,7 @@ export class EquipmentsPage implements OnInit {
           this.loadEquipments(); // Recarrega a lista
         },
         error: (error) => {
-          console.error('Erro ao excluir equipamento:', error);
-          this.showToast('Erro ao excluir equipamento. Tente novamente.', 'danger');
+          this.showToast('Erro ao excluir equipamento: ' + error.error.message, 'danger');
           this.loading = false;
         }
       });

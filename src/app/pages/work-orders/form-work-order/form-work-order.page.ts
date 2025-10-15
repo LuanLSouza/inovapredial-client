@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { WorkOrdersService } from 'src/app/services/work-orders.service';
 import { EquipmentsService } from 'src/app/services/equipments.service';
 import { EmployeesService } from 'src/app/services/employees.service';
@@ -59,7 +59,8 @@ export class FormWorkOrderPage implements OnInit {
     private workOrdersService: WorkOrdersService,
     private equipmentsService: EquipmentsService,
     private employeesService: EmployeesService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { 
     this.initializeForm();
   }
@@ -145,7 +146,8 @@ export class FormWorkOrderPage implements OnInit {
           this.saving = false;
           this.router.navigate(['/work-orders']);
         },
-        error: () => {
+        error: (error) => {
+          this.showToast('Erro ao atualizar ordem de serviço: ' + error.error.message, 'danger');
           this.saving = false;
         }
       });
@@ -156,7 +158,8 @@ export class FormWorkOrderPage implements OnInit {
           this.saving = false;
           this.router.navigate(['/work-orders']);
         },
-        error: () => {
+        error: (error) => {
+          this.showToast('Erro ao criar ordem de serviço: ' + error.error.message, 'danger');
           this.saving = false;
         }
       });
@@ -192,6 +195,16 @@ export class FormWorkOrderPage implements OnInit {
       equipmentId: ['', [Validators.required]],
       employeeId: ['']
     });
+  }
+
+  private async showToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      color: color,
+      position: 'top'
+    });
+    await toast.present();
   }
 
   private loadWorkOrder() {
