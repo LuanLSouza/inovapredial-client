@@ -10,6 +10,12 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Mensagem de aviso para tarefas concluídas -->
+  <ion-alert *ngIf="isTaskCompleted" class="warning-alert">
+    <ion-icon name="warning" slot="start"></ion-icon>
+    <ion-label>Esta tarefa está concluída e não pode ser editada.</ion-label>
+  </ion-alert>
+
   <form [formGroup]="form" (ngSubmit)="submit()">
     
     <!-- Informações Básicas -->
@@ -163,9 +169,9 @@
       
       <ion-button 
         type="submit"
-        [disabled]="form.invalid || saving">
+        [disabled]="form.invalid || saving || isTaskCompleted">
         <ion-spinner *ngIf="saving" name="crescent" size="small"></ion-spinner>
-        Salvar Alterações
+        {{ isTaskCompleted ? 'Tarefa Concluída' : 'Salvar Alterações' }}
       </ion-button>
     </div>
   </form>

@@ -327,8 +327,7 @@ export class InventoriesPage implements OnInit {
           this.loadInventories(); // Recarrega a lista
         },
         error: (error) => {
-          console.error('Erro ao excluir item:', error);
-          this.showToast('Erro ao excluir item. Tente novamente.', 'danger');
+          this.showToast('Erro ao excluir item: ' + error.error.message, 'danger');
           this.loading = false;
         }
       });

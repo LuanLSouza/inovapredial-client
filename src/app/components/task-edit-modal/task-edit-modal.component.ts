@@ -21,6 +21,7 @@ export class TaskEditModalComponent {
   employees: Employee[] = [];
   loadingEmployees = false;
   saving = false;
+  isTaskCompleted = false;
 
   activityStatusOptions = [
     { label: 'Aberta', value: 'OPEN' },
@@ -38,8 +39,14 @@ export class TaskEditModalComponent {
   }
 
   ngOnInit() {
+    this.isTaskCompleted = this.task.activityStatus === 'COMPLETED';
     this.loadEmployees();
     this.populateForm();
+    
+    // Se a tarefa estiver concluída, desabilitar o formulário
+    if (this.isTaskCompleted) {
+      this.form.disable();
+    }
   }
 
   get f() { return this.form.controls as any; }
@@ -107,6 +114,11 @@ export class TaskEditModalComponent {
   }
 
   submit() {
+    // Não permitir envio se a tarefa estiver concluída
+    if (this.isTaskCompleted) {
+      return;
+    }
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

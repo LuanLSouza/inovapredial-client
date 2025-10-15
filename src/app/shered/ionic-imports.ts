@@ -3,7 +3,7 @@ import {
     IonCard, IonGrid, IonRow, IonCol, IonLabel, IonInput, IonSelect,
     IonSelectOption, IonImg, IonList, IonItem, IonListHeader, IonNote, IonSpinner,
     IonIcon, IonBadge, IonCardHeader, IonCardContent, IonCardTitle, IonSegment, IonSegmentButton,
-    IonTextarea, IonText, IonCheckbox, IonToggle
+    IonTextarea, IonText, IonCheckbox, IonToggle, IonAlert
   } from '@ionic/angular/standalone';
   
   export const IONIC_IMPORTS = [
@@ -11,5 +11,5 @@ import {
     IonCard, IonGrid, IonRow, IonCol, IonLabel, IonInput, IonSelect,
     IonSelectOption, IonImg, IonList, IonItem, IonListHeader, IonNote, IonSpinner,
     IonIcon, IonBadge, IonCardHeader, IonCardContent, IonCardTitle, IonSegment, IonSegmentButton,
-    IonTextarea, IonText, IonCheckbox, IonToggle
+    IonTextarea, IonText, IonCheckbox, IonToggle, IonAlert
   ];

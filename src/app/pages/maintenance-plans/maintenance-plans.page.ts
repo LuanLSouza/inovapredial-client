@@ -313,8 +313,7 @@ export class MaintenancePlansPage implements OnInit {
           this.loadMaintenancePlans(); // Recarrega a lista
         },
         error: (error) => {
-          console.error('Erro ao excluir plano de manutenção:', error);
-          this.showToast('Erro ao excluir plano de manutenção. Tente novamente.', 'danger');
+          this.showToast('Erro ao excluir plano de manutenção: ' + error.error.message, 'danger');
           this.loading = false;
         }
       });

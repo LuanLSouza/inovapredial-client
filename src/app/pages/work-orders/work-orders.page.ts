@@ -371,8 +371,7 @@ export class WorkOrdersPage implements OnInit {
           this.loadWorkOrders(); // Recarrega a lista
         },
         error: (error) => {
-          console.error('Erro ao excluir ordem de serviço:', error);
-          this.showToast('Erro ao excluir ordem de serviço. Tente novamente.', 'danger');
+          this.showToast('Erro ao excluir ordem de serviço: ' + error.error.message, 'danger');
           this.loading = false;
         }
       });

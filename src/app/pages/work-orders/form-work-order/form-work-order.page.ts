@@ -262,7 +262,9 @@ export class FormWorkOrderPage implements OnInit {
       size: 1000, // Carrega todos os equipamentos
       sortBy: 'identification',
       sortDirection: 'ASC'
-    }, {}).subscribe({
+    }, {
+      equipmentStatus: 'ACTIVE' // Filtra apenas equipamentos ativos
+    }).subscribe({
       next: (response) => {
         this.equipments = response.content;
         this.loadingEquipments = false;

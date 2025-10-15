@@ -192,6 +192,7 @@
                             size="small" 
                             fill="outline"
                             color="primary"
+                            [disabled]="task.activityStatus === 'COMPLETED'"
                             (click)="openStatusChangeModal(task)">
                             Alterar Status
                           </ion-button>
@@ -202,10 +203,19 @@
                       <ion-button fill="clear" size="small" (click)="viewTask(task)">
                         <ion-icon src="../../../assets/icons/eye-icon.svg" slot="icon-only"></ion-icon>
                       </ion-button>
-                      <ion-button fill="clear" size="small" (click)="editTask(task)">
+                      <ion-button 
+                        fill="clear" 
+                        size="small" 
+                        [disabled]="task.activityStatus === 'COMPLETED'"
+                        (click)="editTask(task)">
                         <ion-icon src="../../../assets/icons/pencil-icon.svg" slot="icon-only"></ion-icon>
                       </ion-button>
-                      <ion-button fill="clear" size="small" color="danger" (click)="deleteTask(task)">
+                      <ion-button 
+                        fill="clear" 
+                        size="small" 
+                        color="danger" 
+                        [disabled]="task.activityStatus === 'COMPLETED'"
+                        (click)="deleteTask(task)">
                         <ion-icon src="../../../assets/icons/trash-icon.svg" slot="icon-only"></ion-icon>
                       </ion-button>
                     </ion-buttons>

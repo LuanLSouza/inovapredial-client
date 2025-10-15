@@ -90,6 +90,12 @@ export class ViewWorkOrderPage implements OnInit {
   }
 
   async openStatusChangeModal(task: TaskResponse) {
+    // Verificar se a tarefa está concluída
+    if (task.activityStatus === 'COMPLETED') {
+      this.presentToast('Não é possível alterar o status de uma tarefa concluída.', 'warning');
+      return;
+    }
+
     const alert = await this.alertController.create({
       header: 'Alterar Status da Tarefa',
       message: `Tarefa: ${task.title} | Status atual: ${this.getTaskStatusLabel(task.activityStatus)}`,
@@ -106,7 +112,7 @@ export class ViewWorkOrderPage implements OnInit {
           type: 'radio',
           label: 'Concluída',
           value: 'COMPLETED',
-          checked: task.activityStatus === 'COMPLETED'
+          checked: task.activityStatus === ('COMPLETED' as TaskActivityStatus)
         },
         {
           name: 'status',
@@ -236,6 +242,12 @@ export class ViewWorkOrderPage implements OnInit {
   }
 
   async editTask(task: TaskResponse) {
+    // Verificar se a tarefa está concluída
+    if (task.activityStatus === 'COMPLETED') {
+      this.presentToast('Não é possível editar uma tarefa concluída.', 'warning');
+      return;
+    }
+
     const modal = await this.modalController.create({
       component: TaskEditModalComponent,
       componentProps: {
@@ -262,6 +274,12 @@ export class ViewWorkOrderPage implements OnInit {
   }
 
   async deleteTask(task: TaskResponse) {
+    // Verificar se a tarefa está concluída
+    if (task.activityStatus === 'COMPLETED') {
+      this.presentToast('Não é possível excluir uma tarefa concluída.', 'warning');
+      return;
+    }
+
     const alert = await this.alertController.create({
       header: 'Confirmar Exclusão',
       message: `Tem certeza que deseja excluir a tarefa "${task.title}"?`,
