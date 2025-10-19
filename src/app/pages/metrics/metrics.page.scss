@@ -1,0 +1,417 @@
+// Estilos para a página de métricas seguindo o padrão da aplicação
+
+.filter-card {
+  margin-bottom: 16px;
+  
+  .filter-grid {
+    padding: 0;
+  }
+  
+  .filter-row {
+    margin-bottom: 16px;
+  }
+  
+  .label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--ion-color-dark);
+  }
+  
+  .input {
+    &.solid {
+      --background: var(--ion-color-light);
+      --border-radius: 8px;
+      --border-width: 1px;
+      --border-color: var(--ion-color-medium);
+      --padding-start: 12px;
+      --padding-end: 12px;
+    }
+  }
+  
+  .select {
+    &.solid {
+      --background: var(--ion-color-light);
+      --border-radius: 8px;
+      --border-width: 1px;
+      --border-color: var(--ion-color-medium);
+    }
+  }
+}
+
+.loading-card {
+  margin-bottom: 16px;
+  
+  ion-card-content {
+    padding: 40px;
+    
+    p {
+      margin-top: 16px;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.empty-card {
+  margin-bottom: 16px;
+  
+  ion-card-content {
+    padding: 40px;
+    
+    ion-icon {
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: var(--ion-color-medium);
+      font-size: 16px;
+    }
+  }
+}
+
+.no-building-card {
+  margin-bottom: 16px;
+  
+  ion-card-content {
+    padding: 40px;
+    
+    ion-icon {
+      color: var(--ion-color-primary);
+      margin-bottom: 16px;
+    }
+    
+    h3 {
+      color: var(--ion-color-dark);
+      margin-bottom: 16px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    p {
+      color: var(--ion-color-medium-shade);
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    
+    ion-button {
+      margin-top: 16px;
+    }
+  }
+}
+
+.metrics-section {
+  margin-bottom: 16px;
+  
+  ion-card-header {
+    padding-bottom: 8px;
+    
+    ion-card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+  }
+  
+  ion-card-content {
+    padding-top: 8px;
+  }
+}
+
+.metric-card {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--ion-color-light-shade);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  &.success {
+    background: var(--ion-color-success-tint);
+    border-color: var(--ion-color-success);
+    
+    .metric-value {
+      color: var(--ion-color-success-shade);
+    }
+  }
+  
+  &.danger {
+    background: var(--ion-color-danger-tint);
+    border-color: var(--ion-color-danger);
+    
+    .metric-value {
+      color: var(--ion-color-danger-shade);
+    }
+  }
+  
+  &.warning {
+    background: var(--ion-color-warning-tint);
+    border-color: var(--ion-color-warning);
+    
+    .metric-value {
+      color: var(--ion-color-warning-shade);
+    }
+  }
+  
+  &.primary {
+    background: var(--ion-color-primary-tint);
+    border-color: var(--ion-color-primary);
+    
+    .metric-value {
+      color: var(--ion-color-primary-shade);
+    }
+  }
+  
+  &.medium {
+    background: var(--ion-color-medium-tint);
+    border-color: var(--ion-color-medium);
+    
+    .metric-value {
+      color: var(--ion-color-medium-shade);
+    }
+  }
+  
+  .metric-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  
+  .metric-label {
+    font-size: 14px;
+    color: var(--ion-color-medium-shade);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+}
+
+.chart-container {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--ion-color-light-shade);
+  
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    text-align: center;
+  }
+  
+  canvas {
+    max-height: 300px;
+  }
+}
+
+.metric-summary {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--ion-color-light-shade);
+  
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+  
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ion-color-light-shade);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .summary-label {
+      font-weight: 500;
+      color: var(--ion-color-dark);
+    }
+    
+    .summary-value {
+      color: var(--ion-color-medium-shade);
+      font-size: 14px;
+    }
+    
+    .summary-cost {
+      color: var(--ion-color-primary);
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+}
+
+.table-container {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--ion-color-light-shade);
+  
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+  
+  .table-grid {
+    padding: 0;
+  }
+  
+  .table-header {
+    background: var(--ion-color-medium-tint);
+    border-radius: 8px 8px 0 0;
+    padding: 12px 0;
+    margin-bottom: 0;
+    
+    ion-col {
+      font-weight: 600;
+      color: var(--ion-color-dark);
+      font-size: 14px;
+      text-align: center;
+      
+      &.col-name {
+        text-align: left;
+      }
+    }
+  }
+  
+  .table-row {
+    border-bottom: 1px solid var(--ion-color-light-shade);
+    padding: 12px 0;
+    margin-bottom: 0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &.warning-row {
+      background: var(--ion-color-warning-tint);
+      border-radius: 0 0 8px 8px;
+    }
+    
+    ion-col {
+      font-size: 14px;
+      color: var(--ion-color-dark);
+      text-align: center;
+      
+      &.col-name {
+        text-align: left;
+        font-weight: 500;
+      }
+      
+      &.col-identification {
+        font-family: monospace;
+        font-size: 13px;
+      }
+    }
+  }
+  
+  .col-name {
+    flex: 2;
+  }
+  
+  .col-identification {
+    flex: 1.5;
+  }
+  
+  .col-failures,
+  .col-mtbf,
+  .col-current,
+  .col-minimum {
+    flex: 1;
+  }
+  
+  .col-last-failure {
+    flex: 1.2;
+  }
+  
+  .col-criticality {
+    flex: 1;
+  }
+  
+  .col-type {
+    flex: 1.2;
+  }
+  
+  .col-quantity {
+    flex: 1.2;
+  }
+  
+  .col-cost {
+    flex: 1.2;
+  }
+  
+  .col-stock {
+    flex: 1;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .metric-card {
+    margin-bottom: 16px;
+    
+    .metric-value {
+      font-size: 24px;
+    }
+    
+    .metric-label {
+      font-size: 13px;
+    }
+  }
+  
+  .chart-container,
+  .metric-summary,
+  .table-container {
+    margin-bottom: 16px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    
+    .table-grid {
+      min-width: 600px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .filter-card {
+    .filter-row {
+      ion-col {
+        margin-bottom: 16px;
+      }
+    }
+  }
+  
+  .metric-card {
+    padding: 16px;
+    
+    .metric-value {
+      font-size: 20px;
+    }
+    
+    .metric-label {
+      font-size: 12px;
+    }
+  }
+  
+  .chart-container,
+  .metric-summary,
+  .table-container {
+    padding: 16px;
+  }
+}

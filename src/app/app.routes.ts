@@ -125,6 +125,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/work-orders/view-work-order/view-work-order.page').then( m => m.ViewWorkOrderPage)
       },
       {
+        path: 'metrics',
+        loadComponent: () => import('./pages/metrics/metrics.page').then( m => m.MetricsPage)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'
