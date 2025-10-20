@@ -154,6 +154,9 @@
                         *ngFor="let equipment of equipments" 
                         [value]="equipment.id">
                         {{ equipment.identification }}
+                        <span *ngIf="equipment.equipmentStatus !== 'ACTIVE'" style="color: #999; font-style: italic;">
+                          ({{ equipment.equipmentStatus === 'INACTIVE' ? 'Inativo' : 'Em Manutenção' }})
+                        </span>
                       </ion-select-option>
                     </ion-select>
                   </ion-item>

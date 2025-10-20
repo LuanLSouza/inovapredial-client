@@ -72,13 +72,14 @@ export class FormWorkOrderPage implements OnInit {
         this.workOrderId = params['id'];
         this.isEditMode = true;
         this.pageTitle = 'Editar Ordem de Serviço';
-        this.loadWorkOrder();
+        // No modo edição, carrega equipamentos primeiro, depois a ordem de serviço
+        this.loadEquipmentsAndThenWorkOrder();
+      } else {
+        // No modo criação, carrega dados normalmente
+        this.loadEquipments();
+        this.loadEmployees();
       }
     });
-
-    // Carrega dados para os selects
-    this.loadEquipments();
-    this.loadEmployees();
   }
 
   get f() { return this.form.controls as any; }
@@ -224,7 +225,8 @@ export class FormWorkOrderPage implements OnInit {
     });
   }
 
-  private populateForm(workOrder: WorkOrder) {
+  private populateForm(workOrder: WorkOrder) { 
+    // Primeiro, popula todos os campos exceto equipmentId e employeeId
     this.form.patchValue({
       description: workOrder.description,
       maintenanceType: workOrder.maintenanceType,
@@ -232,10 +234,32 @@ export class FormWorkOrderPage implements OnInit {
       activityStatus: workOrder.activityStatus || '',
       totalCost: workOrder.totalCost || null,
       openingDate: this.formatDateForInput(workOrder.openingDate) || '',
-      closingDate: this.formatDateForInput(workOrder.closingDate) || '',
-      equipmentId: workOrder.equipmentId,
-      employeeId: workOrder.employeeId || ''
+      closingDate: this.formatDateForInput(workOrder.closingDate) || ''
     });
+    
+    // Usa setTimeout para garantir que o DOM esteja pronto antes de definir os selects
+    setTimeout(() => {
+      // Verifica se os equipamentos estão carregados antes de definir o valor
+      if (workOrder.equipmentId && this.equipments.length > 0) {
+        const equipmentExists = this.equipments.some(eq => eq.id === workOrder.equipmentId);
+        if (equipmentExists) {
+          this.form.get('equipmentId')?.setValue(workOrder.equipmentId);
+        } else {
+          console.warn('Equipment ID not found in loaded equipments:', workOrder.equipmentId);
+        }
+      }
+      
+      if (workOrder.employeeId && this.employees.length > 0) {
+        const employeeExists = this.employees.some(emp => emp.id === workOrder.employeeId);
+        if (employeeExists) {
+          this.form.get('employeeId')?.setValue(workOrder.employeeId);
+        } else {
+          console.warn('Employee ID not found in loaded employees:', workOrder.employeeId);
+        }
+      }
+      
+      console.log('Form value after timeout:', this.form.value);
+    }, 100);
   }
 
   private formatDateForInput(dateString: string | undefined): string {
@@ -271,6 +295,36 @@ export class FormWorkOrderPage implements OnInit {
       },
       error: () => {
         this.loadingEquipments = false;
+      }
+    });
+  }
+
+  private loadEquipmentsAndThenWorkOrder() {
+    this.loadingEquipments = true;
+    console.log('Loading equipments for edit mode...');
+    this.equipmentsService.getEquipments({
+      page: 0,
+      size: 1000, // Carrega todos os equipamentos
+      sortBy: 'identification',
+      sortDirection: 'ASC'
+    }, {
+      // No modo edição, não filtra por status para incluir equipamentos inativos
+      // que podem estar vinculados à ordem de serviço
+    }).subscribe({
+      next: (response) => {
+        this.equipments = response.content;
+        console.log('Equipments loaded successfully (all statuses):', this.equipments);
+        this.loadingEquipments = false;
+        // Após carregar equipamentos, carrega funcionários e a ordem de serviço
+        this.loadEmployees();
+        this.loadWorkOrder();
+      },
+      error: (error) => {
+        console.error('Error loading equipments:', error);
+        this.loadingEquipments = false;
+        // Mesmo com erro, tenta carregar funcionários e ordem de serviço
+        this.loadEmployees();
+        this.loadWorkOrder();
       }
     });
   }
