@@ -189,12 +189,30 @@ export class MetricsPage implements OnInit {
     
     this.metricsService.getCompleteMetrics(this.filters).subscribe({
       next: (data: MetricResponseDTO) => {
+        console.log('=== DADOS COMPLETOS DA API ===');
+        console.log('Response completa:', data);
+        console.log('WorkOrderMetrics completo:', data.workOrderMetrics);
+        
         this.metricsData = data;
         this.generalMetrics = data.generalMetrics;
         this.workOrderMetrics = data.workOrderMetrics;
         this.equipmentMetrics = data.equipmentMetrics;
         this.timeSeriesMetrics = data.timeSeriesMetrics;
         this.inventoryMetrics = data.inventoryMetrics;
+        
+        // Debug específico para tipos de manutenção
+        console.log('=== ANÁLISE DOS TIPOS DE MANUTENÇÃO ===');
+        console.log('Preventive:', data.workOrderMetrics?.preventive);
+        console.log('Corrective:', data.workOrderMetrics?.corrective);
+        console.log('Predictive:', data.workOrderMetrics?.predictive);
+        
+        // Verificar se os dados existem
+        if (data.workOrderMetrics) {
+          console.log('Total Work Orders:', data.workOrderMetrics.totalWorkOrders);
+          console.log('Preventive count:', data.workOrderMetrics.preventive?.count);
+          console.log('Corrective count:', data.workOrderMetrics.corrective?.count);
+          console.log('Predictive count:', data.workOrderMetrics.predictive?.count);
+        }
         
         // Debug: Log dos dados de equipamentos MTBF
         console.log('Equipment MTBF Data:', this.equipmentMetrics?.equipmentMTBF);
@@ -291,21 +309,60 @@ export class MetricsPage implements OnInit {
   }
 
   private updateCharts() {
-    if (!this.workOrderMetrics) return;
+    if (!this.workOrderMetrics) {
+      console.log('WorkOrderMetrics is null or undefined');
+      return;
+    }
 
-    // Atualizar gráfico de pizza (tipos de manutenção)
+    console.log('=== UPDATE CHARTS ===');
+    console.log('WorkOrderMetrics:', this.workOrderMetrics);
+    console.log('Preventive:', this.workOrderMetrics?.preventive);
+    console.log('Corrective:', this.workOrderMetrics?.corrective);
+    console.log('Predictive:', this.workOrderMetrics?.predictive);
+
+    // CORREÇÃO: Calcular percentuais baseado nos counts ao invés de usar percentageOfTotal
+    const preventiveCount = this.workOrderMetrics?.preventive?.count || 0;
+    const correctiveCount = this.workOrderMetrics?.corrective?.count || 0;
+    const predictiveCount = this.workOrderMetrics?.predictive?.count || 0;
+    
+    const totalCount = preventiveCount + correctiveCount + predictiveCount;
+    
+    console.log('Counts por tipo:', {
+      preventive: preventiveCount,
+      corrective: correctiveCount,
+      predictive: predictiveCount,
+      total: totalCount
+    });
+
+    // Calcular percentuais corretos baseado nos counts
+    const preventivePercentage = totalCount > 0 ? (preventiveCount / totalCount) * 100 : 0;
+    const correctivePercentage = totalCount > 0 ? (correctiveCount / totalCount) * 100 : 0;
+    const predictivePercentage = totalCount > 0 ? (predictiveCount / totalCount) * 100 : 0;
+
+    console.log('Percentages calculados corretamente:', {
+      preventive: preventivePercentage,
+      corrective: correctivePercentage,
+      predictive: predictivePercentage
+    });
+
+    // Verificar se todos os valores são zero
+    const totalPercentage = preventivePercentage + correctivePercentage + predictivePercentage;
+    console.log('Total percentage:', totalPercentage);
+
+    if (totalCount === 0) {
+      console.warn('ATENÇÃO: Não há ordens de serviço para exibir no gráfico!');
+    }
+
     this.pieChartData = {
       labels: ['Preventiva', 'Corretiva', 'Preditiva'],
       datasets: [{
-        data: [
-          this.workOrderMetrics?.preventive?.percentageOfTotal || 0,
-          this.workOrderMetrics?.corrective?.percentageOfTotal || 0,
-          this.workOrderMetrics?.predictive?.percentageOfTotal || 0
-        ],
+        data: [preventivePercentage, correctivePercentage, predictivePercentage],
         backgroundColor: ['#28a745', '#dc3545', '#ffc107'],
         borderWidth: 2
       }]
     };
+
+    console.log('PieChartData final:', this.pieChartData);
 
     // Atualizar gráfico de linha (custos mensais)
     if (this.timeSeriesMetrics?.monthlyCosts) {
@@ -489,11 +546,22 @@ export class MetricsPage implements OnInit {
     if (!lastFailureDate) return 'N/A';
     
     try {
-      // Tentar diferentes formatos de data
       let date: Date;
       
-      // Se já está em formato ISO
-      if (lastFailureDate.includes('T') || lastFailureDate.includes('Z')) {
+      // Verificar se está no formato brasileiro DD/MM/YYYY
+      if (lastFailureDate.includes('/') && lastFailureDate.length === 10) {
+        const parts = lastFailureDate.split('/');
+        if (parts.length === 3) {
+          const day = parseInt(parts[0], 10);
+          const month = parseInt(parts[1], 10) - 1; // Mês é 0-indexado no JavaScript
+          const year = parseInt(parts[2], 10);
+          
+          date = new Date(year, month, day);
+        } else {
+          return 'Formato inválido';
+        }
+      } else if (lastFailureDate.includes('T') || lastFailureDate.includes('Z')) {
+        // Se já está em formato ISO
         date = new Date(lastFailureDate);
       } else {
         // Tentar parsear como string simples
