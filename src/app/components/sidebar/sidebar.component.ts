@@ -20,7 +20,6 @@ export class SidebarComponent {
 
   menuItems: MenuItem[] = [
     { icon: 'assets/icons/home-icon.svg', label: 'Inicio', route: '/home' },
-    { icon: 'assets/icons/calendar-icon.svg', label: 'Calendários', route: '/calendar' },
     { icon: 'assets/icons/building-icon.svg', label: 'Edificações', route: '/buildings' },
     { icon: 'assets/icons/equipments-icon.svg', label: 'Equipamentos', route: '/equipments' },
     { icon: 'assets/icons/employee-icon.svg', label: 'Funcionários', route: '/employees' },
