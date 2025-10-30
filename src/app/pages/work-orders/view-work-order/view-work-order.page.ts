@@ -16,6 +16,8 @@ import { TaskViewModalComponent } from 'src/app/components/task-view-modal/task-
 import { TaskEditModalComponent } from 'src/app/components/task-edit-modal/task-edit-modal.component';
 import { InventoryModalComponent } from 'src/app/components/inventory-modal/inventory-modal.component';
 import { WorkOrderInventoryResponse } from 'src/app/models/work-order-inventory.interface';
+import { WorkOrderPdfService } from 'src/app/services/pdf/work-order-pdf.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-view-work-order',
@@ -50,7 +52,8 @@ export class ViewWorkOrderPage implements OnInit {
     private toastController: ToastController,
     private tasksService: TasksService,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private workOrderPdfService: WorkOrderPdfService
   ) { }
 
   ngOnInit() {
@@ -456,7 +459,7 @@ export class ViewWorkOrderPage implements OnInit {
     await toast.present();
   }
 
-  private presentToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+  presentToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
     // Compatibilidade com chamadas existentes
     this.showToast(message, color);
   }
@@ -554,6 +557,29 @@ export class ViewWorkOrderPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async onSharePdf(): Promise<void> {
+    if (!this.workOrder) return;
+    try {
+      const tasks = this.tasks.length > 0
+        ? this.tasks
+        : await firstValueFrom(this.tasksService.search(
+            { page: '0', size: '100', sortBy: 'startDate', sortDirection: 'DESC' },
+            { workOrderId: this.workOrderId as string }
+          ).pipe());
+
+      const inventory = this.inventoryItems.length > 0
+        ? this.inventoryItems
+        : await firstValueFrom(this.workOrdersService.getWorkOrderInventory(this.workOrderId as string));
+
+      const tasksList = Array.isArray((tasks as any).content) ? (tasks as any).content : (tasks as any);
+
+      await this.workOrderPdfService.generateAndShare(this.workOrder, tasksList, inventory);
+      this.presentToast('PDF gerado com sucesso.');
+    } catch {
+      this.presentToast('Falha ao gerar PDF.', 'danger');
+    }
   }
 
 }
