@@ -5,6 +5,81 @@
     <div class="content-container">
       <h1>Bem-vindo ao Inova Predial</h1>
       <p>Gerencie seu condomínio de forma eficiente e inteligente.</p>
+
+      <div class="cards-grid">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6" size-lg="3">
+              <ion-card button="true" (click)="navigateTo('/buildings')">
+                <ion-item lines="none">
+                  <ion-avatar slot="start">
+                    <img src="assets/icons/building-icon.svg" alt="Prédios" />
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>Prédios</h2>
+                    <h1>{{ isLoading ? '—' : counts.buildings }}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="3">
+              <ion-card button="true" (click)="navigateTo('/equipments')">
+                <ion-item lines="none">
+                  <ion-avatar slot="start">
+                    <img src="assets/icons/equipments-icon.svg" alt="Equipamentos" />
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>Equipamentos</h2>
+                    <h1>{{ isLoading ? '—' : counts.equipments }}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="3">
+              <ion-card button="true" (click)="navigateTo('/work-orders')">
+                <ion-item lines="none">
+                  <ion-avatar slot="start">
+                    <img src="assets/icons/order-service-icon.svg" alt="Ordens de Serviço" />
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>Ordens de Serviço</h2>
+                    <h1>{{ isLoading ? '—' : counts.workOrders }}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" size-lg="3">
+              <ion-card button="true" (click)="navigateTo('/employees')">
+                <ion-item lines="none">
+                  <ion-avatar slot="start">
+                    <img src="assets/icons/employee-icon.svg" alt="Colaboradores" />
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>Colaboradores</h2>
+                    <h1>{{ isLoading ? '—' : counts.employees }}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div *ngIf="hasError" class="error-hint">Não foi possível carregar os contadores.</div>
     </div>
   </ion-content>
+  <ion-footer class="home-footer">
+    <ion-toolbar>
+      <div class="footer-content">
+        <div class="footer-version">v1.0 – Protótipo Acadêmico</div>
+        <div class="footer-credits">
+          <div>Desenvolvido por Ana Júlia Espindula Geremias, Leandro Cerqueira Marcelino e Luan Limas de Souza</div>
+          <div>Orientação: Prof. Fernando Del Moro</div>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
 </div>

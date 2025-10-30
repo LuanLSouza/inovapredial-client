@@ -183,10 +183,25 @@
     margin-bottom: 8px;
     line-height: 1;
   }
+
+  .metric-value-work {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
   
   .metric-label {
     font-size: 14px;
     color: var(--ion-color-medium-shade);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .metric-label-work {
+    font-size: 14px;
+    color: white;
     font-weight: 500;
     line-height: 1.2;
   }

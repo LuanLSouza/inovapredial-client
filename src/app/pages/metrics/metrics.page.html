@@ -172,26 +172,26 @@
           <ion-row>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card success">
-                <div class="metric-value">{{workOrderMetrics?.completedWorkOrders || 0}}</div>
-                <div class="metric-label">Completas</div>
+                <div class="metric-value-work">{{workOrderMetrics?.completedWorkOrders || 0}}</div>
+                <div class="metric-label-work">Completas</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card danger">
-                <div class="metric-value">{{workOrderMetrics?.cancelledWorkOrders || 0}}</div>
-                <div class="metric-label">Canceladas</div>
+                <div class="metric-value-work">{{workOrderMetrics?.cancelledWorkOrders || 0}}</div>
+                <div class="metric-label-work">Canceladas</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card warning">
-                <div class="metric-value">{{workOrderMetrics?.inProgressWorkOrders || 0}}</div>
-                <div class="metric-label">Em Progresso</div>
+                <div class="metric-value-work">{{workOrderMetrics?.inProgressWorkOrders || 0}}</div>
+                <div class="metric-label-work">Em Progresso</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card primary">
-                <div class="metric-value">{{formatPercentage(workOrderMetrics?.completionRate || 0)}}</div>
-                <div class="metric-label">Taxa de Conclusão</div>
+                <div class="metric-value-work">{{formatPercentage(workOrderMetrics?.completionRate || 0)}}</div>
+                <div class="metric-label-work">Taxa de Conclusão</div>
               </div>
             </ion-col>
           </ion-row>
@@ -239,7 +239,7 @@
     <!-- Seção de Séries Temporais -->
     <ion-card class="metrics-section">
       <ion-card-header>
-        <ion-card-title>Séries Temporais</ion-card-title>
+        <ion-card-title>Séries Mensais  </ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid>
@@ -279,26 +279,26 @@
           <ion-row>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card success">
-                <div class="metric-value">{{equipmentMetrics?.statusDistribution?.active || 0}}</div>
-                <div class="metric-label">Ativos</div>
+                <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.active || 0}}</div>
+                <div class="metric-label-work">Ativos</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card medium">
-                <div class="metric-value">{{equipmentMetrics?.statusDistribution?.inactive || 0}}</div>
-                <div class="metric-label">Inativos</div>
+                <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.inactive || 0}}</div>
+                <div class="metric-label-work">Inativos</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card warning">
-                <div class="metric-value">{{equipmentMetrics?.statusDistribution?.maintenance || 0}}</div>
-                <div class="metric-label">Em Manutenção</div>
+                <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.maintenance || 0}}</div>
+                <div class="metric-label-work">Em Manutenção</div>
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="3">
               <div class="metric-card danger">
-                <div class="metric-value">{{equipmentMetrics?.statusDistribution?.outOfService || 0}}</div>
-                <div class="metric-label">Fora de Serviço</div>
+                <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.outOfService || 0}}</div>
+                <div class="metric-label-work">Fora de Serviço</div>
               </div>
             </ion-col>
           </ion-row>

@@ -26,6 +26,77 @@
   line-height: 1.5;
 }
 
+// Cards grid
+.cards-grid {
+  margin-top: 24px;
+
+  ion-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  ion-item {
+    --inner-padding-end: 12px;
+    --inner-padding-start: 12px;
+  }
+
+  ion-avatar {
+    width: 44px;
+    height: 44px;
+    background: #F2F7FB;
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  ion-label h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #5A6B7B;
+    margin: 0;
+  }
+
+  ion-label h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #1E4D6B;
+    margin: 4px 0 0 0;
+  }
+}
+
+.error-hint {
+  margin-top: 12px;
+  color: #C0392B;
+  font-size: 13px;
+}
+
+// Footer
+.home-footer {
+  --background: #ffffff;
+  border-top: 1px solid #E6ECF1;
+
+  .footer-content {
+    width: 100%;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  .footer-version {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #5A6B7B;
+    margin-bottom: 4px;
+  }
+
+  .footer-credits {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #7A8A99;
+    line-height: 1.4;
+  }
+}
+
 // Responsive adjustments para conteúdo
 @media (max-width: 768px) {
   .content-container {
