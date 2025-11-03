@@ -66,7 +66,7 @@ export class WorkOrderPdfService {
     inventoryItems: WorkOrderInventoryResponse[],
     logoDataUrl?: string
   ): any {
-    const title = `Ordem de Serviço ${workOrder.id ? `#${workOrder.id}` : ''}`.trim();
+    const title = `Ordem de Serviço`.trim();
 
     const infoRows: Array<[string, string]> = [
       ['Descrição', workOrder.description || '—'],
