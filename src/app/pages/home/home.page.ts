@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, AlertController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
-import { BuildingsService } from '../services/buildings.service';
-import { EquipmentsService } from '../services/equipments.service';
-import { WorkOrdersService } from '../services/work-orders.service';
-import { EmployeesService } from '../services/employees.service';
+import { BuildingsService } from '../../services/buildings.service';
+import { EquipmentsService } from '../../services/equipments.service';
+import { WorkOrdersService } from '../../services/work-orders.service';
+import { EmployeesService } from '../../services/employees.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
