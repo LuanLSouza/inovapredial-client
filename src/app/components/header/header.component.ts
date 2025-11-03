@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Subject, takeUntil, distinctUntilChanged } from 'rxjs';
 import { UserInfo } from 'src/app/models/userinfo.interface';
@@ -7,6 +7,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SelectedBuildingService } from 'src/app/services/selected-building.service';
 import { BuildingSelectionModalComponent } from '../building-selection-modal/building-selection-modal.component';
 import { Building } from 'src/app/models/building.interface';
+import { AddUserModalComponent } from '../add-user-modal/add-user-modal.component';
+import { OwnUsersService } from 'src/app/services/api/own-users.service';
+import { OwnUserRequestDTO } from 'src/app/models/own-user.dto';
+import { addIcons } from 'ionicons';
+import { ellipsisVertical } from 'ionicons/icons';
 
 
 @Component({
@@ -27,8 +32,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private selectedBuildingService: SelectedBuildingService,
-    private modalController: ModalController
-  ) {}
+    private modalController: ModalController,
+    private toastController: ToastController,
+    private ownUsersService: OwnUsersService,
+  ) {
+    addIcons({ 'ellipsis-vertical': ellipsisVertical });
+  }
 
   ngOnInit() {
     // Armazenar o ID da edificação inicial
@@ -108,5 +117,42 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   private reloadPage(): void {
     window.location.reload();
+  }
+
+  onAddUserClick(): void {
+    this.openAddUserModal();
+  }
+
+  private async openAddUserModal(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: AddUserModalComponent,
+      presentingElement: await this.modalController.getTop()
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data?.created && data.dto) {
+      const dto = data.dto as OwnUserRequestDTO;
+      this.ownUsersService.create(dto).subscribe({
+        next: async () => {
+          await this.presentToast('Usuário criado com sucesso.', 'success');
+        },
+        error: async (err) => {
+          console.error(err);
+          await this.presentToast('Falha ao criar usuário.', 'danger');
+        }
+      });
+    }
+  }
+
+  private async presentToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2500,
+      color,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 }

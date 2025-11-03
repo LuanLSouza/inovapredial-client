@@ -20,6 +20,11 @@
             <div class="user-name">{{ (userInfo$ | async)?.name }}</div>
             <div class="user-role">{{ (userInfo$ | async)?.role }}</div>
           </div>
+
+          <ion-button fill="clear" id="header-actions-trigger" aria-label="Ações">
+            <ion-icon name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+
           <ion-button fill="clear" class="logout-button" (click)="onLogoutClick()">
             <img src="assets/icons/logout-icon.svg" alt="Logout" class="logout-icon">
           </ion-button>
@@ -27,4 +32,15 @@
       </div>
     </div>
   </ion-toolbar>
+  <ion-popover trigger="header-actions-trigger" side="bottom" alignment="end">
+    <ng-template>
+      <ion-content>
+        <ion-list inset="true">
+          <ion-item button detail="true" (click)="onAddUserClick()">
+            <ion-label>Adicionar usuário</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
 </ion-header>

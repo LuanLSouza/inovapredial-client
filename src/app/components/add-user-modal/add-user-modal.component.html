@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Novo usuário</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()" [disabled]="isSubmitting">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+    <ion-list inset>
+      <ion-item>
+        <ion-input
+          label="Username"
+          label-placement="stacked"
+          formControlName="username"
+          autocomplete="off"
+          placeholder="jdoe"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          type="email"
+          label="Email"
+          label-placement="stacked"
+          formControlName="email"
+          autocomplete="off"
+          placeholder="email@empresa.com"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          type="password"
+          label="Senha"
+          label-placement="stacked"
+          formControlName="password"
+          autocomplete="new-password"
+          placeholder="••••••••"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Perfil" label-placement="stacked" formControlName="role">
+          <ion-select-option value="USER">Usuário</ion-select-option>
+          <ion-select-option value="ADMIN">Admin</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Edificações" label-placement="stacked" multiple="true" formControlName="buildingIds">
+          <ion-select-option *ngFor="let b of (buildings$ | async)" [value]="b.id">{{ b.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="actions">
+      <ion-button type="button" fill="clear" (click)="close()" [disabled]="isSubmitting">Cancelar</ion-button>
+      <ion-button type="submit" [disabled]="isSubmitting || form.invalid">
+        <ion-spinner *ngIf="isSubmitting" name="lines-small" slot="start"></ion-spinner>
+        Salvar
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
+
+
