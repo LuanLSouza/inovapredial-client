@@ -8,7 +8,7 @@ import { SelectedBuildingService } from 'src/app/services/selected-building.serv
 import { BuildingSelectionModalComponent } from '../building-selection-modal/building-selection-modal.component';
 import { Building } from 'src/app/models/building.interface';
 import { AddUserModalComponent } from '../add-user-modal/add-user-modal.component';
-import { OwnUsersService } from 'src/app/services/api/own-users.service';
+import { OwnUsersService } from 'src/app/services/own-users.service';
 import { OwnUserRequestDTO } from 'src/app/models/own-user.dto';
 import { addIcons } from 'ionicons';
 import { ellipsisVertical } from 'ionicons/icons';
