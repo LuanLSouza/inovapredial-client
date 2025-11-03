@@ -6,13 +6,15 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { EquipmentsService } from 'src/app/services/equipments.service';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
 import { Equipment, EquipmentRequest } from 'src/app/models/equipment.interface';
+import { ImageUploadComponent } from 'src/app/components/image-upload/image-upload.component';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-form-equipment',
   templateUrl: './form-equipment.page.html',
   styleUrls: ['./form-equipment.page.scss'],
   standalone: true,
-  imports: [...IONIC_IMPORTS, CommonModule, ReactiveFormsModule]
+  imports: [...IONIC_IMPORTS, CommonModule, ReactiveFormsModule, ImageUploadComponent]
 })
 export class FormEquipmentPage implements OnInit {
   form!: FormGroup;
@@ -22,6 +24,7 @@ export class FormEquipmentPage implements OnInit {
   isEditMode = false;
   equipmentId: string | null = null;
   pageTitle = 'Novo Equipamento';
+  oldImageUrl: string | null = null;
 
   classificationOptions = [
     { label: 'Componente', value: 'COMPONENT' },
@@ -46,7 +49,8 @@ export class FormEquipmentPage implements OnInit {
     private route: ActivatedRoute,
     private equipmentsService: EquipmentsService,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private imageService: ImageService
   ) { 
     this.initializeForm();
   }
@@ -95,7 +99,7 @@ export class FormEquipmentPage implements OnInit {
     }
   }
 
-  submit() {
+  async submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -104,10 +108,18 @@ export class FormEquipmentPage implements OnInit {
     const payload: EquipmentRequest = this.form.value;
     this.saving = true;
     
+    // Se a imagem foi alterada e havia uma imagem antiga, remove a antiga
+    const newImageUrl = payload.imageUrl;
+    const imageChanged = this.isEditMode && this.oldImageUrl && this.oldImageUrl !== newImageUrl;
+    
     if (this.isEditMode && this.equipmentId) {
       // Modo edição
       this.equipmentsService.updateEquipment(this.equipmentId, payload).subscribe({
-        next: () => {
+        next: async () => {
+          // Remove imagem antiga se foi substituída
+          if (imageChanged && this.oldImageUrl) {
+            await this.imageService.deleteImage(this.oldImageUrl);
+          }
           this.saving = false;
           this.router.navigate(['/equipments']);
         },
@@ -213,6 +225,9 @@ export class FormEquipmentPage implements OnInit {
   }
 
   private populateForm(equipment: Equipment) {
+    // Salva a URL da imagem antiga para possível remoção posterior
+    this.oldImageUrl = equipment.imageUrl || null;
+    
     this.form.patchValue({
       identification: equipment.identification,
       description: equipment.description || '',

@@ -7,6 +7,7 @@ import { Equipment, EquipmentSearchParams, EquipmentFilter } from 'src/app/model
 import { PaginatedResponse } from 'src/app/models/paginatedResponse';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
 import { AlertController, ToastController } from '@ionic/angular/standalone';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-equipments',
@@ -70,7 +71,8 @@ export class EquipmentsPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -328,12 +330,20 @@ export class EquipmentsPage implements OnInit {
     return this.isSortedBy(field) ? this.currentSortDirection : null;
   }
   
-  private deleteEquipment(equipment: Equipment) {
+  private async deleteEquipment(equipment: Equipment) {
     this.loading = true;
+    
+    // Salva a URL da imagem para remoção após deletar o equipamento
+    const imageUrlToDelete = equipment.imageUrl;
     
     this.equipmentsService.deleteEquipment(equipment.id!)
       .subscribe({
-        next: () => {
+        next: async () => {
+          // Remove a imagem do sistema de arquivos se existir
+          if (imageUrlToDelete && !imageUrlToDelete.startsWith('http')) {
+            await this.imageService.deleteImage(imageUrlToDelete);
+          }
+          
           this.showToast('Equipamento excluído com sucesso!', 'success');
           this.loadEquipments(); // Recarrega a lista
         },

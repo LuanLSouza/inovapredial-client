@@ -299,20 +299,19 @@
             </ion-grid>
           </div>
 
-          <!-- URL da Imagem -->
+          <!-- Upload de Imagem -->
           <div class="form-section">
             <h3 class="section-title">Imagem</h3>
             
             <ion-grid>
               <ion-row>
                 <ion-col size="12">
-                  <ion-item class="form-item">
-                    <ion-label position="stacked">URL da Imagem</ion-label>
-                    <ion-input 
-                      formControlName="imageUrl"
-                      placeholder="Digite a URL da imagem do equipamento">
-                    </ion-input>
-                  </ion-item>
+                  <app-image-upload
+                    formControlName="imageUrl"
+                    category="equipments"
+                    label="Imagem do Equipamento"
+                    placeholder="Selecione ou capture uma imagem do equipamento">
+                  </app-image-upload>
                 </ion-col>
               </ion-row>
             </ion-grid>

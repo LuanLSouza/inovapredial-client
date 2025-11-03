@@ -8,6 +8,7 @@ import { ToastController, ModalController, AlertController } from '@ionic/angula
 import { EquipmentPlanResponse } from 'src/app/models/equipment-plan.interface';
 import { EquipmentPlansService } from 'src/app/services/equipment-plans.service';
 import { EquipmentPlanModalComponent } from 'src/app/components/equipment-plan-modal/equipment-plan-modal.component';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-view-equipment',
@@ -23,6 +24,8 @@ export class ViewEquipmentPage implements OnInit {
   equipmentId: string | null = null;
   equipmentPlans: EquipmentPlanResponse[] = [];
   loadingPlans = false;
+  imageUrl: string | null = null;
+  loadingImage = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +34,8 @@ export class ViewEquipmentPage implements OnInit {
     private equipmentPlansService: EquipmentPlansService,
     private toastController: ToastController,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -54,6 +58,7 @@ export class ViewEquipmentPage implements OnInit {
         next: (equipment: Equipment) => {
           this.equipment = equipment;
           this.loading = false;
+          this.loadImage();
           this.loadEquipmentPlans();
         },
         error: (error) => {
@@ -258,5 +263,36 @@ export class ViewEquipmentPage implements OnInit {
           this.showToast('Erro ao atualizar status do plano.', 'danger');
         }
       });
+  }
+
+  /**
+   * Carrega a imagem do equipamento
+   */
+  private async loadImage() {
+    if (!this.equipment?.imageUrl) {
+      this.imageUrl = null;
+      return;
+    }
+
+    // Verifica se é uma URL externa ou caminho local
+    if (this.equipment.imageUrl.startsWith('http://') || 
+        this.equipment.imageUrl.startsWith('https://') ||
+        this.equipment.imageUrl.startsWith('/')) {
+      // URL externa ou caminho absoluto
+      this.imageUrl = this.equipment.imageUrl;
+      return;
+    }
+
+    // Caminho local - carrega usando ImageService
+    this.loadingImage = true;
+    try {
+      const loadedUrl = await this.imageService.loadImage(this.equipment.imageUrl);
+      this.imageUrl = loadedUrl;
+    } catch (error) {
+      console.error('Erro ao carregar imagem:', error);
+      this.imageUrl = null;
+    } finally {
+      this.loadingImage = false;
+    }
   }
 }

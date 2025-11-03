@@ -1,0 +1,49 @@
+<div class="image-upload-container">
+  <ion-label position="stacked" class="upload-label">{{ label }}</ion-label>
+  
+  <div class="image-preview-container">
+    @if (loading) {
+      <div class="loading-overlay">
+        <ion-spinner name="crescent"></ion-spinner>
+        <ion-label>Processando imagem...</ion-label>
+      </div>
+    } @else if (imagePreview) {
+      <div class="preview-wrapper">
+        <img [src]="imagePreview" alt="Preview" class="preview-image" />
+        <div class="image-actions">
+          <ion-button 
+            fill="clear" 
+            size="small" 
+            color="danger"
+            (click)="removeImage()"
+            [disabled]="loading">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button 
+            fill="clear" 
+            size="small" 
+            color="primary"
+            (click)="selectImage()"
+            [disabled]="loading">
+            <ion-icon name="camera" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-state" (click)="selectImage()">
+        <ion-icon name="image" class="empty-icon"></ion-icon>
+        <ion-label class="empty-label">{{ placeholder }}</ion-label>
+        <ion-button fill="outline" size="small" class="select-button">
+          Selecionar Imagem
+        </ion-button>
+      </div>
+    }
+  </div>
+
+  @if (error) {
+    <div class="error-message">
+      <ion-label color="danger">{{ error }}</ion-label>
+    </div>
+  }
+</div>
+
