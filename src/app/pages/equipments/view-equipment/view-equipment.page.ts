@@ -242,7 +242,7 @@ export class ViewEquipmentPage implements OnInit {
   onToggleRealized(plan: EquipmentPlanResponse) {
     if (!this.equipmentId) return;
 
-    const updateRequest = { realized: !plan.realized };
+    const updateRequest = { realized: true };
 
     this.equipmentPlansService.updateRealized(this.equipmentId, plan.planId, updateRequest)
       .subscribe({
@@ -251,10 +251,7 @@ export class ViewEquipmentPage implements OnInit {
           if (index !== -1) {
             this.equipmentPlans[index] = updatedPlan;
           }
-          this.showToast(
-            updatedPlan.realized ? 'Plano marcado como realizado!' : 'Plano marcado como não realizado!', 
-            'success'
-          );
+          this.showToast('Plano marcado como realizado!', 'success');
         },
         error: (error) => {
           console.error('Erro ao atualizar status:', error);

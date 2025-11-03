@@ -187,11 +187,12 @@
                         <div class="plan-header">
                           <ion-label class="plan-description">{{ plan.planDescription }}</ion-label>
                           <div class="plan-actions">
-                            <ion-checkbox 
-                              [checked]="plan.realized" 
-                              (ionChange)="onToggleRealized(plan)"
-                              class="realized-checkbox">
-                            </ion-checkbox>
+                            <ion-button 
+                              fill="outline" 
+                              size="small"
+                              (click)="onToggleRealized(plan)">
+                              Marcar como realizado
+                            </ion-button>
                             <ion-button 
                               fill="clear" 
                               color="danger" 
@@ -214,16 +215,6 @@
                         <div class="plan-info">
                           <ion-label class="info-label">Próxima Data</ion-label>
                           <ion-label class="info-value">{{ formatDate(plan.nextDueDate) }}</ion-label>
-                        </div>
-                      </ion-col>
-                      <ion-col size="12" size-md="4">
-                        <div class="plan-info">
-                          <ion-label class="info-label">Status</ion-label>
-                          <ion-badge 
-                            [color]="plan.realized ? 'success' : 'warning'" 
-                            class="status-badge">
-                            {{ plan.realized ? 'Realizado' : 'Pendente' }}
-                          </ion-badge>
                         </div>
                       </ion-col>
                     </ion-row>
