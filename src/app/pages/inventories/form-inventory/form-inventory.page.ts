@@ -190,7 +190,7 @@ export class FormInventoryPage implements OnInit {
     
     const searchParams: EmployeeSearchParams = {
       page: 0,
-      size: 1000, // Carrega todos os funcionários
+      size: 1000,
       sortBy: 'name',
       sortDirection: 'ASC'
     };
@@ -199,19 +199,16 @@ export class FormInventoryPage implements OnInit {
       .subscribe({
         next: (response: PaginatedResponse<Employee>) => {
           this.employees = response.content;
-          console.log('Employees loaded:', this.employees);
           this.employeeOptions = [
             { label: 'Selecione um funcionário (opcional)', value: '' },
             ...this.employees.map(employee => ({
-              label: employee.name,
+              label: `${employee.name} - ${employee.specialty}`,
               value: employee.id
             }))
           ];
-          console.log('Employee options:', this.employeeOptions);
           this.loadingEmployees = false;
         },
         error: (error) => {
-          console.error('Erro ao carregar funcionários:', error);
           this.loadingEmployees = false;
         }
       });
