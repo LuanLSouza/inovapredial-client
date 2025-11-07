@@ -48,12 +48,12 @@ export class EquipmentPlanModalComponent implements OnInit {
   private initializeForm() {
     this.form = this.fb.group({
       // Campos para plano existente
-      planId: [''],
+      planId: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       
       // Campos para novo plano
-      description: ['', [Validators.required]],
-      maintenanceType: ['PREVENTIVE', [Validators.required]],
+      description: [''],
+      maintenanceType: ['PREVENTIVE'],
       frequencyDays: [30, [Validators.required, Validators.min(1)]],
       requiresShutdown: [false]
     });
@@ -82,12 +82,14 @@ export class EquipmentPlanModalComponent implements OnInit {
     
     if (this.createNewPlan) {
       this.f.planId.clearValidators();
+      this.f.planId.setValue(''); // Limpa o valor
       this.f.description.setValidators([Validators.required]);
       this.f.maintenanceType.setValidators([Validators.required]);
       this.f.frequencyDays.setValidators([Validators.required, Validators.min(1)]);
     } else {
       this.f.planId.setValidators([Validators.required]);
       this.f.description.clearValidators();
+      this.f.description.setValue('');
       this.f.maintenanceType.clearValidators();
       this.f.frequencyDays.clearValidators();
     }
