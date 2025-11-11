@@ -13,7 +13,7 @@
   <!-- Toggle para múltiplas tarefas -->
   <div class="multiple-tasks-toggle">
     <ion-item>
-      <ion-checkbox [(ngModel)]="multipleTasks" (ionChange)="toggleMultipleTasks()"></ion-checkbox>
+      <ion-checkbox slot="start" class="checkbox-custom" [checked]="multipleTasks" (ionChange)="toggleMultipleTasks($event)"></ion-checkbox>
       <ion-label>Adicionar múltiplas tarefas</ion-label>
     </ion-item>
   </div>

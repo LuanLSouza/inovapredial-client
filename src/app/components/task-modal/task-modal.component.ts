@@ -85,10 +85,14 @@ export class TaskModalComponent {
     }
   }
 
-  toggleMultipleTasks() {
-    this.multipleTasks = !this.multipleTasks;
-    if (this.multipleTasks && this.taskForms.length === 0) {
-      this.addTaskForm();
+  toggleMultipleTasks(event: any) {
+    this.multipleTasks = event.detail.checked;
+    if (this.multipleTasks) {
+      if (this.taskForms.length === 0) {
+        this.addTaskForm();
+      }
+    } else {
+      this.taskForms = [];
     }
   }
 

@@ -76,6 +76,31 @@ ion-col {
   padding: 8px;
   background-color: var(--ion-color-light);
   border-radius: 8px;
+  
+  ion-item {
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    --min-height: auto;
+    --inner-padding-start: 0;
+    --inner-padding-top: 0;
+    --inner-padding-bottom: 0;
+  }
+  
+  ion-checkbox {
+    --size: 20px;
+    margin-inline-end: 8px;
+    margin-right: 8px;
+  }
+  
+  ion-label {
+    margin-left: 0;
+    margin-inline-start: 0;
+  }
+}
+
+.checkbox-custom {
+  margin-inline-end: 8px !important;
+  margin-right: 8px !important;
 }
 
 .task-form-container {
