@@ -59,7 +59,6 @@ export class AddUserModalComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    // A integração real com a API será feita após criação dos serviços.
     this.isSubmitting = true;
     try {
       const dto = this.form.value;

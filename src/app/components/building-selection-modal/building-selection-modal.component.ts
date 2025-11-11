@@ -43,7 +43,7 @@ export class BuildingSelectionModalComponent implements OnInit, OnDestroy {
     
     const searchParams: BuildingSearchParams = {
       page: 0,
-      size: 100, // Carregar todas as edificações para seleção
+      size: 100, 
       sortBy: 'name',
       sortDirection: 'ASC'
     };
@@ -76,37 +76,20 @@ export class BuildingSelectionModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  /**
-   * Seleciona uma edificação
-   * @param building Edificação selecionada
-   */
   selectBuilding(building: Building) {
     this.selectedBuildingService.setSelectedBuilding(building);
     this.modalController.dismiss(building);
   }
 
-  /**
-   * Fecha o modal sem selecionar
-   */
   dismiss() {
     this.modalController.dismiss();
   }
 
-  /**
-   * Verifica se uma edificação está selecionada
-   * @param building Edificação para verificar
-   * @returns true se a edificação está selecionada
-   */
   isSelected(building: Building): boolean {
     const selectedBuilding = this.selectedBuildingService.getSelectedBuilding();
     return selectedBuilding?.id === building.id;
   }
 
-  /**
-   * Obtém o label do tipo de edificação
-   * @param buildingType Tipo da edificação
-   * @returns Label formatado
-   */
   getBuildingTypeLabel(buildingType: string): string {
     const labels: { [key: string]: string } = {
       'RESIDENTIAL': 'Residencial',
@@ -118,11 +101,6 @@ export class BuildingSelectionModalComponent implements OnInit, OnDestroy {
     return labels[buildingType] || buildingType;
   }
 
-  /**
-   * Formata o endereço como string
-   * @param address Endereço da edificação
-   * @returns String formatada do endereço
-   */
   getAddressString(address: any): string {
     if (!address) return '';
     

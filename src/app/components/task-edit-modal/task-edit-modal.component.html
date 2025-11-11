@@ -9,8 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <!-- Mensagem de aviso para tarefas concluídas -->
+<ion-content class="ion-padding"> 
   <ion-alert *ngIf="isTaskCompleted" class="warning-alert">
     <ion-icon name="warning" slot="start"></ion-icon>
     <ion-label>Esta tarefa está concluída e não pode ser editada.</ion-label>
@@ -18,7 +17,6 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()">
     
-    <!-- Informações Básicas -->
     <div class="form-section">
       <h3 class="section-title">Informações Básicas</h3>
       
@@ -56,7 +54,6 @@
       </ion-item>
     </div>
 
-    <!-- Datas e Tempo -->
     <div class="form-section">
       <h3 class="section-title">Datas e Tempo</h3>
       
@@ -117,7 +114,6 @@
       </ion-grid>
     </div>
 
-    <!-- Custo e Responsável -->
     <div class="form-section">
       <h3 class="section-title">Custo e Responsável</h3>
       
@@ -156,8 +152,6 @@
         </ion-row>
       </ion-grid>
     </div>
-
-    <!-- Botões de Ação -->
     <div class="form-actions">
       <ion-button 
         type="button" 

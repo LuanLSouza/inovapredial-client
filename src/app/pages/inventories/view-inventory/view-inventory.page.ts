@@ -132,7 +132,7 @@ export class ViewInventoryPage implements OnInit {
   private loadEmployees() {
     const searchParams: EmployeeSearchParams = {
       page: 0,
-      size: 1000, // Carrega todos os funcionários
+      size: 1000,
       sortBy: 'name',
       sortDirection: 'ASC'
     };
@@ -143,7 +143,6 @@ export class ViewInventoryPage implements OnInit {
           this.employees = response.content;
         },
         error: (error) => {
-          console.error('Erro ao carregar funcionários:', error);
         }
       });
   }

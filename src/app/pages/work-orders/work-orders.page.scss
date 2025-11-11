@@ -168,43 +168,42 @@ ion-content {
 .table-grid {
     --ion-grid-padding: 0;
     --ion-grid-column-padding: 12px;
-    min-width: 1000px; // Largura mínima aumentada para incluir todas as colunas
+    min-width: 1000px;
     padding-bottom: 10px;
 }
 
-// Definição das larguras das colunas
 .col-description {
-  flex: 0 0 25%; // 25% da largura
+  flex: 0 0 25%;
   min-width: 200px;
   max-width: 25%;
 }
 
 .col-type {
-  flex: 0 0 18%; // 18% da largura
+  flex: 0 0 18%;
   min-width: 130px;
   max-width: 18%;
 }
 
 .col-priority {
-  flex: 0 0 12%; // 12% da largura
+  flex: 0 0 12%;
   min-width: 90px;
   max-width: 12%;
 }
 
 .col-status {
-  flex: 0 0 12%; // 12% da largura
+  flex: 0 0 12%;
   min-width: 90px;
   max-width: 12%;
 }
 
 .col-opening-date {
-  flex: 0 0 15%; // 15% da largura
+  flex: 0 0 15%;
   min-width: 120px;
   max-width: 15%;
 }
 
 .col-actions {
-  flex: 0 0 10%; // 10% da largura
+  flex: 0 0 10%;
   min-width: 80px;
   max-width: 10%;
 }
@@ -303,8 +302,6 @@ ion-content {
 .grid-divider {
     --min-height: 25px;
 }
-
-/** Pagination */
 
 .pagination-bar {
     margin-top: 12px;

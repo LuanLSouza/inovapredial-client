@@ -1,6 +1,5 @@
 <ion-content>
   <div class="page-container">
-    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <span>Edificação > {{ isEditMode ? 'Editar Edificação' : 'Nova Edificação' }}</span>
     </div>
@@ -10,13 +9,11 @@
       <p>Carregando dados...</p>
     </div>
 
-    <!-- Form Container -->
     <ion-card class="form-card" *ngIf="!loading">
      
       <ion-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()">
           
-          <!-- Informações Básicas -->
           <div class="form-section">
             <h3 class="section-title">Informações Básicas</h3>
             
@@ -87,7 +84,6 @@
             </ion-grid>
           </div>
 
-          <!-- Endereço -->
           <div class="form-section" formGroupName="addressRequest">
             <h3 class="section-title">Endereço</h3>
             
@@ -182,7 +178,6 @@
             </ion-grid>
           </div>
 
-          <!-- Botões de Ação -->
           <div class="form-actions">
             <ion-button 
               type="button" 

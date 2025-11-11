@@ -44,11 +44,9 @@ export class LoginPage {
         await loading.dismiss();
         this.showToast('Login realizado com sucesso!', 'success');
         this.router.navigate(['/home']);
-        console.log('Token salvo:', response.token);
       },
       error: async (error) => {
         await loading.dismiss();
-        console.error('Erro no login:', error);
         
         let errorMessage = 'Erro ao fazer login. Tente novamente.';
         
@@ -56,7 +54,6 @@ export class LoginPage {
           errorMessage = 'Email ou senha incorretos.';
         } else if (error.status === 0) {
           errorMessage = 'Erro de conexão. Verifique sua internet.';
-          console.log(error);
         } else if (error.error?.message) {
           errorMessage = error.error.message;
         }

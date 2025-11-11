@@ -77,7 +77,6 @@ export class EmployeesPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Erro ao carregar funcionários:', error);
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -220,7 +219,6 @@ export class EmployeesPage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Exclusão cancelada');
           }
         },
         {
@@ -266,10 +264,9 @@ export class EmployeesPage implements OnInit {
       .subscribe({
         next: () => {
           this.showToast('Funcionário excluído com sucesso!', 'success');
-          this.loadEmployees(); // Recarrega a lista
+          this.loadEmployees();
         },
         error: (error) => {
-          console.error('Erro ao excluir funcionário:', error);
           this.showToast('Erro ao excluir funcionário. Tente novamente.', 'danger');
           this.loading = false;
         }

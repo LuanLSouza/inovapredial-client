@@ -368,7 +368,7 @@ export class WorkOrdersPage implements OnInit {
       .subscribe({
         next: () => {
           this.showToast('Ordem de serviço excluída com sucesso!', 'success');
-          this.loadWorkOrders(); // Recarrega a lista
+          this.loadWorkOrders();
         },
         error: (error) => {
           this.showToast('Erro ao excluir ordem de serviço: ' + error.error.message, 'danger');

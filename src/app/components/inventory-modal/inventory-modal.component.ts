@@ -50,7 +50,7 @@ export class InventoryModalComponent implements OnInit {
       next: (response) => {
         this.inventories = response.content;
         this.loadingInventories = false;
-      },
+      }, 
       error: () => {
         this.loadingInventories = false;
         this.presentToast('Erro ao carregar inventários.', 'danger');

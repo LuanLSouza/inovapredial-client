@@ -1,7 +1,7 @@
 export interface EquipmentPlanRequest {
   equipmentId: string;
   planId: string;
-  startDate: string; // formato date (YYYY-MM-DD)
+  startDate: string; 
 }
 
 export interface EquipmentPlanResponse {
@@ -9,8 +9,8 @@ export interface EquipmentPlanResponse {
   equipmentIdentification: string;
   planId: string;
   planDescription: string;
-  startDate: string; // formato date (YYYY-MM-DD)
-  nextDueDate: string; // formato date (YYYY-MM-DD)
+  startDate: string; 
+  nextDueDate: string; 
   realized: boolean;
   buildingId: string;
 }

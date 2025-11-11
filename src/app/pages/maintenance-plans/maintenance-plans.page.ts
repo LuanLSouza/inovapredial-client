@@ -310,7 +310,7 @@ export class MaintenancePlansPage implements OnInit {
       .subscribe({
         next: () => {
           this.showToast('Plano de manutenção excluído com sucesso!', 'success');
-          this.loadMaintenancePlans(); // Recarrega a lista
+          this.loadMaintenancePlans();
         },
         error: (error) => {
           this.showToast('Erro ao excluir plano de manutenção: ' + error.error.message, 'danger');

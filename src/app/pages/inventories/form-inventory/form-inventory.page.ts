@@ -49,7 +49,6 @@ export class FormInventoryPage implements OnInit {
   ngOnInit() {
     this.loadEmployees();
     
-    // Verifica se há um ID na rota (modo edição)
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.inventoryId = params['id'];
@@ -77,7 +76,6 @@ export class FormInventoryPage implements OnInit {
             text: 'Continuar Editando',
             role: 'cancel',
             handler: () => {
-              // Não faz nada, mantém na página
             }
           },
           {
@@ -92,7 +90,6 @@ export class FormInventoryPage implements OnInit {
       
       await alert.present();
     } else {
-      // Se não há dados, cancela diretamente
       this.router.navigate(['/inventories']);
     }
   }
@@ -104,13 +101,9 @@ export class FormInventoryPage implements OnInit {
     }
     
     const payload: InventoryRequest = this.form.value;
-    console.log('Form value:', this.form.value);
-    console.log('Payload:', payload);
-    console.log('EmployeeId:', payload.employeeId);
     this.saving = true;
     
     if (this.isEditMode && this.inventoryId) {
-      // Modo edição
       this.inventoriesService.updateInventory(this.inventoryId, payload).subscribe({
         next: () => {
           this.saving = false;
@@ -121,7 +114,6 @@ export class FormInventoryPage implements OnInit {
         }
       });
     } else {
-      // Modo criação
       this.inventoriesService.createInventory(payload).subscribe({
         next: () => {
           this.saving = false;
@@ -137,7 +129,6 @@ export class FormInventoryPage implements OnInit {
   private hasFormData(): boolean {
     const formValue = this.form.value;
     
-    // Verifica campos principais
     if (formValue.name?.trim()) return true;
     if (formValue.cost) return true;
     if (formValue.quantity) return true;
@@ -168,7 +159,6 @@ export class FormInventoryPage implements OnInit {
       },
       error: () => {
         this.loading = false;
-        // Redireciona para a lista se não conseguir carregar
         this.router.navigate(['/inventories']);
       }
     });

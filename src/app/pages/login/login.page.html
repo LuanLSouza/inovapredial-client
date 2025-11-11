@@ -1,27 +1,21 @@
 <ion-content [fullscreen]="true" class="login-page">
   <div class="login-container">
-    <!-- Background Image -->
     <div class="background-image">
       <img src="assets/images/fundo-login.png" alt="Background" />
     </div>
 
-    <!-- Text Overlay -->
     <div class="text-overlay">
       <h1 class="main-text">Solução Web</h1>
       <h1 class="main-text">para a Gestão Eficiente</h1>
       <h1 class="main-text">da Manutenção Predial</h1>
     </div>
 
-    <!-- Login Form Section -->
     <div class="login-form-section">
-      <!-- Logo -->
       <div class="logo-container">
         <img src="assets/icons/logo-icon.svg" alt="Logo" class="logo" />
       </div>
 
-      <!-- Login Form -->
       <form (ngSubmit)="onLogin()" class="login-form">
-        <!-- Email Input -->
         <div class="input-group">
           <div class="input-container">
             <img src="assets/icons/email-icon.svg" alt="Email" class="input-icon" />
@@ -36,7 +30,6 @@
           </div>
         </div>
 
-        <!-- Password Input -->
         <div class="input-group">
           <div class="input-container">
             <img src="assets/icons/password-icon.svg" alt="Password" class="input-icon" />
@@ -51,7 +44,6 @@
           </div>
         </div>
 
-        <!-- Login Button -->
         <button type="submit" class="login-button">
           Entrar
         </button>

@@ -168,31 +168,30 @@ ion-content {
 .table-grid {
     --ion-grid-padding: 0;
     --ion-grid-column-padding: 12px;
-    min-width: 700px; // Largura mínima para manter as colunas lado a lado
+    min-width: 700px;
     padding-bottom: 10px;
 }
 
-// Definição das larguras das colunas
 .col-name {
-  flex: 0 0 35%; // 35% da largura
+  flex: 0 0 35%;
   min-width: 200px;
   max-width: 35%;
 }
 
 .col-specialty {
-  flex: 0 0 30%; // 30% da largura
+  flex: 0 0 30%;
   min-width: 150px;
   max-width: 30%;
 }
 
 .col-contact {
-  flex: 0 0 23%; // 25% da largura
+  flex: 0 0 23%;
   min-width: 120px;
   max-width: 25%;
 }
 
 .col-actions {
-  flex: 0 0 10%; // 10% da largura
+  flex: 0 0 10%;
   min-width: 80px;
   max-width: 10%;
 }
@@ -291,8 +290,6 @@ ion-content {
 .grid-divider {
     --min-height: 25px;
 }
-
-/** Pagination */
 
 .pagination-bar {
     margin-top: 12px;

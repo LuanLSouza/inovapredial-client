@@ -97,9 +97,6 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  /**
-   * Seleciona imagem no mobile usando Camera
-   */
   private async selectImageMobile() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -155,9 +152,6 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  /**
-   * Processa e salva a imagem
-   */
   private async processImage(file: File) {
     this.loading = true;
     this.error = null;
@@ -187,9 +181,6 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  /**
-   * Remove a imagem
-   */
   async removeImage() {
     if (!this.imagePath) {
       return;
@@ -214,18 +205,12 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  /**
-   * Trata erros
-   */
   private handleError(error: any) {
     const message = error instanceof Error ? error.message : 'Erro ao processar imagem';
     this.error = message;
     this.showToast(message, 'danger');
   }
 
-  /**
-   * Exibe toast
-   */
   private async showToast(message: string, color: string = 'success') {
     const toast = await this.toastController.create({
       message,

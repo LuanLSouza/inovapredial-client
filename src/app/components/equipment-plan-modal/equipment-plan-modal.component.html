@@ -11,8 +11,7 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="form" (ngSubmit)="submit()">
-    
-    <!-- Toggle para escolher entre plano existente ou novo -->
+
     <ion-item>
       <ion-label>Opção</ion-label>
       <ion-toggle 
@@ -23,7 +22,6 @@
       <ion-label slot="end">{{ createNewPlan ? 'Criar Novo Plano' : 'Usar Plano Existente' }}</ion-label>
     </ion-item>
 
-    <!-- Campos para plano existente -->
     @if (!createNewPlan) {
       <ion-item>
         <ion-label position="stacked">Plano de Manutenção *</ion-label>
@@ -47,7 +45,6 @@
       }
     }
 
-    <!-- Campos para novo plano -->
     @if (createNewPlan) {
       <ion-item>
         <ion-label position="stacked">Descrição do Plano *</ion-label>
@@ -95,7 +92,6 @@
       </ion-item>
     }
 
-    <!-- Campo comum: Data de início -->
     <ion-item>
       <ion-label position="stacked">Data de Início *</ion-label>
       <ion-input 
@@ -107,7 +103,6 @@
       <ion-note color="danger">Data de início é obrigatória</ion-note>
     }
 
-    <!-- Botões de ação -->
     <div class="ion-margin-top">
       <ion-button 
         expand="block" 

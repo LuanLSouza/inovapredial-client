@@ -1,6 +1,5 @@
 <ion-content>
   <div class="page-container">
-    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <span>Ordens de Serviço > {{ isEditMode ? 'Editar Ordem de Serviço' : 'Nova Ordem de Serviço' }}</span>
     </div>
@@ -10,13 +9,11 @@
       <p>Carregando dados...</p>
     </div>
 
-    <!-- Form Container -->
     <ion-card class="form-card" *ngIf="!loading">
      
       <ion-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()">
           
-          <!-- Informações Básicas -->
           <div class="form-section">
             <h3 class="section-title">Informações Básicas</h3>
             
@@ -108,7 +105,6 @@
             </ion-grid>
           </div>
 
-          <!-- Datas -->
           <div class="form-section">
             <h3 class="section-title">Datas</h3>
             
@@ -137,7 +133,6 @@
             </ion-grid>
           </div>
 
-          <!-- Relacionamentos -->
           <div class="form-section">
             <h3 class="section-title">Selecionar equipamento e funcionário responsável</h3>
             
@@ -183,7 +178,6 @@
             </ion-grid>
           </div>
 
-          <!-- Botões de Ação -->
           <div class="form-actions">
             <ion-button 
               type="button" 

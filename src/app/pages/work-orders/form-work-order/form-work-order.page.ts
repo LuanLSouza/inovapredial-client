@@ -66,16 +66,13 @@ export class FormWorkOrderPage implements OnInit {
   }
 
   ngOnInit() {
-    // Verifica se há um ID na rota (modo edição)
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.workOrderId = params['id'];
         this.isEditMode = true;
         this.pageTitle = 'Editar Ordem de Serviço';
-        // No modo edição, carrega equipamentos primeiro, depois a ordem de serviço
         this.loadEquipmentsAndThenWorkOrder();
       } else {
-        // No modo criação, carrega dados normalmente
         this.loadEquipments();
         this.loadEmployees();
       }
@@ -94,7 +91,6 @@ export class FormWorkOrderPage implements OnInit {
             text: 'Continuar Editando',
             role: 'cancel',
             handler: () => {
-              // Não faz nada, mantém na página
             }
           },
           {
@@ -109,7 +105,6 @@ export class FormWorkOrderPage implements OnInit {
       
       await alert.present();
     } else {
-      // Se não há dados, cancela diretamente
       this.router.navigate(['/work-orders']);
     }
   }
@@ -133,7 +128,6 @@ export class FormWorkOrderPage implements OnInit {
       employeeId: formValue.employeeId || null
     };
 
-    // No modo criação, não enviar status e data de fechamento (API define padrão)
     if (!this.isEditMode) {
       const { activityStatus, closingDate, ...rest } = payload as any;
       payload = rest as WorkOrderRequest;
@@ -141,7 +135,6 @@ export class FormWorkOrderPage implements OnInit {
     this.saving = true;
     
     if (this.isEditMode && this.workOrderId) {
-      // Modo edição
       this.workOrdersService.updateWorkOrder(this.workOrderId, payload).subscribe({
         next: () => {
           this.saving = false;
@@ -153,7 +146,6 @@ export class FormWorkOrderPage implements OnInit {
         }
       });
     } else {
-      // Modo criação
       this.workOrdersService.createWorkOrder(payload).subscribe({
         next: () => {
           this.saving = false;
@@ -170,7 +162,6 @@ export class FormWorkOrderPage implements OnInit {
   private hasFormData(): boolean {
     const formValue = this.form.value;
     
-    // Verifica campos principais
     if (formValue.description?.trim()) return true;
     if (formValue.maintenanceType) return true;
     if (formValue.priority) return true;
@@ -219,14 +210,12 @@ export class FormWorkOrderPage implements OnInit {
       },
       error: () => {
         this.loading = false;
-        // Redireciona para a lista se não conseguir carregar
         this.router.navigate(['/work-orders']);
       }
     });
   }
 
   private populateForm(workOrder: WorkOrder) { 
-    // Primeiro, popula todos os campos exceto equipmentId e employeeId
     this.form.patchValue({
       description: workOrder.description,
       maintenanceType: workOrder.maintenanceType,
@@ -237,15 +226,12 @@ export class FormWorkOrderPage implements OnInit {
       closingDate: this.formatDateForInput(workOrder.closingDate) || ''
     });
     
-    // Usa setTimeout para garantir que o DOM esteja pronto antes de definir os selects
     setTimeout(() => {
-      // Verifica se os equipamentos estão carregados antes de definir o valor
       if (workOrder.equipmentId && this.equipments.length > 0) {
         const equipmentExists = this.equipments.some(eq => eq.id === workOrder.equipmentId);
         if (equipmentExists) {
           this.form.get('equipmentId')?.setValue(workOrder.equipmentId);
         } else {
-          console.warn('Equipment ID not found in loaded equipments:', workOrder.equipmentId);
         }
       }
       
@@ -254,11 +240,9 @@ export class FormWorkOrderPage implements OnInit {
         if (employeeExists) {
           this.form.get('employeeId')?.setValue(workOrder.employeeId);
         } else {
-          console.warn('Employee ID not found in loaded employees:', workOrder.employeeId);
         }
       }
       
-      console.log('Form value after timeout:', this.form.value);
     }, 100);
   }
 
@@ -266,7 +250,6 @@ export class FormWorkOrderPage implements OnInit {
     if (!dateString) return '';
     try {
       const date = new Date(dateString);
-      // Formato: YYYY-MM-DDTHH:mm
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
@@ -283,11 +266,11 @@ export class FormWorkOrderPage implements OnInit {
     this.loadingEquipments = true;
       this.equipmentsService.getEquipments({
       page: 0,
-      size: 1000, // Carrega todos os equipamentos
+      size: 1000,
       sortBy: 'identification',
       sortDirection: 'ASC'
     }, {
-      equipmentStatus: 'ACTIVE' // Filtra apenas equipamentos ativos
+      equipmentStatus: 'ACTIVE'
     }).subscribe({
       next: (response) => {
         this.equipments = response.content;
@@ -301,28 +284,22 @@ export class FormWorkOrderPage implements OnInit {
 
   private loadEquipmentsAndThenWorkOrder() {
     this.loadingEquipments = true;
-    console.log('Loading equipments for edit mode...');
     this.equipmentsService.getEquipments({
       page: 0,
-      size: 1000, // Carrega todos os equipamentos
+      size: 1000,
       sortBy: 'identification',
       sortDirection: 'ASC'
     }, {
-      // No modo edição, não filtra por status para incluir equipamentos inativos
-      // que podem estar vinculados à ordem de serviço
+
     }).subscribe({
       next: (response) => {
         this.equipments = response.content;
-        console.log('Equipments loaded successfully (all statuses):', this.equipments);
         this.loadingEquipments = false;
-        // Após carregar equipamentos, carrega funcionários e a ordem de serviço
         this.loadEmployees();
         this.loadWorkOrder();
       },
       error: (error) => {
-        console.error('Error loading equipments:', error);
         this.loadingEquipments = false;
-        // Mesmo com erro, tenta carregar funcionários e ordem de serviço
         this.loadEmployees();
         this.loadWorkOrder();
       }
@@ -333,7 +310,7 @@ export class FormWorkOrderPage implements OnInit {
     this.loadingEmployees = true;
       this.employeesService.getEmployees({
       page: 0,
-      size: 1000, // Carrega todos os funcionários
+      size: 1000,
       sortBy: 'name',
       sortDirection: 'ASC'
     }, {}).subscribe({

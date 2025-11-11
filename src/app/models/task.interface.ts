@@ -19,14 +19,14 @@ export interface TaskResponse {
   description?: string;
   activityStatus: TaskActivityStatus;
   estimatedTime?: number;
-  startDate?: string; // ISO date-time
-  endDate?: string;   // ISO date-time
+  startDate?: string; 
+  endDate?: string;   
   timeSpent?: number;
   cost?: number;
-  workOrderId: string; // uuid
-  employeeId?: string; // uuid
-  buildingId: string; // uuid
-  reason?: string; // motivo opcional da última alteração de status
+  workOrderId: string; 
+  employeeId?: string; 
+  buildingId: string; 
+  reason?: string; 
 }
 
 export interface TaskFilter {
@@ -43,8 +43,8 @@ export interface TaskFilter {
   timeSpentMax?: number;
   costMin?: number;
   costMax?: number;
-  workOrderId?: string; // uuid
-  employeeId?: string; // uuid
+  workOrderId?: string; 
+  employeeId?: string; 
 }
 
 export interface TaskSearchParams {

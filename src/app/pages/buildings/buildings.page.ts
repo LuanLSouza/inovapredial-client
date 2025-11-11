@@ -88,7 +88,6 @@ export class BuildingsPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Erro ao carregar edificações:', error);
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -244,7 +243,6 @@ export class BuildingsPage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Exclusão cancelada');
           }
         },
         {

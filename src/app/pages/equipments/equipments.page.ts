@@ -99,7 +99,6 @@ export class EquipmentsPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Erro ao carregar equipamentos:', error);
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -270,8 +269,7 @@ export class EquipmentsPage implements OnInit {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: () => {
-            console.log('Exclusão cancelada');
+          handler: () => {    
           }
         },
         {
@@ -333,19 +331,17 @@ export class EquipmentsPage implements OnInit {
   private async deleteEquipment(equipment: Equipment) {
     this.loading = true;
     
-    // Salva a URL da imagem para remoção após deletar o equipamento
     const imageUrlToDelete = equipment.imageUrl;
     
     this.equipmentsService.deleteEquipment(equipment.id!)
       .subscribe({
         next: async () => {
-          // Remove a imagem do sistema de arquivos se existir
           if (imageUrlToDelete && !imageUrlToDelete.startsWith('http')) {
             await this.imageService.deleteImage(imageUrlToDelete);
           }
           
           this.showToast('Equipamento excluído com sucesso!', 'success');
-          this.loadEquipments(); // Recarrega a lista
+          this.loadEquipments();
         },
         error: (error) => {
           this.showToast('Erro ao excluir equipamento: ' + error.error.message, 'danger');

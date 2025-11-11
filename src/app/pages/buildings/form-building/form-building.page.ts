@@ -122,7 +122,6 @@ export class FormBuildingPage implements OnInit {
       
       await alert.present();
     } else {
-      // Se não há dados, cancela diretamente
       this.router.navigate(['/buildings']);
     }
   }
@@ -138,7 +137,6 @@ export class FormBuildingPage implements OnInit {
     this.saving = true;
     
     if (this.isEditMode && this.buildingId) {
-      // Modo edição
       this.buildingsService.updateBuilding(this.buildingId, payload).subscribe({
         next: () => {
           this.saving = false;
@@ -149,7 +147,6 @@ export class FormBuildingPage implements OnInit {
         }
       });
     } else {
-      // Modo criação
       this.buildingsService.createBuilding(payload).subscribe({
         next: () => {
           this.saving = false;
@@ -166,7 +163,6 @@ export class FormBuildingPage implements OnInit {
     const cepRaw = this.a.zipCode.value || '';
     const cep = cepRaw.replace(/\D/g, '');
     
-    // Só busca quando tem 8 dígitos
     if (cep.length === 8) {
       this.buscarCEP();
     }
@@ -175,12 +171,10 @@ export class FormBuildingPage implements OnInit {
   private hasFormData(): boolean {
     const formValue = this.form.value;
     
-    // Verifica campos principais
     if (formValue.name?.trim()) return true;
     if (formValue.description?.trim()) return true;
     if (formValue.constructionYear && formValue.constructionYear !== new Date().getFullYear()) return true;
     
-    // Verifica campos de endereço
     const address = formValue.addressRequest;
     if (address?.zipCode?.trim()) return true;
     if (address?.street?.trim()) return true;
@@ -221,7 +215,6 @@ export class FormBuildingPage implements OnInit {
       },
       error: () => {
         this.loading = false;
-        // Redireciona para a lista se não conseguir carregar
         this.router.navigate(['/buildings']);
       }
     });

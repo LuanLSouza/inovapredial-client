@@ -22,7 +22,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ModalController } from '@ionic/angular/standalone';
 import { BuildingSelectionModalComponent } from 'src/app/components/building-selection-modal/building-selection-modal.component';
 
-// Registrar todos os controladores e escalas do Chart.js
+
 import Chart from 'chart.js/auto';
 Chart.register(...registerables);
 
@@ -35,13 +35,11 @@ Chart.register(...registerables);
 })
 export class MetricsPage implements OnInit {
   
-  // Estados de carregamento
   loading = false;
   loadingEquipments = false;
   loadingEmployees = false;
   noBuildingSelected = false;
 
-  // Dados das métricas
   metricsData: MetricResponseDTO | null = null;
   generalMetrics: GeneralMetricsDTO | null = null;
   workOrderMetrics: WorkOrderMetricsDTO | null = null;
@@ -49,7 +47,6 @@ export class MetricsPage implements OnInit {
   timeSeriesMetrics: TimeSeriesMetricsDTO | null = null;
   inventoryMetrics: InventoryMetricsDTO | null = null;
 
-  // Filtros
   filters: MetricFilterDTO = {};
   startDate: string = '';
   endDate: string = '';
@@ -57,11 +54,9 @@ export class MetricsPage implements OnInit {
   selectedEmployeeId: string = '';
   selectedMaintenanceType: string = '';
 
-  // Dados para os selects
   equipments: Equipment[] = [];
   employees: Employee[] = [];
 
-  // Opções para os selects
   maintenanceTypeOptions = [
     { label: 'Todos os tipos', value: '' },
     { label: 'Corretiva', value: 'CORRECTIVE' },
@@ -69,7 +64,6 @@ export class MetricsPage implements OnInit {
     { label: 'Preditiva', value: 'PREDICTIVE' },
   ];
 
-  // Configurações dos gráficos
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -167,10 +161,8 @@ export class MetricsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Definir valores padrão para as datas
     this.setDefaultDates();
     
-    // Verificar se há uma edificação selecionada
     if (!this.selectedBuildingService.getSelectedBuilding()) {
       this.noBuildingSelected = true;
       this.showBuildingSelectionModal();
@@ -184,7 +176,6 @@ export class MetricsPage implements OnInit {
   loadMetrics() {
     this.loading = true;
     
-    // Preparar filtros
     this.prepareFilters();
     
     this.metricsService.getCompleteMetrics(this.filters).subscribe({
@@ -200,13 +191,11 @@ export class MetricsPage implements OnInit {
         this.timeSeriesMetrics = data.timeSeriesMetrics;
         this.inventoryMetrics = data.inventoryMetrics;
         
-        // Debug específico para tipos de manutenção
         console.log('=== ANÁLISE DOS TIPOS DE MANUTENÇÃO ===');
         console.log('Preventive:', data.workOrderMetrics?.preventive);
         console.log('Corrective:', data.workOrderMetrics?.corrective);
         console.log('Predictive:', data.workOrderMetrics?.predictive);
         
-        // Verificar se os dados existem
         if (data.workOrderMetrics) {
           console.log('Total Work Orders:', data.workOrderMetrics.totalWorkOrders);
           console.log('Preventive count:', data.workOrderMetrics.preventive?.count);
@@ -214,7 +203,6 @@ export class MetricsPage implements OnInit {
           console.log('Predictive count:', data.workOrderMetrics.predictive?.count);
         }
         
-        // Debug: Log dos dados de equipamentos MTBF
         console.log('Equipment MTBF Data:', this.equipmentMetrics?.equipmentMTBF);
         if (this.equipmentMetrics?.equipmentMTBF) {
           this.equipmentMetrics.equipmentMTBF.forEach((equipment, index) => {
@@ -320,7 +308,6 @@ export class MetricsPage implements OnInit {
     console.log('Corrective:', this.workOrderMetrics?.corrective);
     console.log('Predictive:', this.workOrderMetrics?.predictive);
 
-    // CORREÇÃO: Calcular percentuais baseado nos counts ao invés de usar percentageOfTotal
     const preventiveCount = this.workOrderMetrics?.preventive?.count || 0;
     const correctiveCount = this.workOrderMetrics?.corrective?.count || 0;
     const predictiveCount = this.workOrderMetrics?.predictive?.count || 0;
@@ -334,7 +321,6 @@ export class MetricsPage implements OnInit {
       total: totalCount
     });
 
-    // Calcular percentuais corretos baseado nos counts
     const preventivePercentage = totalCount > 0 ? (preventiveCount / totalCount) * 100 : 0;
     const correctivePercentage = totalCount > 0 ? (correctiveCount / totalCount) * 100 : 0;
     const predictivePercentage = totalCount > 0 ? (predictiveCount / totalCount) * 100 : 0;
@@ -345,7 +331,6 @@ export class MetricsPage implements OnInit {
       predictive: predictivePercentage
     });
 
-    // Verificar se todos os valores são zero
     const totalPercentage = preventivePercentage + correctivePercentage + predictivePercentage;
     console.log('Total percentage:', totalPercentage);
 
@@ -364,7 +349,6 @@ export class MetricsPage implements OnInit {
 
     console.log('PieChartData final:', this.pieChartData);
 
-    // Atualizar gráfico de linha (custos mensais)
     if (this.timeSeriesMetrics?.monthlyCosts) {
       const monthlyCosts = this.timeSeriesMetrics.monthlyCosts;
       this.lineChartData = {
@@ -381,7 +365,6 @@ export class MetricsPage implements OnInit {
       };
     }
 
-    // Atualizar gráfico de barras (ordens de serviço mensais)
     if (this.timeSeriesMetrics?.monthlyWorkOrders) {
       const monthlyWorkOrders = this.timeSeriesMetrics.monthlyWorkOrders;
       this.barChartData = {
@@ -399,7 +382,6 @@ export class MetricsPage implements OnInit {
     }
   }
 
-  // Métodos auxiliares para formatação
   formatCurrency(value: number | null | undefined): string {
     if (value === null || value === undefined || isNaN(value)) {
       return 'R$ 0,00';
@@ -457,23 +439,15 @@ export class MetricsPage implements OnInit {
     return labelMap[criticality.toUpperCase()] || criticality;
   }
 
-  /**
-   * Define valores padrão para as datas (início do mês até hoje)
-   */
   private setDefaultDates() {
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     
-    // Formatar data de início (primeiro dia do mês)
-    this.startDate = this.formatDateForInput(firstDayOfMonth);
+      this.startDate = this.formatDateForInput(firstDayOfMonth);
     
-    // Formatar data de fim (hoje)
     this.endDate = this.formatDateForInput(now);
   }
 
-  /**
-   * Formata uma data para o formato DD/MM/YYYY
-   */
   private formatDateForInput(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -481,9 +455,6 @@ export class MetricsPage implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  /**
-   * Converte data do formato DD/MM/YYYY para ISO string
-   */
   private convertDateToISO(dateString: string): string {
     if (!dateString) return '';
     
@@ -494,11 +465,8 @@ export class MetricsPage implements OnInit {
     return date.toISOString();
   }
 
-  /**
-   * Formata automaticamente a data enquanto o usuário digita
-   */
   formatDateInput(event: any, field: 'startDate' | 'endDate') {
-    let value = event.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+    let value = event.target.value.replace(/\D/g, '');
     
     if (value.length >= 2) {
       value = value.substring(0, 2) + '/' + value.substring(2);
@@ -516,9 +484,6 @@ export class MetricsPage implements OnInit {
     event.target.value = value;
   }
 
-  /**
-   * Valida se a data está no formato correto
-   */
   isValidDate(dateString: string): boolean {
     if (!dateString || dateString.length !== 10) return false;
     
@@ -539,21 +504,17 @@ export class MetricsPage implements OnInit {
            date.getFullYear() === yearNum;
   }
 
-  /**
-   * Formata a data de última falha
-   */
   formatLastFailureDate(lastFailureDate: string): string {
     if (!lastFailureDate) return 'N/A';
     
     try {
       let date: Date;
       
-      // Verificar se está no formato brasileiro DD/MM/YYYY
       if (lastFailureDate.includes('/') && lastFailureDate.length === 10) {
         const parts = lastFailureDate.split('/');
         if (parts.length === 3) {
           const day = parseInt(parts[0], 10);
-          const month = parseInt(parts[1], 10) - 1; // Mês é 0-indexado no JavaScript
+          const month = parseInt(parts[1], 10) - 1;
           const year = parseInt(parts[2], 10);
           
           date = new Date(year, month, day);
@@ -561,14 +522,11 @@ export class MetricsPage implements OnInit {
           return 'Formato inválido';
         }
       } else if (lastFailureDate.includes('T') || lastFailureDate.includes('Z')) {
-        // Se já está em formato ISO
         date = new Date(lastFailureDate);
       } else {
-        // Tentar parsear como string simples
         date = new Date(lastFailureDate);
       }
       
-      // Verificar se a data é válida
       if (isNaN(date.getTime())) {
         return 'Data inválida';
       }
@@ -580,9 +538,6 @@ export class MetricsPage implements OnInit {
     }
   }
 
-  /**
-   * Mostra a modal de seleção de edificação
-   */
   async showBuildingSelectionModal() {
     const modal = await this.modalController.create({
       component: BuildingSelectionModalComponent,
@@ -593,13 +548,11 @@ export class MetricsPage implements OnInit {
 
     const { data } = await modal.onWillDismiss();
     if (data) {
-      // Edificação selecionada, carregar dados
       this.noBuildingSelected = false;
       this.loadEquipments();
       this.loadEmployees();
       this.loadMetrics();
     } else {
-      // Modal fechada sem seleção, redirecionar para home
       window.location.href = '/home';
     }
   }

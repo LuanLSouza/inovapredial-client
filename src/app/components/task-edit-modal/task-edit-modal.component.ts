@@ -43,7 +43,6 @@ export class TaskEditModalComponent {
     this.loadEmployees();
     this.populateForm();
     
-    // Se a tarefa estiver concluída, desabilitar o formulário
     if (this.isTaskCompleted) {
       this.form.disable();
     }
@@ -114,7 +113,6 @@ export class TaskEditModalComponent {
   }
 
   submit() {
-    // Não permitir envio se a tarefa estiver concluída
     if (this.isTaskCompleted) {
       return;
     }

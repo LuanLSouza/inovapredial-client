@@ -8,7 +8,6 @@
   } @else if (employee) {
     <div class="view-container">
       
-      <!-- Informações Principais -->
       <ion-card class="main-info-card">
         <ion-card-header>
           <div class="employee-header">
@@ -26,7 +25,6 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Informações Básicas -->
       <ion-card class="details-card">
         <ion-card-header>
           <ion-card-title class="card-title">Informações Básicas</ion-card-title>
@@ -61,7 +59,6 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Calendário de Trabalho -->
       @if (employee.calendar) {
         <ion-card class="calendar-card">
           <ion-card-header>
@@ -81,7 +78,6 @@
                 </ion-row>
               }
               
-              <!-- Dias da Semana -->
               <ion-row>
                 <ion-col size="12">
                   <div class="info-item">
@@ -118,7 +114,6 @@
                 </ion-col>
               </ion-row>
               
-              <!-- Horários -->
               <ion-row>
                 <ion-col size="12" size-md="6">
                   <div class="info-item">
@@ -134,7 +129,6 @@
                 </ion-col>
               </ion-row>
               
-              <!-- Possui Intervalo -->
               <ion-row>
                 <ion-col size="12">
                   <div class="info-item">
@@ -152,7 +146,6 @@
         </ion-card>
       }
 
-      <!-- Ações -->
       <div class="actions-container">
         <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
           Voltar para Lista

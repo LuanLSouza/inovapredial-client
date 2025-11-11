@@ -155,7 +155,6 @@ ion-content {
     padding: 12px 16px;
 }
 
-/** Table */
 
 .table-container {
   overflow-x: auto;
@@ -168,43 +167,43 @@ ion-content {
 .table-grid {
     --ion-grid-padding: 0;
     --ion-grid-column-padding: 12px;
-    min-width: 900px; // Largura mínima para manter as colunas lado a lado
+    min-width: 900px; 
     padding-bottom: 10px;
 }
 
-// Definição das larguras das colunas
+
 .col-name {
-  flex: 0 0 25%; // 25% da largura
+  flex: 0 0 25%;
   min-width: 200px;
   max-width: 25%;
 }
 
 .col-type {
-  flex: 0 0 18%; // 18% da largura
+  flex: 0 0 18%;
   min-width: 140px;
   max-width: 18%;
 }
 
 .col-year {
-  flex: 0 0 12%; // 12% da largura
+  flex: 0 0 12%;
   min-width: 100px;
   max-width: 12%;
 }
 
 .col-city {
-  flex: 0 0 15%; // 15% da largura
+  flex: 0 0 15%;
   min-width: 120px;
   max-width: 15%;
 }
 
 .col-address {
-  flex: 0 0 20%; // 20% da largura
+  flex: 0 0 20%;
   min-width: 160px;
   max-width: 20%;
 }
 
 .col-actions {
-  flex: 0 0 10%; // 10% da largura
+  flex: 0 0 10%;
   min-width: 80px;
   max-width: 10%;
 }
@@ -221,7 +220,6 @@ ion-content {
     min-height: 50px;
 }
 
-// Evita que textos longos do cabeçalho (ex.: "Ano de Construção") ultrapassem a coluna
 .table-header ion-col {
   overflow: hidden;
 }
@@ -229,7 +227,7 @@ ion-content {
 .table-header .sortable-header {
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 0; // necessário para truncar dentro de flex
+  min-width: 0;
 }
 
 .table-header .sortable-header ion-icon {
@@ -237,7 +235,6 @@ ion-content {
   margin-left: 6px;
 }
 
-// Permite que apenas o cabeçalho da coluna "Ano de Construção" quebre linha
 .table-header .col-year .sortable-header {
   white-space: normal;
   overflow: visible;
@@ -326,8 +323,6 @@ ion-content {
 .grid-divider {
     --min-height: 25px;
 }
-
-/** Pagination */
 
 .pagination-bar {
     margin-top: 12px;

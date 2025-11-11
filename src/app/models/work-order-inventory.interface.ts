@@ -9,5 +9,5 @@ export interface WorkOrderInventoryResponse {
   quantity: number;
   unitCost: number;
   totalCost: number;
-  outputDate: string; // ISO date-time
+  outputDate: string; 
 }

@@ -93,7 +93,6 @@ export class InventoriesPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Erro ao carregar inventários:', error);
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -245,7 +244,6 @@ export class InventoriesPage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Exclusão cancelada');
           }
         },
         {
@@ -324,7 +322,7 @@ export class InventoriesPage implements OnInit {
       .subscribe({
         next: () => {
           this.showToast('Item excluído com sucesso!', 'success');
-          this.loadInventories(); // Recarrega a lista
+          this.loadInventories();
         },
         error: (error) => {
           this.showToast('Erro ao excluir item: ' + error.error.message, 'danger');
@@ -344,7 +342,7 @@ export class InventoriesPage implements OnInit {
     
     const searchParams: EmployeeSearchParams = {
       page: 0,
-      size: 1000, // Carrega todos os funcionários
+      size: 1000,
       sortBy: 'name',
       sortDirection: 'ASC'
     };
@@ -363,7 +361,6 @@ export class InventoriesPage implements OnInit {
           this.loadingEmployees = false;
         },
         error: (error) => {
-          console.error('Erro ao carregar funcionários:', error);
           this.loadingEmployees = false;
         }
       });

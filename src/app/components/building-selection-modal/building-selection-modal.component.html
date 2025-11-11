@@ -6,7 +6,6 @@
 
 <ion-content>
   <div class="modal-content">
-    <!-- Barra de busca -->
     <div class="search-section">
       <ion-searchbar
         [(ngModel)]="searchTerm"
@@ -16,13 +15,11 @@
       </ion-searchbar>
     </div>
 
-    <!-- Loading -->
     <div *ngIf="loading" class="loading-container">
       <ion-spinner name="crescent"></ion-spinner>
       <p>Carregando edificações...</p>
     </div>
 
-    <!-- Lista de edificações -->
     <div *ngIf="!loading" class="buildings-list">
       <div *ngIf="filteredBuildings.length === 0" class="empty-state">
         <ion-icon name="business-outline" size="large"></ion-icon>
