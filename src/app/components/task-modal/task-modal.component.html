@@ -151,7 +151,7 @@
                 <ion-select-option 
                   *ngFor="let employee of employees" 
                   [value]="employee.id">
-                  {{ employee.name }}
+                  {{ employee.name + ' - ' + employee.specialty }}
                 </ion-select-option>
               </ion-select>
             </ion-item>
