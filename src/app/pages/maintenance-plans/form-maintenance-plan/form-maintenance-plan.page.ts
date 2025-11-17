@@ -24,7 +24,6 @@ export class FormMaintenancePlanPage implements OnInit {
   pageTitle = 'Novo Plano de Manutenção';
 
   maintenanceTypeOptions = [
-    { label: 'Corretiva', value: 'CORRECTIVE' },
     { label: 'Preventiva', value: 'PREVENTIVE' },
     { label: 'Preditiva', value: 'PREDICTIVE' },
   ];

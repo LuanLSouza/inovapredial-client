@@ -6,6 +6,8 @@ import { Capacitor } from '@capacitor/core';
 import { ToastController } from '@ionic/angular/standalone';
 import { ImageService } from '../../services/image.service';
 import { IONIC_IMPORTS } from '../../shered/ionic-imports';
+import { addIcons } from 'ionicons';
+import { trash, camera, image } from 'ionicons/icons';
 
 @Component({
   selector: 'app-image-upload',
@@ -40,7 +42,9 @@ export class ImageUploadComponent implements OnInit, ControlValueAccessor {
   constructor(
     private imageService: ImageService,
     private toastController: ToastController
-  ) {}
+  ) {
+    addIcons({ trash, camera, image });
+  }
 
   ngOnInit() {
     if (this.imagePath) {
