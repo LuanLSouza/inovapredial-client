@@ -180,9 +180,6 @@ export class MetricsPage implements OnInit {
     
     this.metricsService.getCompleteMetrics(this.filters).subscribe({
       next: (data: MetricResponseDTO) => {
-        console.log('=== DADOS COMPLETOS DA API ===');
-        console.log('Response completa:', data);
-        console.log('WorkOrderMetrics completo:', data.workOrderMetrics);
         
         this.metricsData = data;
         this.generalMetrics = data.generalMetrics;
@@ -190,30 +187,7 @@ export class MetricsPage implements OnInit {
         this.equipmentMetrics = data.equipmentMetrics;
         this.timeSeriesMetrics = data.timeSeriesMetrics;
         this.inventoryMetrics = data.inventoryMetrics;
-        
-        console.log('=== ANÁLISE DOS TIPOS DE MANUTENÇÃO ===');
-        console.log('Preventive:', data.workOrderMetrics?.preventive);
-        console.log('Corrective:', data.workOrderMetrics?.corrective);
-        console.log('Predictive:', data.workOrderMetrics?.predictive);
-        
-        if (data.workOrderMetrics) {
-          console.log('Total Work Orders:', data.workOrderMetrics.totalWorkOrders);
-          console.log('Preventive count:', data.workOrderMetrics.preventive?.count);
-          console.log('Corrective count:', data.workOrderMetrics.corrective?.count);
-          console.log('Predictive count:', data.workOrderMetrics.predictive?.count);
-        }
-        
-        console.log('Equipment MTBF Data:', this.equipmentMetrics?.equipmentMTBF);
-        if (this.equipmentMetrics?.equipmentMTBF) {
-          this.equipmentMetrics.equipmentMTBF.forEach((equipment, index) => {
-            console.log(`Equipment ${index}:`, {
-              name: equipment.equipmentName,
-              lastFailureDate: equipment.lastFailureDate,
-              criticality: equipment.criticality
-            });
-          });
-        }
-        
+                
         this.updateCharts();
         this.loading = false;
       },
@@ -298,15 +272,9 @@ export class MetricsPage implements OnInit {
 
   private updateCharts() {
     if (!this.workOrderMetrics) {
-      console.log('WorkOrderMetrics is null or undefined');
       return;
     }
 
-    console.log('=== UPDATE CHARTS ===');
-    console.log('WorkOrderMetrics:', this.workOrderMetrics);
-    console.log('Preventive:', this.workOrderMetrics?.preventive);
-    console.log('Corrective:', this.workOrderMetrics?.corrective);
-    console.log('Predictive:', this.workOrderMetrics?.predictive);
 
     const preventiveCount = this.workOrderMetrics?.preventive?.count || 0;
     const correctiveCount = this.workOrderMetrics?.corrective?.count || 0;
@@ -314,25 +282,9 @@ export class MetricsPage implements OnInit {
     
     const totalCount = preventiveCount + correctiveCount + predictiveCount;
     
-    console.log('Counts por tipo:', {
-      preventive: preventiveCount,
-      corrective: correctiveCount,
-      predictive: predictiveCount,
-      total: totalCount
-    });
-
     const preventivePercentage = totalCount > 0 ? (preventiveCount / totalCount) * 100 : 0;
     const correctivePercentage = totalCount > 0 ? (correctiveCount / totalCount) * 100 : 0;
     const predictivePercentage = totalCount > 0 ? (predictiveCount / totalCount) * 100 : 0;
-
-    console.log('Percentages calculados corretamente:', {
-      preventive: preventivePercentage,
-      corrective: correctivePercentage,
-      predictive: predictivePercentage
-    });
-
-    const totalPercentage = preventivePercentage + correctivePercentage + predictivePercentage;
-    console.log('Total percentage:', totalPercentage);
 
     if (totalCount === 0) {
       console.warn('ATENÇÃO: Não há ordens de serviço para exibir no gráfico!');
