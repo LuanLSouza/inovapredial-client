@@ -307,32 +307,6 @@
         </ion-card>
       }
 
-      @if (equipment.imageUrl) {
-        <ion-card class="image-card">
-          <ion-card-header>
-            <ion-card-title class="card-title">Imagem do Equipamento</ion-card-title>
-          </ion-card-header>
-          
-          <ion-card-content>
-            <div class="image-container">
-              @if (loadingImage) {
-                <div class="loading-container">
-                  <ion-spinner name="crescent"></ion-spinner>
-                  <ion-label>Carregando imagem...</ion-label>
-                </div>
-              } @else if (imageUrl) {
-                <img [src]="imageUrl" alt="Imagem do equipamento" class="equipment-image" />
-              } @else {
-                <div class="empty-state">
-                  <ion-icon name="image-outline"></ion-icon>
-                  <ion-label>Imagem não encontrada</ion-label>
-                </div>
-              }
-            </div>
-          </ion-card-content>
-        </ion-card>
-      }
-
       <div class="actions-container">
         <ion-button expand="block" fill="outline" (click)="onBack()" class="back-button">
           Voltar para Lista
