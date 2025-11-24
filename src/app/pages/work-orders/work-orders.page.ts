@@ -188,7 +188,7 @@ export class WorkOrdersPage implements OnInit {
       OPEN: 'Aberta',
       IN_PROGRESS: 'Em Progresso',
       COMPLETED: 'Concluída',
-      CANCELLED: 'Cancela da'
+      CANCELLED: 'Cancelada'
     };
     return map[status] ?? status;
   }
@@ -308,7 +308,7 @@ export class WorkOrdersPage implements OnInit {
     const colorMap: Record<string, string> = {
       LOW: 'success',
       MEDIUM: 'warning',
-      HIGH: 'danger',
+      HIGH: 'orange',
       URGENT: 'danger'
     };
     return colorMap[priority] ?? 'medium';

@@ -277,28 +277,22 @@
       <ion-card-content>
         <ion-grid>
           <ion-row>
-            <ion-col size="12" size-md="6" size-lg="3">
+            <ion-col size="12" size-md="6" size-lg="4">
               <div class="metric-card success">
                 <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.active || 0}}</div>
                 <div class="metric-label-work">Ativos</div>
               </div>
             </ion-col>
-            <ion-col size="12" size-md="6" size-lg="3">
+            <ion-col size="12" size-md="6" size-lg="4">
               <div class="metric-card medium">
                 <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.inactive || 0}}</div>
                 <div class="metric-label-work">Inativos</div>
               </div>
             </ion-col>
-            <ion-col size="12" size-md="6" size-lg="3">
+            <ion-col size="12" size-md="6" size-lg="4">
               <div class="metric-card warning">
                 <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.maintenance || 0}}</div>
                 <div class="metric-label-work">Em Manutenção</div>
-              </div>
-            </ion-col>
-            <ion-col size="12" size-md="6" size-lg="3">
-              <div class="metric-card danger">
-                <div class="metric-value-work">{{equipmentMetrics?.statusDistribution?.outOfService || 0}}</div>
-                <div class="metric-label-work">Fora de Serviço</div>
               </div>
             </ion-col>
           </ion-row>

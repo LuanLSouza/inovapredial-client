@@ -6,7 +6,6 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { EquipmentsService } from 'src/app/services/equipments.service';
 import { IONIC_IMPORTS } from 'src/app/shered/ionic-imports';
 import { Equipment, EquipmentRequest } from 'src/app/models/equipment.interface';
-import { ImageUploadComponent } from 'src/app/components/image-upload/image-upload.component';
 import { ImageService } from 'src/app/services/image.service';
 
 @Component({
@@ -14,7 +13,7 @@ import { ImageService } from 'src/app/services/image.service';
   templateUrl: './form-equipment.page.html',
   styleUrls: ['./form-equipment.page.scss'],
   standalone: true,
-  imports: [...IONIC_IMPORTS, CommonModule, ReactiveFormsModule, ImageUploadComponent]
+  imports: [...IONIC_IMPORTS, CommonModule, ReactiveFormsModule]
 })
 export class FormEquipmentPage implements OnInit {
   form!: FormGroup;
